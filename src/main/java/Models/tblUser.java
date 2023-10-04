@@ -9,6 +9,7 @@ package Models;
  * @author Kiet
  */
 public class tblUser {
+
     int UserID;
     String UserName;
     String Password;
@@ -16,10 +17,66 @@ public class tblUser {
     String FullName;
     String Gender;
     String DOB;
-    int PhoneNumber;
+    String PhoneNumber;
+    private int AddressID;
+    private String Address;
     int RoleID;
     byte Active;
 
+    public tblUser() {
+    }
+
+    
+    public tblUser(int UserID, String UserName, String Password, String Email, String FullName, String Gender, String DOB, String PhoneNumber, int RoleID, byte Active) {
+        this.UserID = UserID;
+        this.UserName = UserName;
+        this.Password = Password;
+        this.Email = Email;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.DOB = DOB;
+        this.PhoneNumber = PhoneNumber;
+        this.RoleID = RoleID;
+        this.Active = Active;
+    }
+
+    public tblUser(String UserName, String Password, String Email, String FullName, String Gender, String DOB, String PhoneNumber, int RoleID, byte Active) {
+        this.UserName = UserName;
+        this.Password = Password;
+        this.Email = Email;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.DOB = DOB;
+        this.PhoneNumber = PhoneNumber;
+        this.RoleID = RoleID;
+        this.Active = Active;
+    }
+
+    public tblUser(int UserID, String UserName, String Email, String FullName, String Gender, String DOB, String PhoneNumber, int AddressID, String Address) {
+        this.UserID = UserID;
+        this.UserName = UserName;
+        this.Email = Email;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.DOB = DOB;
+        this.PhoneNumber = PhoneNumber;
+        this.AddressID = AddressID;
+        this.Address = Address;
+    }
+
+    public tblUser(int UserID, String UserName, String Email, String FullName, String Gender, String PhoneNumber, String Address) {
+        this.UserID = UserID;
+        this.UserName = UserName;
+        this.Email = Email;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.Address = Address;
+    }
+    
+
+    
+    
     public int getUserID() {
         return UserID;
     }
@@ -81,11 +138,11 @@ public class tblUser {
         this.DOB = DOB;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(int PhoneNumber) {
+    public void setPhoneNumber(String PhoneNumber) {
         this.PhoneNumber = PhoneNumber;
     }
 
@@ -105,20 +162,20 @@ public class tblUser {
         this.Active = Active;
     }
 
-    public tblUser(int UserID, String UserName, String Password, String Email, String FullName, String Gender, String DOB, int PhoneNumber, int RoleID, byte Active) {
-        this.UserID = UserID;
-        this.UserName = UserName;
-        this.Password = Password;
-        this.Email = Email;
-        this.FullName = FullName;
-        this.Gender = Gender;
-        this.DOB = DOB;
-        this.PhoneNumber = PhoneNumber;
-        this.RoleID = RoleID;
-        this.Active = Active;
+    public int getAddressID() {
+        return AddressID;
     }
 
-    public tblUser() {
+    public void setAddressID(int AddressID) {
+        this.AddressID = AddressID;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
 }

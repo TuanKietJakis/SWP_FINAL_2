@@ -8,6 +8,7 @@ import DatabaseConnection.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -20,5 +21,18 @@ public class CartDAO {
 
     public CartDAO() throws Exception {
         conn = DatabaseConnection.getConnection();
+    }
+    
+    public ResultSet ShowCartByID(int UserID) {
+        String sql = "select * from tblCart\n"
+                + "where UserID = ?;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
     }
 }

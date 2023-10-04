@@ -204,4 +204,19 @@ public class AccountDAO {
         }
         return ID;
     }
+    public tblUser GetCartByUserID(int ID) {
+        tblUser us = new tblUser();
+        try {
+            ps = conn.prepareStatement("select * from tblUser inner join tblAddress on tblUser.UserID = tblAddress.UserID where tblUser.UserID=?");
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                us = new tblUser(rs.getInt("UserID") , rs.getString("Username"), rs.getString("Email"), rs.getString("FullName"), rs.getString("Gender"), rs.getString("PhoneNumber") , rs.getString("Address")) ;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return us;
+    }
 }

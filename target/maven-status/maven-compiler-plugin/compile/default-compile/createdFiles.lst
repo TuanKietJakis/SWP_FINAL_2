@@ -1,5 +1,4 @@
 DAOs\CategoryDAO.class
-Models\tblAddresss.class
 Models\tblFAQ.class
 Controllers\ProductController.class
 Models\tblWishList.class
