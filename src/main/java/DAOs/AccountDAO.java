@@ -136,7 +136,7 @@ public class AccountDAO {
 
             if (rs.next()) {
                 int RoleID = rs.getInt("RoleID");
-                return (RoleID == 1);
+                return (RoleID == 2);
             }
         } catch (SQLException e) {
             e.printStackTrace();

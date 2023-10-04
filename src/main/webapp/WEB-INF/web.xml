@@ -22,27 +22,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
-        <url-pattern>/AccountController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminController</servlet-name>
-        <url-pattern>/admin/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OrderController</servlet-name>
-        <url-pattern>/OrderController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductController</servlet-name>
-        <url-pattern>/ProductController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginController</servlet-name>
-        <url-pattern>/LoginController</url-pattern>
-    </servlet-mapping>
-       <servlet-mapping>
-        <servlet-name>ProductController</servlet-name>
-        <url-pattern>/Product/*</url-pattern>
+        <url-pattern>/Account/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminController</servlet-name>
@@ -52,14 +32,16 @@
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/Order/*</url-pattern>
     </servlet-mapping>
-      <servlet-mapping>
-        <servlet-name>AccountController</servlet-name>
-        <url-pattern>/Account/*</url-pattern>
+    <servlet-mapping>
+        <servlet-name>ProductController</servlet-name>
+        <url-pattern>/Product/*</url-pattern>
     </servlet-mapping>
-      <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/Login/*</url-pattern>
     </servlet-mapping>
+      
+      
     <session-config>
         <session-timeout>
             30

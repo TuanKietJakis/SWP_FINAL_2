@@ -53,7 +53,10 @@ public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String path = request.getRequestURI();
+        if (path.endsWith("/Admin")) {
+            request.getRequestDispatcher("/admin.jsp").forward(request, response);
+        }
     } 
 
     /** 

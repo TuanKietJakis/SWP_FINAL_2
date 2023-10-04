@@ -60,7 +60,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/LoginController")) {
+        if (path.endsWith("/Login")) {
             request.getRequestDispatcher("/Login.jsp").forward(request, response);
         }
     }
@@ -103,11 +103,11 @@ public class LoginController extends HttpServlet {
                     if (isAdmin) { // Kiểm tra nếu là quản trị viên
                         session.setAttribute("Adminstrator", fullname);
                         session.setAttribute("AdminstratorID", ID);
-                        response.sendRedirect("admin.jsp"); // Chuyển hướng đến trang "admin.jsp" P/S: thay doi
+                        response.sendRedirect("/Admin"); // Chuyển hướng đến trang "admin.jsp" P/S: thay doi
                     } else {
                         session.setAttribute("Customer", fullname);
                         session.setAttribute("CustomerID", ID);
-                        response.sendRedirect("home.jsp"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
+                        response.sendRedirect("/Account"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
                     }
                }else{
                    request.setAttribute("error", "Wrong username or password");

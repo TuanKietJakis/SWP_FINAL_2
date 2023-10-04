@@ -53,7 +53,10 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String path = request.getRequestURI();
+        if (path.endsWith("/Account")) {
+            request.getRequestDispatcher("/home.jsp").forward(request, response);
+        }
     } 
 
     /** 

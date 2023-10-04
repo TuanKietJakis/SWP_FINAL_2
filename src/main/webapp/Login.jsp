@@ -19,7 +19,7 @@
                 <span id="close"><ion-icon  name="close-circle-outline"></ion-icon></span>
             </div>
             <div class="Login">
-                <form action="LoginController" id="form_login" method="post">
+                <form action="/Login" id="form_login" method="post">
                     <h1>Login</h1>
                     <div class="Login_quote"><text>How can I be more confident?</text></div>
                     <div class="input_box">
@@ -52,7 +52,7 @@
         <div class="section section_2">
             <div class="banner">
                 <div class="banner_image">
-                    <img src="Rectangle 188.png" alt="">
+                    <img src="img/Rectangle 188.png" alt="">
                 </div>
                 <div class="banner_text">
                     <text>Fragrance can create better opportunities</text>
