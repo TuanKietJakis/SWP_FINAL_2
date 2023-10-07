@@ -62,6 +62,10 @@ public class LoginController extends HttpServlet {
         String path = request.getRequestURI();
         if (path.endsWith("/Login")) {
             request.getRequestDispatcher("/Login.jsp").forward(request, response);
+        }else if(path.endsWith("/Login/OTP")){
+            request.getRequestDispatcher("/OTP.jsp").forward(request, response);
+        }else if(path.endsWith("/Login/Reset")){
+             request.getRequestDispatcher("/ResetPassword.jsp").forward(request, response);
         }
     }
 

@@ -298,4 +298,54 @@ public class AccountDAO {
         }
         return us;
     }
+    public boolean checkEmail(String email) {
+        String query = "SELECT COUNT(*) FROM tblUser WHERE Email = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+        }
+        return false;
+    }
+
+    public tblUser forgetpass(String newPassword, String email) {//kiet
+
+        String query = "UPDATE tblUser\n"
+                + "SET Password = ? \n"
+                + "where Email  = ?";
+        try {
+            ps = conn.prepareStatement(query); // nem cau lenh query sang sql
+//            rs = ps.executeQuery();// chay cau lenh query nhan ket qua tra ve
+            ps.setString(1, newPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
+        }
+        return null;
+
+    }
 }
