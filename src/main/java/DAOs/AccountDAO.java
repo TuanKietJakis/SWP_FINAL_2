@@ -8,6 +8,7 @@ import DatabaseConnection.DatabaseConnection;
 import EncodeMD5.MD5;
 import Models.tblUser;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,7 +49,67 @@ public class AccountDAO {
         }
         return null;
     }
+    /**
+     *
+     * @param 
+     * @return
+     */
+   public int UpdateAccount(String Fullname, String Username, String Mobile_Number, String Email, String Address, String Gender, Date date, int Account_ID) {
+        int kq = 0;
+        String sql = "UPDATE tblUser\n"
+                + "SET  Fullname = ?, Username = ?, Mobile_Number = ?,\n"
+                + "Email = ?, Address = ?, Gender = ?, Birthday = ? WHERE Account_ID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Fullname);
+            ps.setString(2, Username);
+            ps.setString(3, Mobile_Number);
+            ps.setString(4, Email);
+            ps.setString(5, Address);
+            ps.setString(6, Gender);
+            ps.setDate(7, date);
+            ps.setInt(8, Account_ID);
+            kq = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kq;
+    }
+    /**
+     *
+     * @param ID
+     * @return
+     */
+    public int DeleteAccount(int ID) {
+        int ketqua = 0;
+        String sql = "delete from tblUser where UserID=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            ketqua = ps.executeUpdate();
+        } catch (SQLException ex) {
+        }
+        return ketqua;
+    }
 
+    /**
+     * Make account an admin
+     *
+     * @param ID
+     * @return
+     */
+    public int AddAdmin(int ID) {
+        String sql = "Update tblUser set RoleID=2 where UserID = ?";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            result = ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
     /**
      * Get Account where that Account is not Admin
      *
@@ -183,6 +244,24 @@ public class AccountDAO {
 
     }
 
+    /**
+     * Remove account from admin
+     *
+     * @param ID
+     * @return
+     */
+    public int RemoveAdmin(int ID) {
+        String sql = "Update tblUser set RoleID=0 where UserID = ?";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            result = ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
     /**
      * Get ID of Account from it fullname
      *
