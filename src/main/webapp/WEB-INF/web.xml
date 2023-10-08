@@ -36,6 +36,11 @@
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>ForgotPassword.ResetPassword</servlet-class>
     </servlet>
+<servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>Controllers.HomeController</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -81,6 +86,11 @@
         <servlet-name>ResetPassword</servlet-name>
         <url-pattern>/ResetPassword</url-pattern>
     </servlet-mapping>
+<servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

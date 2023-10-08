@@ -1,0 +1,109 @@
+.footer {
+    background: #fff;
+    padding: 5rem 0 8rem;
+}
+
+.footer_container {
+    display: flex;
+    gap: 5rem;
+}
+
+.footer_content {
+    gap: 5rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.footer_info_description {
+    max-width: 262px;
+    margin-left: 2rem;
+    color: #0D0D0D;
+    font-family: var(--body-font);
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.footer__subtitle {
+    color: #FF9C00;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+}
+
+.footer__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+
+.footer__link {
+    color: #0D0D0D;
+    font-size: 16px;
+    font-weight: 400;
+    transition: 0.2s;
+
+    &:hover {
+        font-weight: 600;
+    }
+}
+
+.footer_social_title {
+    color: var(--TEXT-CLR, #5E6282);
+    font-family: var(--title-font);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 124.5%;
+    /* 24.9px */
+    letter-spacing: 0.1px;
+    margin-bottom: 1.25rem;
+}
+
+.footer_social_list {
+    display: flex;
+    gap: 25px;
+}
+
+[class^="footer_social_link"] {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 43px;
+    height: 43px;
+    background-color: #fff;
+    border-radius: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
+    margin-bottom: 1rem;
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s;
+
+    & i {
+        font-size: 24px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    &:hover i{
+        color: #f8f8f8;
+        font-weight: 500;
+    }
+
+    &[class$="1"]:hover {
+        transform: translateY(-10%);
+        background: #0866FF;
+    }
+
+    &[class$="3"]:hover {
+        transform: translateY(-10%);
+        background: #000;
+    }
+
+    &[class$="2"]:hover {
+        transform: translateY(-10%);
+        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+    }
+
+}
+.footer_social_tel{
+    color: #000;
+}

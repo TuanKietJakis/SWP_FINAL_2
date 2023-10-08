@@ -10,19 +10,19 @@
 
 
 <%AccountDAO aDAO = new AccountDAO();
-            tblUser us = aDAO.GetCartByUserID(Integer.parseInt(request.getParameter("ID")));
+    tblUser us = aDAO.GetCartByUserID(Integer.parseInt(request.getParameter("ID")));
 %>
 
 <header class="header" id="header">
     <nav class="nav container">
-        <a href="index.html" class="nav_logo"><img src="img/Logo_img.png" alt=""></a>
+        <a href="/Home/" class="nav_logo"><img src="img/Logo_img.png" alt=""></a>
         <div class="nav_menu">
             <ul class="nav_list">
-                <li class="nav_item"><a href="#" class="nav_item_link">Home</a></li>
-                <li class="nav_item"><a href="#" class="nav_item_link">Shop online</a></li>
-                <li class="nav_item"><a href="#" class="nav_item_link">What's new</a></li>
-                <li class="nav_item"><a href="#" class="nav_item_link">Contact</a></li>
-                <li class="nav_item"><a href="#" class="nav_item_link">About us</a></li>
+                <li class="nav_item"><a href="/Home/" class="nav_item_link">Home</a></li>
+                <li class="nav_item"><a href="/Shop/" class="nav_item_link">Shop online</a></li>
+                <li class="nav_item"><a href="/News/" class="nav_item_link">What's new</a></li>
+                <li class="nav_item"><a href="/Contact/" class="nav_item_link">Contact</a></li>
+                <li class="nav_item"><a href="/AboutUs/" class="nav_item_link">About us</a></li>
             </ul>
             <div class="nav_acc">
                 <div>
@@ -37,19 +37,33 @@
                 </div> -->
                 <!-- ============== Search input ============= -->
                 <input type="text" class="nav_acc_glass_input" placeholder="Search name of product">
-
+                <%
+                    if (us.getUserName() == null || us.getUserName() == "") {
+                %>
+                <div class="nav_profile" style="padding: 9px 0;">
+                    <a href="/Login/" class="nav_name" style="font-weight: 600; font-size: 20px; padding: 2px 0; color: #fff;">
+                        Login
+                    </a>
+                    <!-- <i class="fa-solid fa-user nav_acc_user"></i> -->
+                </div>  
+                <%
+                } else {
+                %>
                 <div class="nav_profile">
                     <h3 class="nav_name">
                         <%=us.getUserName()%>
                     </h3>
                     <i class="fa-solid fa-user nav_acc_user"></i>
                 </div>
+                
                 <div class="nav_profile_select nav_profile_show">
                     <a href="#" class="nav_profile_opt">Your profile</a>
                     <a href="#" class="nav_profile_opt">Order History</a>
                     <a href="#" class="nav_profile_opt">Logout</a>
                 </div>
+                <%}%>
             </div>
         </div>
     </nav>
+    <script src="js/DangScript/Header.js"></script>
 </header>
