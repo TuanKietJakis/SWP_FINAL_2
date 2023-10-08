@@ -56,7 +56,7 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/Home/TrangChu") || path.endsWith("/Home/")) {
+        if (path.endsWith("/Home")) {
             request.getRequestDispatcher("/home.jsp").forward(request, response);
         }
     }

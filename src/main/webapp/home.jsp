@@ -21,8 +21,15 @@
     </head>
 
     <body>
+        <%
+            System.out.println(session.getAttribute("CustomerID"));
+            int ID = 0;
+            if(session.getAttribute("CustomerID")!=null){
+            ID = (int)session.getAttribute("CustomerID");
+            }
+        %>
         <jsp:include page="header.jsp">
-            <jsp:param name="ID" value=""/>
+            <jsp:param name="ID" value="<%=ID%>"/>
         </jsp:include>
 
         <main class="main" id="main">

@@ -15,6 +15,7 @@ Models\tblBrand.class
 DAOs\BrandDAO.class
 ForgotPassword\ForgotPassword$1.class
 Models\tblOrderDetail.class
+Controllers\HomeController.class
 Models\tblRole.class
 DAOs\AccountDAO.class
 Controllers\AccountController.class

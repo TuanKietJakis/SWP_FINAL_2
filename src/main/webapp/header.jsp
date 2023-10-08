@@ -41,7 +41,7 @@
                     if (us.getUserName() == null || us.getUserName() == "") {
                 %>
                 <div class="nav_profile" style="padding: 9px 0;">
-                    <a href="/Login/" class="nav_name" style="font-weight: 600; font-size: 20px; padding: 2px 0; color: #fff;">
+                    <a href="/Login" class="nav_name" style="font-weight: 600; font-size: 20px; padding: 2px 2rem; color: #fff;">
                         Login
                     </a>
                     <!-- <i class="fa-solid fa-user nav_acc_user"></i> -->

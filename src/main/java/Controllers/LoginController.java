@@ -111,7 +111,7 @@ public class LoginController extends HttpServlet {
                     } else {
                         session.setAttribute("Customer", fullname);
                         session.setAttribute("CustomerID", ID);
-                        response.sendRedirect("/Account"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
+                        response.sendRedirect("/Home/"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
                     }
                }else{
                    request.setAttribute("error", "Wrong username or password");
