@@ -116,7 +116,7 @@ public class AccountDAO {
      * @return
      */
     public ResultSet GetNotAdmin() {
-        String sql = "select UserID, Fullname, Email from Account where Role = 1;";
+        String sql = "select UserID, FullName, Email from tblUser where RoleID = 1;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -133,7 +133,7 @@ public class AccountDAO {
     public int GetCountAccount() {
         int count = 0;
         String sql = "select count(UserID) as [counter] from tblUser\n"
-                + "where Role = 1;";
+                + "where RoleID = 1;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -172,7 +172,7 @@ public class AccountDAO {
      * @return
      */
     public ResultSet GetAdmin() {
-        String sql = "select UserID, Fullname, Email from tblUser where Role = 1;";
+        String sql = "select UserID, Fullname, Email from tblUser where RoleID = 2;";
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();

@@ -84,12 +84,12 @@ public class AccountController extends HttpServlet {
                 try {
                     try {
                         String[] s = path.split("/");
-                        int AccountID = Integer.parseInt(s[s.length - 1]);
-                        if (AccountID == 0) {
+                        int UserID = Integer.parseInt(s[s.length - 1]);
+                        if (UserID == 0) {
                             response.sendRedirect("/Account");
                         } else {
                             HttpSession session = request.getSession();
-                            session.setAttribute("AccountID", AccountID);
+                            session.setAttribute("UserID", UserID);
                             request.getRequestDispatcher("/JSP/AccountPage/AccountInfo.jsp").forward(request, response);
                         }
                     } catch (Exception ex) {
@@ -109,9 +109,9 @@ public class AccountController extends HttpServlet {
                     try {
                         try {
                             String[] s = path.split("/");
-                            int AccountID = Integer.parseInt(s[s.length - 1]);
+                            int UserID = Integer.parseInt(s[s.length - 1]);
                             AccountDAO dao = new AccountDAO();
-                            int result = dao.AddAdmin(AccountID);
+                            int result = dao.AddAdmin(UserID);
                             if (result != 0) {
                                 response.sendRedirect("/Admin");
                             } else {

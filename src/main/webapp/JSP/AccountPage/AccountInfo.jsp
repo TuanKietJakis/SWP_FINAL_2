@@ -63,27 +63,27 @@
                             <table id="example">
                                 <%
                                     AccountDAO Dao = new AccountDAO();
-                                    int Info = (Integer) session.getAttribute("AccountID");
+                                    int Info = (Integer) session.getAttribute("UserID");
                                     ResultSet rs = Dao.GetAll(Info);
                                     if (rs.next()) {
                                 %> 
                                 <thead>
                                     <tr>
-                                        <th>Account ID</th>
+                                        <th>User ID</th>
+                                        <th>Username</th>
                                         <th>Full Name</th>
-                                        <th>username</th>
-                                        <th>Mobile Number</th>
+                                        <th>Phone Number</th>
                                         <th>Email</th>
                                         <th>Address</th>
                                         <th>Gender</th>
-                                        <th>Birthday</th>
+                                        <th>DOB</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td><%=rs.getInt("UserID")%> </td>
-                                        <td><%=rs.getString("Fullname")%> </td>
+                                        <td><%=rs.getString("FullName")%> </td>
                                         <td><%=rs.getString("Username")%> </td>
                                         <td><%=rs.getString("PhoneNumber")%> </td>
                                         <td><%=rs.getString("Email")%> </td>

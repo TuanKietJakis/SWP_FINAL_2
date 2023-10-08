@@ -32,8 +32,6 @@
         <%@include file="/JSP/SectionList.jsp" %>
         <!-- SIDEBAR -->
 
-
-
         <!-- CONTENT -->
         <section id="content">
            

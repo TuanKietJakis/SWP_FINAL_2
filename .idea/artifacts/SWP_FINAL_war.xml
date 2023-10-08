@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SWP_FINAL:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>SWP_FINAL</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="SWP_FINAL-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="SWP_FINAL:war exploded" />
+    </root>
+  </artifact>
+</component>

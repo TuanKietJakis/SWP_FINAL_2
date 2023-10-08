@@ -8,9 +8,6 @@
 <%@page import="DAOs.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-  
-    <body>
 <ul class="box-info">
     <%
         AccountDAO accDAO = new AccountDAO();
@@ -43,7 +40,3 @@
         </span>
     </li>
 </ul>
-
-    </body>
-</html>
-
