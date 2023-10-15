@@ -15,7 +15,7 @@
 
 <header class="header" id="header">
     <nav class="nav container">
-        <a href="/Home/" class="nav_logo"><img src="img/Logo_img.png" alt=""></a>
+        <a href="/Home/" class="nav_logo"><img src="/img/Logo_img.png" alt=""></a>
         <div class="nav_menu">
             <ul class="nav_list">
                 <li class="nav_item"><a href="/Home/" class="nav_item_link">Home</a></li>
@@ -28,7 +28,7 @@
                 <div>
                     <i class="fa-solid fa-magnifying-glass nav_acc_glass"></i>
                 </div>
-                <div>
+                <div onclick="location.href='/Cart/Info/<%=us.getUserID()%>';">
                     <i class="fa-solid fa-cart-shopping nav_acc_glass nav_acc_cart"></i>
                 </div>
                 <!-- ================= Cart popup ======== -->

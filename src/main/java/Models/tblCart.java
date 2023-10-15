@@ -17,6 +17,7 @@ public class tblCart {
     int ProductPrice;
     int ProductAmount;
     String ProductImageURL;
+    int Quantity;
 
     public int getCartID() {
         return CartID;
@@ -44,6 +45,14 @@ public class tblCart {
 
     public String getProductName() {
         return ProductName;
+    }
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int Quantity) {
+        this.Quantity = Quantity;
     }
 
     public void setProductName(String ProductName) {
@@ -83,6 +92,14 @@ public class tblCart {
         this.ProductAmount = ProductAmount;
         this.ProductImageURL = ProductImageURL;
     }
+
+    public tblCart(int CartID, int ProductID, int ProductAmount, int Quantity) {
+        this.CartID = CartID;
+        this.ProductID = ProductID;
+        this.ProductAmount = ProductAmount;
+        this.Quantity = Quantity;
+    }
+    
 
     public tblCart() {
     }

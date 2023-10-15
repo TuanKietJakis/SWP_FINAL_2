@@ -9,7 +9,7 @@
         <div class="footer_container container">
             <div class="footer_info">
                 <a class="footer_info_logo" href="#">
-                    <img src="img/Logo_footer.png" alt="">
+                    <img src="/img/Logo_footer.png" alt="">
                 </a>
                 <p class="footer_info_description">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.

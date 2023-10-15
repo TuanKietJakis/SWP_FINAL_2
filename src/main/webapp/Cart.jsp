@@ -22,13 +22,11 @@
 
     <body>
         <%
-            int ID = 2;
-            AccountDAO aDAO = new AccountDAO();
-            tblUser us = aDAO.GetCartByUserID(ID);
+            tblUser us = (tblUser) session.getAttribute("UserInfo");
         %>
 
         <jsp:include page="header.jsp">
-            <jsp:param name="ID" value="<%=ID%>"/>
+            <jsp:param name="ID" value="<%=us.getUserID()%>"/>
         </jsp:include>  
 
         <main class="main">
@@ -49,17 +47,19 @@
                             //                        String idkh = (String) session.getAttribute("idkh");
                             String msp = "";
                             int subtotal = 0;
-                            int countProduct = 1;
+                            int countProduct = 0;
                             CartDAO dao = new CartDAO();
-                            ResultSet rs = dao.ShowCartByID(ID);
+                            ResultSet rs = dao.ShowCartByID(us.getUserID());
                             if (!rs.next()) {
                         %>
                         <P style="width:100%;text-align: center;padding: 1rem 0;">Không có sản phẩm trong giỏ</p>
                             <%
                             } else {
+                                countProduct++;
                             %>
+                        <P class="noItem" style="width:100%;text-align: center;padding: 1rem 0;display: none;">Không có sản phẩm trong giỏ</p>
                         <!-- ====================== item 1 ================== -->
-                        <div class="cart_t_item">
+                        <div class="cart_t_item" id="cart<%=rs.getInt("CartID")%>">
                             <div class="cart_t_i_content col-product">
                                 <div class="cart_t_i_img">
                                     <img src="<%=rs.getString("ProductImageURL")%>" alt="">
@@ -75,24 +75,28 @@
                                 <div class="cart_t_i_quantity" data-quantity-id="<%=countProduct%>">
                                     <div class="value-button decrease">-
                                     </div>
-                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onchange="updateTotal(<%=countProduct%>)" />
+                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" />
+                                    <input type="hidden" name="proPrice" id="proPrice" value="<%=rs.getInt("ProductPrice")%>" data-cart-id="<%=rs.getInt("CartID")%>">
+                                    <input type="hidden" id="action" name="action" value="update-quan">
                                     <div class="value-button increase">+
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="cart_t_i_func">
+                            <!--============== Modifi here ===============-->
+                            <button type="button" id="deleteBtn" class="cart_t_i_func" data-product-id="<%=rs.getInt("CartID")%>">
                                 <i class="fa-solid fa-trash"></i>
-                            </a>
+                                <input type="hidden" id="action" name="action" value="delete-product">
+                            </button>
                         </div>
 
                         <%
                             msp += rs.getInt("ProductID") + ",";
-                            subtotal += rs.getInt("ProductPrice");
+                            subtotal += rs.getInt("ProductPrice") * rs.getInt("ProductAmount");
                             while (rs.next()) {
                                 countProduct++;
                         %>
                         <!-- ====================== item 1 ================== -->
-                        <div class="cart_t_item">
+                        <div class="cart_t_item" id="cart<%=rs.getInt("CartID")%>">
                             <div class="cart_t_i_content col-product">
                                 <div class="cart_t_i_img">
                                     <img src="<%=rs.getString("ProductImageURL")%>" alt="">
@@ -102,24 +106,27 @@
                                     <p class="cart_t_i_subtitle">Category: Eau de perfume</p>
                                 </div>
                             </div>
-                            <h1 class="cart_t_i_price col-price" id="price<%=countProduct%>"><%=rs.getInt("ProductPrice")%></h1>
+                            <h1 class="cart_t_i_price col-price" id="price<%=countProduct%>">$<%=rs.getInt("ProductPrice")%></h1>
                             <div class="col-quantity">
                                 <!--========= edit quantity =============-->
-                                <div class="cart_t_i_quantity" data-quantity-id="<%=countProduct%>">
+                                <div class="cart_t_i_quantity" data-quantity-id="<%=countProduct%>" >
                                     <div class="value-button decrease">-
                                     </div>
-                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onchange="updateTotal(<%=countProduct%>)"/>
+                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" />
+                                    <input type="hidden" name="proPrice" id="proPrice" value="<%=rs.getInt("ProductPrice")%>" data-cart-id="<%=rs.getInt("CartID")%>">
+                                    <input type="hidden" id="action" name="action" value="update-quan">
                                     <div class="value-button increase">+
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="cart_t_i_func">
+                            <button type="button" id="deleteBtn" class="cart_t_i_func" data-product-id="<%=rs.getInt("CartID")%>">
                                 <i class="fa-solid fa-trash"></i>
-                            </a>
+                                <input type="hidden" id="action" name="action" value="delete-product">
+                            </button>
                         </div>
                         <%
                                     msp += rs.getInt("ProductID") + ",";
-                                    subtotal += rs.getInt("ProductPrice");
+                                    subtotal += rs.getInt("ProductPrice") * rs.getInt("ProductAmount");
                                 }
                             }
                         %>
@@ -157,7 +164,9 @@
                                 have entered.</p>
                             <h3 class="cart_dz_data">
                                 Order subtotal
-                                <span>$ <%=subtotal%></span>
+                                <span class="subtotalClass">$ <%=subtotal%></span>
+                                <input type="hidden" name="subtotal" id="subtotal" value="<%=subtotal%>">
+
                             </h3>
                             <h3 class="cart_dz_data">
                                 Shipping and handling
@@ -166,7 +175,7 @@
                                     if (subtotal <= 0) {
                                         shipcost = 0;
                                     } else {
-                                        shipcost = 12;
+                                        shipcost = 1 * countProduct;
                                     }
                                 %>
                                 <span>
@@ -175,7 +184,8 @@
                             </h3>
                             <h3 class="cart_dz_data cart_dz_total">
                                 Total
-                                <span>$<%int Total = subtotal + shipcost;%><%=Total%></span>
+                                <span class="totalClass">$<%int Total = subtotal + shipcost;%><%=Total%></span>
+                                <input type="hidden" name="total" id="total" value="<%=Total%>">
                             </h3>
                             <input type="submit" value="Proceed to checkout" class="cart_cz_checkout">
                         </div>
@@ -183,8 +193,8 @@
                 </form>
             </section>
         </main>
-        <jsp:include page="Footer.jsp"></jsp:include>                     
-
-        <script src="js/CartScript.js"></script>
+        <jsp:include page="Footer.jsp"></jsp:include>      
+        <script src="/js/DangScript/jquery.min.js"></script>
+        <script src="/js/DangScript/CartScript.js"></script>
     </body>
 </html>

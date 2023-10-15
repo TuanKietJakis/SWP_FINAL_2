@@ -8,7 +8,7 @@ body {
 }
 
 .section {
-    margin: 10px 0;
+    margin: 3rem 0;
 }
 
 .button {
@@ -19,10 +19,14 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
+
+/* ============================== Home ================================ */
 .home_section {
     position: relative;
 }
-.home_addition_bg{
+
+
+.home_addition_bg {
     position: relative;
     width: 100%;
     height: 100%;
@@ -31,19 +35,22 @@ body {
 .home_slide {
     position: relative;
     height: calc(100vh - var(--header-height));
+}
 
-}
-@keyframes floating{
-    0%{
+@keyframes floating {
+    0% {
         transform: translateY(10%);
     }
-    50%{
-transform: translateY(-10%);
+
+    50% {
+        transform: translateY(-10%);
     }
-    100%{
+
+    100% {
         transform: translateY(10%);
     }
 }
+
 .home_img1 {
     position: absolute;
     bottom: -3%;
@@ -52,10 +59,12 @@ transform: translateY(-10%);
     height: 75px;
     z-index: 10;
     animation: floating 4000ms ease-in-out infinite;
+
     & img {
         object-fit: cover;
     }
 }
+
 .home_img0 {
     position: absolute;
     bottom: -12%;
@@ -64,20 +73,23 @@ transform: translateY(-10%);
     height: 100px;
     z-index: -1;
     animation: floating 4000ms ease-in-out infinite;
+
     & img {
         object-fit: cover;
     }
 }
+
 .home_img2 {
     position: absolute;
-    bottom: -95%;
+    bottom: -140%;
     right: 2%;
     width: 200px;
     height: 100px;
-    z-index: -1;
+    z-index: 80;
     transform: rotate(45deg);
     animation: floating 4000ms ease-in-out infinite;
     animation-delay: 0.5s;
+
     & img {
         object-fit: cover;
     }
@@ -88,16 +100,20 @@ transform: translateY(-10%);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 [class^="home_slide_img"] {
     position: absolute;
     width: 100%;
     height: 100%;
+    top: 0;
+    left: 0;
     z-index: -1;
+
     & img {
         object-fit: cover;
-        object-position: right;
+        object-position: center;
     }
 }
 
@@ -106,11 +122,11 @@ transform: translateY(-10%);
 }
 
 .home_slide_data {
-    margin-left: 0rem;
-    width: 90%;
+    margin-left: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 2.25rem;
+    gap: 1.5rem;
 }
 
 .owl-item.active {
@@ -155,29 +171,57 @@ transform: translateY(-10%);
     }
 }
 
+.home_slide_subtitle {
+    font-size: 1rem;
+    color: rgba(1, 1, 1, 0.5);
+    letter-spacing: 2px;
+}
 
 .home_slide_title {
-    /* color: #000; */
-    font-family: 'Inter';
-    font-size: 36px;
-    font-weight: 400;
+    font-family: var(--title-font);
+    font-size: 3.25rem;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
 
-    & span {
-        color: #fff;
-        font-weight: 500;
-       text-shadow: -2px 4px 2px rgba(255, 0, 170, 0.25);
-    }
+.home_slide_des {
+    font-family: var(--title-font);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: normal;
+    line-height: 170%;
+    color: rgba(1, 1, 1, 0.6);
 }
 
 .home_slide_button {
+    margin-top: 1rem;
+    color: rgba(1, 1, 1, 1);
     width: fit-content;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    position: relative;
     transition: 0.3s;
-    box-shadow: 1px 2px 4px rgba(1, 1, 1, 0.25), 1px 2px 10px rgba(255, 255, 255, 0.1);
-    background: #C0B8EA;
-    /* border: 2px solid #a698ec; */
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        bottom: -.25rem;
+        left: 0;
+        background: rgba(1, 1, 1, 0.7);
+        transition: 0.3s;
+    }
+
     &:hover {
-        background: #a698ec;
-        font-weight: 500;
+        letter-spacing: 4px;
+        color: #ff3f66;
+
+        &::before {
+            background: #ff3f66;
+        }
     }
 }
 
@@ -287,7 +331,7 @@ transform: translateY(-10%);
 }
 
 .cate_back {
-    background-image: url('../img/the-perfume-shop-joop-homme.jpg');
+    background-image: url('../..//img/the-perfume-shop-joop-homme.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -301,6 +345,9 @@ transform: translateY(-10%);
 
 
 /* ======================== Popular Product =============================== */
+.maylike_section {
+    padding: 0rem 0 2rem;
+}
 
 .pproduct_title {
     font-size: 24px;
@@ -455,7 +502,7 @@ transform: translateY(-10%);
         bottom: 1.25rem;
         border-radius: 100px;
         /* transition: transform 0.5s; */
-            cursor: pointer;
+        cursor: pointer;
         transform-style: preserve-3d;
     }
 }
@@ -576,11 +623,13 @@ transform: translateY(-10%);
     right: 0;
     top: 45%;
 }
-.comment_addtion_background{
+
+.comment_addtion_background {
     position: relative;
     width: 100%;
     height: 100%;
 }
+
 .home_img3 {
     position: absolute;
     bottom: 45%;
@@ -588,61 +637,77 @@ transform: translateY(-10%);
     width: 15%;
     height: 15%;
     z-index: 10;
+
     & img {
         object-fit: cover;
     }
 }
+
 /* =================== Get more product ================ */
 .shopnow_container {
     padding-top: 5rem;
+    padding-bottom: 5rem;
 }
 
-.shopnow_grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+.shopnow_flex {
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.shopnow_image_area {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+}
+
+.shopnow_pic1 {
+    z-index: 10;
+
+    & img {
+        border: 10px solid #ffffff;
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.13);
+        transform: translate(5%, -5%);
+    }
+}
+
+.shopnow_pic2 {
+    z-index: 9;
+
+    & img {
+        box-shadow: 0 0 35px rgba(0, 0, 0, 0.13);
+        transform: translate(-5%, 5%);
+    }
 }
 
 [class^="shopnow_pic"] {
-    max-width: 367px;
-    max-height: 388px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    width: clamp(100px, 100%, 298px);
+    max-height: 367px;
+    /* overflow: hidden; */
 
     & img {
         transition: 0.3s;
         width: 100%;
         height: 100%;
         object-fit: cover;
-
-        &:hover {
-            transform: scale(1.1);
-        }
     }
 }
 
-.shopnow_pic1 {
-    border-radius: 10px 0 0 10px;
-}
-
-.shopnow_pic2 {
-    border-radius: 0 10px 10px 0;
-}
 
 .shopnow_content {
     text-align: left;
     padding-right: 2rem;
+    width: 40%;
 }
 
 .shopnow_icon {
     font-size: 52px;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .shopnow_title {
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 3rem;
+    font-weight: 500;
     margin-bottom: 1rem;
 }
 
@@ -650,18 +715,21 @@ transform: translateY(-10%);
     font-size: 16px;
     font-weight: 500;
     margin-bottom: 2rem;
+    color: rgba(1, 1, 1, 0.6);
 }
 
 .shopnow_btn {
-    padding: .74rem 2rem;
-    border: 2px solid #fff;
+    padding: .74rem 2.5rem;
+    border: 2px solid #9d8ee9;
     transition: 0.3s;
+    color: #9d8ee9;
+    background: #fff;
 
     &:hover {
-        background: #fff;
-        color: #9d8ee9;
+        color: #fff;
+        background: #ad9ff4;
+        border: 2px solid #fff;
         font-weight: 500;
-        border: 2px solid #9d8ee9;
     }
 }
 
@@ -695,4 +763,47 @@ transform: translateY(-10%);
     padding-top: 5rem;
     padding-bottom: 5rem;
 
+}
+
+/* ============================== High quantity ===================== */
+
+.advertOne_bg {
+    width: 100%;
+    height: 100%;
+    padding: 5rem 0;
+    background-image: url('../..//img/Back3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.advertOne_title {
+    font-size: 3.25rem;
+    font-weight: 500;
+    line-height: 130%;
+    margin-bottom: 2rem;
+}
+
+.advertOne_des1 {
+    font-size: 16px;
+    margin-bottom: 2rem;
+    color: rgba(1, 1, 1, 0.7);
+}
+
+.advertOne_des2 {
+    font-size: 1rem;
+    color: rgba(1, 1, 1, 0.7);
+}
+
+.advertOnt_signature {
+    width: 243px;
+    height: 170px;
+    margin-bottom: -50px;
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+    }
 }

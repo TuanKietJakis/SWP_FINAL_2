@@ -4,12 +4,20 @@
  */
 package Controllers;
 
+import DAOs.AccountDAO;
+import DAOs.CartDAO;
+import Models.tblCart;
+import Models.tblUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.json.JsonObject;
 
 /**
  *
@@ -34,7 +42,7 @@ public class CartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CartController</title>");            
+            out.println("<title>Servlet CartController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
@@ -56,8 +64,24 @@ public class CartController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/Cart")) {
-            request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+        if (path.startsWith("/Cart/Info")) {
+            String[] s = path.split("/");
+            int ID = Integer.parseInt(s[s.length - 1]);
+            AccountDAO dao = null;
+            try {
+                dao = new AccountDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tblUser acc = dao.GetCartByUserID(ID);
+            HttpSession session = request.getSession();
+            if (acc.getUserName() != null) {
+                session.setAttribute("UserInfo", acc);
+                request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+            } else {
+                session.setAttribute("trigger", "asdf");
+                response.sendRedirect("/");
+            }
         }
     }
 
@@ -72,7 +96,52 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        if ("delete-product".equals(action)) {
+            int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+            CartDAO deleteDAO = null;
+            try {
+                deleteDAO = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (deleteDAO.Delete(ProductID) != 0) {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print("{\"message\": \"Xoá thành công.\"}");
+                out.flush();
+            }
+        }
+        if ("update-quan".equals(request.getParameter("action"))) {
+            int ProductPrice = Integer.parseInt(request.getParameter("ProductPrice"));
+            int ProductAmount = Integer.parseInt(request.getParameter("ProductAmount"));
+            int CartID = Integer.parseInt(request.getParameter("CartID"));
+
+            CartDAO updateDAO = null;
+
+            try {
+                updateDAO = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (ProductAmount < 0) {
+                updateDAO.Delete(CartID);
+            } else {
+                tblCart cart = updateDAO.CompareAmount(CartID);
+                int oldAmount = cart.getProductAmount();
+                if (cart.getQuantity() > ProductAmount) {
+                    updateDAO.UpdateCartAmount(ProductAmount, CartID);
+
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"oldAmount\":" + oldAmount + ",\"ProductPrice\":" + ProductPrice + ",\"ProductAmount\":" + ProductAmount + "}");
+                    out.flush();
+                }
+            }
+
+        }
     }
 
     /**
