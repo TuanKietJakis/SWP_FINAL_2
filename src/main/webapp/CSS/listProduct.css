@@ -1,0 +1,91 @@
+
+            .taskbar {
+                padding-left: 164px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            a {
+                width: 40px;
+                height: 17px;
+                padding-top: 30px;
+                padding-right: 57px;
+                padding-bottom: 30px;
+                color: #000;
+                text-align: center;
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                text-decoration: none;
+            }
+
+            .about {
+                padding-right: -100px;
+            }
+
+            .taskbar_link {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .taskbar_logo {
+                display: flex;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .logo {
+                padding-left: 60px;
+                padding-top: 12px;
+            }
+
+            .account {
+                margin-top: 14px;
+                margin-right: 166px;
+                width: 145px;
+                height: 48px;
+                flex-shrink: 0;
+                border-radius: 100px;
+                background: #C0B8EA;
+                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .image2 {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .sentence {
+                display: flex;
+                margin-right: 500px;
+                margin-bottom: 100px;
+            }
+
+            .explore {
+                width: 142px;
+                height: 45px;
+                border-radius: 100px;
+                background: #C0B8EA;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                margin-right: 800px ;
+                margin-top: 50px;
+            }
+
+            footer{
+                display: flex;
+                padding-left: 164px;
+            }

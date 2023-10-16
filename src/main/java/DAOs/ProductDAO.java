@@ -32,18 +32,31 @@ public class ProductDAO {
     public ProductDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-
+    
+    public ResultSet getAllProduct() {
+        String sql = "select*from tblProduct";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public tblProduct getInfoForUpdating(int ID) {
         tblProduct pro = null;
         try {
-            ps = conn.prepareStatement("select * from tblProduct\n"
-                    + "where ProductID = ?;");
+            ps = conn.prepareStatement("select * from Product\n"
+                    + "where Product_ID = ?;");
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if (rs.next()) {
-                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"),
-                        rs.getString("ProductDes"), rs.getInt("Quantity"),
-                        rs.getByte("Active"), rs.getString("ProductImageURL"), rs.getInt("Size"));
+                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"),
+                                   rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"), 
+                                   rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getByte("Active"), 
+                                   rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (Exception e) {
         }
