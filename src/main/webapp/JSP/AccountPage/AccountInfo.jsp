@@ -32,7 +32,7 @@
         <!-- CONTENT -->
         <section id="content">
             <!-- MAIN -->
-            
+
             <main>
                 <div class="order">
                     <div class="head-title">
@@ -51,45 +51,44 @@
                     </div>
 
                     <jsp:include page="/JSP/AccountPage/InfoBox.jsp"></jsp:include>
-                    <div class="table-data">
-                        <div class="order">
-                            <div class="head">
-                                <div>
-                                    <h3>Account Management</h3>
-                                    <i class='bx bx-chevron-right' ></i>
-                                    <a href="/Account">Back</a>                          
+                        <div class="table-data">
+                            <div class="order">
+                                <div class="head">
+                                    <div>
+                                        <h3>Account Management</h3>
+                                        <i class='bx bx-chevron-right' ></i>
+                                        <a href="/Account">Back</a>                          
+                                    </div>
                                 </div>
-                            </div>
-                            <table id="example">
+                                <table id="example">
                                 <%
                                     AccountDAO Dao = new AccountDAO();
                                     int Info = (Integer) session.getAttribute("UserID");
                                     ResultSet rs = Dao.GetAll(Info);
+                                    
                                     if (rs.next()) {
                                 %> 
                                 <thead>
                                     <tr>
                                         <th>User ID</th>
                                         <th>Username</th>
-                                        <th>Full Name</th>
-                                        <th>Phone Number</th>
                                         <th>Email</th>
-                                        <th>Address</th>
+                                        <th>Full Name</th>
                                         <th>Gender</th>
                                         <th>DOB</th>
+                                        <th>Phone Number</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td><%=rs.getInt("UserID")%> </td>
-                                        <td><%=rs.getString("FullName")%> </td>
                                         <td><%=rs.getString("Username")%> </td>
-                                        <td><%=rs.getString("PhoneNumber")%> </td>
                                         <td><%=rs.getString("Email")%> </td>
-                                        <td><%=rs.getString("Address")%>  </td>
+                                        <td><%=rs.getString("FullName")%> </td>
                                         <td><%=rs.getString("Gender")%>  </td>
-                                        <td><%=rs.getString("Dob")%>  </td>
+                                        <td><%=rs.getString("DOB")%>  </td>
+                                        <td><%=rs.getString("PhoneNumber")%> </td>
                                         <td>
                                             <div class="text-center">  
                                                 <a onclick="return confirm('Do you want to delete this account?');" href="/Account/Delete/<%=rs.getInt("UserID")%>" class="button-1" role="button" ><i class="fa-solid fa-trash"></i></a>

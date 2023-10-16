@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@page import="DAOs.RatingDAO"%>
 <%@page import="DAOs.CategoryDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.BrandDAO"%>
@@ -41,7 +42,7 @@
     </head>
     <body>
         <%
-            Product pro = (Product) session.getAttribute("ProductIDToUpdate");
+            tblProduct pro = (tblProduct) session.getAttribute("ProductIDToUpdate");
             String ImgURL = (String) session.getAttribute("ImgURL");
         %>
         <!-- SIDEBAR -->
@@ -53,7 +54,7 @@
         <!-- CONTENT -->
         <section id="content">
             <!-- MAIN -->
-            
+
             <main>
                 <div class="head-title">
                     <div class="left">
@@ -75,17 +76,17 @@
                                         <div class="row">  
                                             <div class="col-md-6 form-group">
                                                 <label for="email" class="col-form-label">Product ID(Can't Change)</label>
-                                                <input type="text" class="form-control" name="txtProID"  readonly="" id="size" value="<%=pro.getProduct_ID()%>">
+                                                <input type="text" class="form-control" name="txtProductID"  readonly="" id="size" value="<%=pro.getProductID()%>">
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="name" class="col-form-label">Category</label>
-                                                <select name="slctCatID" id="brand" class="form-control"> 
+                                                <select name="selectCategoryID" id="brand" class="form-control"> 
                                                     <%
                                                         CategoryDAO Dao = new CategoryDAO();
                                                         ResultSet rs1 = Dao.GetAll();
                                                         while (rs1.next()) {
                                                     %>
-                                                    <option value="<%=rs1.getInt("Category_ID")%>" <%=pro.getCategory_ID() == rs1.getInt("Category_ID") ? "selected" : ""%>><%=rs1.getString("Cat_Name")%></option>
+                                                    <option value="<%=rs1.getInt("CategoryID")%>" <%=pro.getCategoryID() == rs1.getInt("CategoryID") ? "selected" : ""%>><%=rs1.getString("CatName")%></option>
                                                     <%
                                                         }
                                                     %>
@@ -96,57 +97,67 @@
                                         <div class="row">                                   
                                             <div class="col-md-6 form-group">
                                                 <label for="name" class="col-form-label">Name</label>
-                                                <input type="text" class="form-control" name="txtProName" id="name" value="<%=pro.getP_name()%>">
+                                                <input type="text" class="form-control" name="txtProductName" id="name" value="<%=pro.getProductName()%>">
                                                 <div class="error" id="ErrorProName"></div>
                                             </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="name" class="col-form-label">Brand</label>
-                                                <select name="slctBrand" id="brand" class="form-control"> 
-                                                    <%
-                                                        BrandDAO DaoB = new BrandDAO();
-                                                        ResultSet rs = DaoB.GetAll();
-                                                        while (rs.next()) {
-                                                    %>
-                                                    <option value="<%=rs.getInt("Brand_ID")%>" <%=pro.getBrand_ID() == rs.getInt("Brand_ID") ? "selected" : ""%>><%=rs.getString("Brand_Name")%></option>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <label for="email" class="col-form-label">Price</label>
+                                                    <input type="text" class="form-control" name="txtPrice" id="price" value="<%=pro.getPrice()%>">
+                                                    <div class="error" id="ErrorProPrice"></div>
+                                                </div>
                                             </div>
                                         </div>
 
 
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Price</label>
-                                                <input type="text" class="form-control" name="txtProPrice" id="price" value="<%=pro.getP_price()%>">
-                                                <div class="error" id="ErrorProPrice"></div>
-                                            </div>
-                                        </div>
 
+                                        <div class="col-md-6 form-group">
+                                            <label for="name" class="col-form-label">Brand</label>
+                                            <select name="selectBrand" id="brand" class="form-control"> 
+                                                <%
+                                                    BrandDAO DaoB = new BrandDAO();
+                                                    ResultSet rs = DaoB.GetAll();
+                                                    while (rs.next()) {
+                                                %>
+                                                <option value="<%=rs.getInt("Brand_ID")%>" <%=pro.getBrandID() == rs.getInt("BrandID") ? "selected" : ""%>><%=rs.getString("BrandName")%></option>
+                                                <%
+                                                    }
+                                                %>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="name" class="col-form-label">Rating</label>
+                                            <select name="selectRatingID" id="rating" class="form-control"> 
+                                                <%
+                                                    RatingDAO DaoR = new RatingDAO();
+                                                    ResultSet rs2 = DaoR.GetAll();
+                                                    while (rs.next()) {
+                                                %>
+                                                <option value="<%=rs2.getInt("RatingID")%>" <%=pro.getRatingID() == rs2.getInt("RatingID") ? "selected" : ""%>><%=rs.getInt("RateNumber")%></option>
+                                                <%
+                                                    }
+                                                %>
+                                            </select>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Size</label>
-                                                <input type="text" class="form-control" name="txtProSize" id="sizePro" value="<%=pro.getP_size()%>">
-                                                <div class="error" id="ErrorProSize"></div>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Country</label>
-                                                <input type="text" class="form-control" name="txtProCountry" id="country" value="<%=pro.getP_Country()%>">
+                                                <label for="email" class="col-form-label">Product Description</label>
+                                                <input type="text" class="form-control" name="txtProductDes" id="productdes" value="<%=pro.getProductDes()%>">
                                                 <div class="error" id="ErrorProCountry"></div>
                                             </div>
+                                            <div class="col-md-12 form-group">
+                                                <label for="email" class="col-form-label">Quantity</label>
+                                                <input type="text" class="form-control" name="txtQuantity" id="quantity" value="<%=pro.getQuantity()%>">
+                                                <div class="error" id="ErrorProSize"></div>
+                                            </div>
+
                                         </div>                               
 
 
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="name" class="col-form-label">Status</label>
-                                                <select name="slctStatus" id="brand" class="form-control">
-                                                    <option value="Available" <%=pro.getP_availability().equals("Available") ? "selected" : ""%>>Available</option>
-                                                    <option value="Pending" <%=pro.getP_availability().equals("Pending") ? "selected" : ""%>>Pending</option>
-                                                    <option value="Not_Available" <%=pro.getP_availability().equals("Not_Available") ? "selected" : ""%>>Not_Available</option>
-                                                </select>
-                                            </div>
+                                        <div class="col-md-12 form-group">
+                                            <label for="email" class="col-form-label">Active</label>
+                                            <input type="text" class="form-control" name="txtActive" id="active" value="<%=pro.getActive()%>">
+                                            <div class="error" id="ErrorProSize"></div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6 form-group">
@@ -160,6 +171,11 @@
                                                 Input file to change it
                                             </div>
                                         </div>
+                                        <div class="col-md-12 form-group">
+                                            <label for="email" class="col-form-label">Size</label>
+                                            <input type="text" class="form-control" name="txtSize" id="active" value="<%=pro.getSize()%>">
+                                            <div class="error" id="ErrorProSize"></div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="submit" value="Submit" name="btnUpdatePro" class="button-5 btn-block btn-primary rounded-0 py-2 px-4">
@@ -169,7 +185,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </main>

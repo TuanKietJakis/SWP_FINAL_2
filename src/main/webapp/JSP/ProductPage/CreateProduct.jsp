@@ -4,6 +4,7 @@
     Author     : User
 --%>
 
+<%@page import="DAOs.RatingDAO"%>
 <%@page import="DAOs.CategoryDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.BrandDAO"%>
@@ -49,7 +50,7 @@
 
         <!-- CONTENT -->
         <section id="content">
-            
+
             <!-- MAIN -->
             <main>
                 <div class="head-title">
@@ -72,7 +73,7 @@
                                         <div class="row">  
                                             <div class="col-md-6 form-group">
                                                 <label for="email" class="col-form-label">Product ID</label>
-                                                <input type="number" class="form-control" name="txtProID"  id="ID" >
+                                                <input type="number" class="form-control" name="txtProductID"  id="ID" >
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="name" class="col-form-label">Category</label>
@@ -82,7 +83,7 @@
                                                         ResultSet rs1 = Dao.GetAll();
                                                         while (rs1.next()) {
                                                     %>
-                                                    <option value="<%=rs1.getInt("Category_ID")%>"><%=rs1.getString("Cat_Name")%></option>
+                                                    <option value="<%=rs1.getInt("CategoryID")%>"><%=rs1.getString("CatName")%></option>
                                                     <%
                                                         }
                                                     %>
@@ -96,15 +97,22 @@
                                                 <input type="text" class="form-control" name="txtProName" id="name">
                                                 <div class="error" id="ErrorProName"></div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-12 form-group">
+                                                    <label for="email" class="col-form-label">Price</label>
+                                                    <input type="text" class="form-control" name="txtPrice" id="price" >
+                                                    <div class="error" id="ErrorProPrice"></div>
+                                                </div>
+                                            </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="name" class="col-form-label">Brand</label>
-                                                <select name="slctBrand" id="brand" class="form-control"> 
+                                                <select name="selectBrand" id="brand" class="form-control"> 
                                                     <%
                                                         BrandDAO DaoB = new BrandDAO();
                                                         ResultSet rs = DaoB.GetAll();
                                                         while (rs.next()) {
                                                     %>
-                                                    <option value="<%=rs.getInt("Brand_ID")%>"><%=rs.getString("Brand_Name")%></option>
+                                                    <option value="<%=rs.getInt("BrandID")%>"><%=rs.getString("BrandName")%></option>
                                                     <%
                                                         }
                                                     %>
@@ -112,45 +120,54 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Price</label>
-                                                <input type="text" class="form-control" name="txtProPrice" id="price" >
-                                                <div class="error" id="ErrorProPrice"></div>
-                                            </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="name" class="col-form-label">Rating</label>
+                                            <select name="selectRatingID" id="rating" class="form-control"> 
+                                                <%
+                                                    RatingDAO DaoR = new RatingDAO();
+                                                    ResultSet rs2 = DaoR.GetAll();
+                                                    while (rs.next()) {
+                                                %>
+                                                <option value="<%=rs2.getInt("RatingID")%>"><%=rs.getInt("RateNumber")%></option>
+                                                <%
+                                                    }
+                                                %>
+                                            </select>
                                         </div>
 
+
                                         <div class="row">
                                             <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Size</label>
-                                                <input type="text" class="form-control" name="txtProSize" id="sizePro" >
-                                                <div class="error" id="ErrorProSize"></div>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Country</label>
-                                                <input type="text" class="form-control" name="txtProCountry" id="country" >
+                                                <label for="email" class="col-form-label">Product Des</label>
+                                                <input type="text" class="form-control" name="txtProductDes" id="productdes" >
                                                 <div class="error" id="ErrorProCountry"></div>
                                             </div>
-                                        </div>                               
-
-
-                                        <div class="row">
                                             <div class="col-md-12 form-group">
-                                                <label for="name" class="col-form-label">Status</label>
-                                                <select name="slctStatus" id="brand" class="form-control">
-                                                    <option value="Available" >Available</option>
-                                                    <option value="Pending" >Pending</option>
-                                                    <option value="Not_Available">Not_Available</option>
-                                                </select>
+                                                <label for="email" class="col-form-label">Quantity</label>
+                                                <input type="text" class="form-control" name="txtQuantity" id="quantity" >
+                                                <div class="error" id="ErrorProSize"></div>
                                             </div>
-                                        </div>
+
+                                        </div>                               
+                                           <div class="col-md-12 form-group">
+                                                <label for="email" class="col-form-label">Active</label>
+                                                <input type="text" class="form-control" name="txtActive" id="active" >
+                                                <div class="error" id="ErrorProSize"></div>
+                                            </div>
+                                          
+
+                                      
                                         <div class="row">
                                             <div class="col-md-12 form-group">
                                                 <label for="name" class="col-form-label">Product Image</label>
                                                 <input type="file"  id="ProImg" name="fileProImg" accept="image/png, image/jpeg" required />
                                             </div>
                                         </div>
+                                              <div class="col-md-12 form-group">
+                                                <label for="email" class="col-form-label">Size</label>
+                                                <input type="text" class="form-control" name="txtSize" id="size" >
+                                                <div class="error" id="ErrorProSize"></div>
+                                            </div> 
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <input type="submit" value="Submit" name="btnInsertPro" class="button-5 btn-block btn-primary rounded-0 py-2 px-4">

@@ -5,10 +5,17 @@
 package DAOs;
 
 import Models.tblProduct;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,76 +24,90 @@ import java.util.logging.Logger;
  * @author Kiet CHUA XONG NHAAAAAAAAA
  */
 public class ProductDAO {
-      private Connection conn;
+
+    private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
 
     public ProductDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-    
+
     public tblProduct getInfoForUpdating(int ID) {
         tblProduct pro = null;
         try {
-            ps = conn.prepareStatement("select * from Product\n"
-                    + "where Product_ID = ?;");
+            ps = conn.prepareStatement("select * from tblProduct\n"
+                    + "where ProductID = ?;");
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if (rs.next()) {
-//                pro = new tblProduct(rs.getInt("Product_ID"), rs.getInt("Catagory_ID"), rs.getString("P_Name"), rs.getString("P_Status"), rs.getString("P_Price"),
-//                        rs.getInt("Brand_ID"), rs.getString("P_Size"), rs.getString("P_Country"));
+                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"),
+                        rs.getString("ProductDes"), rs.getInt("Quantity"),
+                        rs.getByte("Active"), rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (Exception e) {
         }
         return pro;
     }
-      public int UpdateProduct(tblProduct pro) {
-        String a, b, c, d, e, f;
-//        int ID = pro.getProduct_ID();
-//        b = pro.getP_price();
-//        int Cat = pro.getCategory_ID();
-//        int rb = pro.getBrand_ID();
-//        int price = Integer.parseInt(b);
-//        a = pro.getP_name();
-//        c = pro.getP_availability();
-//        d = pro.getP_size();
-//        e = pro.getP_Country();
-        String sql = "Update Product set Product_ID = ?, Catagory_ID = ?, P_Name = ?, P_Status = ?, P_Price = ? ,Brand_ID = ?, P_Size = ?, P_Country = ? where Product_ID = ?";
+
+    public int UpdateProduct(tblProduct pro) {
+        String sql = "Update tblProduct set ProductID = ?, CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, RatingID = ?,"
+                + " ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, pro.getProduct_ID());
-//            ps.setInt(2, pro.getCategory_ID());
-//            ps.setString(3, pro.getP_name());
-//            ps.setString(4, pro.getP_availability());
-//            ps.setInt(5, price);
-//            ps.setInt(6, pro.getBrand_ID());
-//            ps.setString(7, pro.getP_size());
-//            ps.setString(8, pro.getP_Country());
-//            ps.setInt(9, pro.getProduct_ID());
+            ps.setInt(1, pro.getProductID());
+            ps.setInt(2, pro.getCategoryID());
+            ps.setString(3, pro.getProductName());
+            ps.setInt(4, pro.getPrice());
+            ps.setInt(5, pro.getBrandID());
+            ps.setInt(6, pro.getRatingID());
+            ps.setString(7, pro.getProductDes());
+            ps.setInt(8, pro.getQuantity());
+            ps.setInt(9, pro.getActive());
+            ps.setString(10, pro.getProductImageURL());
+            ps.setInt(11, pro.getSize());
             result = ps.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
-        
     }
-     public int Delete(int ID) {
+
+    public int Delete(int ID) {
         int ketqua = 0;
-        String sql = "delete from Product where Product_ID=?";
+        String sql = "delete from tblProduct where ProductID=?";
         try {
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, ID);
-//            String URL = GetImageURL(ID);
-//            DeleteImage(URL);
-//            DeleteImageDB(ID);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            String URL = GetImageURL(ID);
+            DeleteImage(URL);
+            DeleteImageDB(ID);
             ketqua = ps.executeUpdate();
         } catch (SQLException ex) {
         }
         return ketqua;
     }
-     
-        public String GetImageURL(int ID) {
+
+    //C:\SWP_PROJECT\SWP_FINAL\src\main\webapp\img
+    public void DeleteImage(String imgName) {
+        String HardPath = "C:\\SWP_PROJECT\\SWP_FINAL\\src\\main\\webapp";
+        Path imagesPath = Paths.get(HardPath + File.separator + imgName);
+
+        try {
+            Files.delete(imagesPath);
+            System.out.println("File "
+                    + imagesPath.toAbsolutePath().toString()
+                    + " successfully removed");
+        } catch (IOException e) {
+            System.err.println("Unable to delete "
+                    + imagesPath.toAbsolutePath().toString()
+                    + " due to...");
+            e.printStackTrace();
+        }
+    }
+
+    public String GetImageURL(int ID) {
         String sql = "Select Image_URL from Product_Image where Product_ID = ?";
         String URL = "";
         try {
@@ -101,8 +122,8 @@ public class ProductDAO {
         }
         return URL;
     }
-        
-         public int GetLastImageID() {
+
+    public int GetLastImageID() {
         String sql = " Select max(Image_ID) as highest from Product_Image";
         int digit = 0;
         String ID = null;
@@ -121,32 +142,40 @@ public class ProductDAO {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return digit;
-    }   
-         public int DeleteImageDB(int ID) {
+    }
+
+    public int DeleteImageDB(int ID) {
         int ketqua = 0;
-        String sql = "delete from Product_Image where Product_ID=?";
+        String sql = "delete from tblProduct where ProductID=? and ProductImageURL=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
+            // Đặt giá trị của ProductImageURL tại đây nếu bạn có thông tin này.
+            // Nếu không có thông tin, hãy bỏ qua phần này.
+            // ps.setString(2, "product_image_url_value");
+
             ketqua = ps.executeUpdate();
         } catch (SQLException ex) {
+            // Xử lý ngoại lệ, ví dụ: log lỗi.
         }
         return ketqua;
     }
 
     public int AddNew(tblProduct pro) {
-        String sql = "insert into Product values(?,?,?,?,?,?,?,?)";
+        String sql = "insert into tblProduct values(?,?,?,?,?,?,?,?,?,?)";
         int result = 0;
         try {
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, pro.getProduct_ID());
-//            ps.setInt(2, pro.getBrand_ID());
-//            ps.setInt(3, pro.getCategory_ID());
-//            ps.setString(4, pro.getP_name());
-//            ps.setString(5, pro.getP_availability());
-//            ps.setInt(6, Integer.parseInt(pro.getP_price()));
-//            ps.setString(7, pro.getP_size());
-//            ps.setString(8, pro.getP_Country());
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pro.getCategoryID());
+            ps.setString(2, pro.getProductName());
+            ps.setInt(3, pro.getPrice());
+            ps.setInt(4, pro.getBrandID());
+            ps.setInt(5, pro.getRatingID());
+            ps.setString(6, pro.getProductDes());
+            ps.setInt(7, pro.getQuantity());
+            ps.setInt(8, pro.getActive());
+            ps.setString(9, pro.getProductImageURL());
+            ps.setInt(10, pro.getSize());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
 
@@ -154,18 +183,42 @@ public class ProductDAO {
         return result;
     }
 
-    public int AddImage(tblProduct PImg) {
-        String sql = "insert into Product_Image values(?,?,?)";
-        int result = 0;
-        try {
-//            PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setInt(1, PImg.getImage_ID());
-//            ps.setInt(2, PImg.getProduct_ID());
-//            ps.setString(3, PImg.getImage_URL());
-            result = ps.executeUpdate();
-        } catch (SQLException ex) {
-
+  public List<tblProduct> getAllProduct(int ID) {
+    List<tblProduct> productList = new ArrayList<>();
+    String sql = "SELECT * FROM tblProduct";
+    try {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            tblProduct product = new tblProduct();
+            product.setProductID(rs.getInt("ProductID"));
+            product.setCategoryID(rs.getInt("CategoryID"));
+            product.setProductName(rs.getString("ProductName"));
+            product.setPrice(rs.getInt("Price"));
+            product.setBrandID(rs.getInt("BrandID"));
+            product.setRatingID(rs.getInt("RatingID"));
+            product.setProductDes(rs.getString("ProductDes"));
+            product.setQuantity(rs.getInt("Quantity"));
+            product.setActive(rs.getByte("Active"));
+            product.setProductImageURL(rs.getString("ProductImageURL"));
+            product.setSize(rs.getInt("Size"));
+            productList.add(product);
         }
-        return result;
+    } catch (SQLException ex) {
+        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return productList;
+}
+public ResultSet getAllProduct2(int ID) {
+    ResultSet rs = null;
+    String sql = "SELECT * FROM tblProduct";
+    try {
+        PreparedStatement ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+    } catch (SQLException ex) {
+        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return rs;
+}
+
 }

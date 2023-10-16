@@ -19,11 +19,12 @@ public class tblProduct {
     int Quantity;
     byte Active;
     String ProductImageURL;
+    int Size;
 
     public tblProduct() {
     }
 
-    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, int RatingID, String ProductDes, int Quantity, byte Active, String ProductImageURL) {
+    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, int RatingID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;
@@ -34,6 +35,7 @@ public class tblProduct {
         this.Quantity = Quantity;
         this.Active = Active;
         this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
     }
 
     public int getProductID() {
@@ -115,5 +117,15 @@ public class tblProduct {
     public void setProductImageURL(String ProductImageURL) {
         this.ProductImageURL = ProductImageURL;
     }
+
+    public int getSize() {
+        return Size;
+    }
+
+    public void setSize(int Size) {
+        this.Size = Size;
+    }
     
+
+  
 }

@@ -20,6 +20,7 @@ Models\tblRole.class
 DAOs\AccountDAO.class
 Controllers\AccountController.class
 Models\tblCart.class
+DAOs\RatingDAO.class
 DAOs\ProductDAO.class
 ForgotPassword\ForgotPassword.class
 Models\tblProduct.class

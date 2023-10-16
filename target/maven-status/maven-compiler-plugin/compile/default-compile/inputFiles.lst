@@ -1,33 +1,34 @@
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\ProductDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\AdminController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\BrandDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\ForgotPassword\ResetPassword.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\EncodeMD5\MD5.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\OrderDetailDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\OrderController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\ProductController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblOrder.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\OrderDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblFAQ.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\AccountController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\ForgotPassword\OTP.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblBrand.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\LoginController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblAddress.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblRating.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DatabaseConnection\DatabaseConnection.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblWishList.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\CartController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\CategoryDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblOrderDetail.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\CartDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblRateCart.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\DAOs\AccountDAO.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblOrderStatus.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblProduct.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Controllers\HomeController.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblCategory.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\ForgotPassword\ForgotPassword.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblRole.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblUser.java
-D:\FPT University\FA23\SWP\SWPMAIN\SWP_FINAL_2\src\main\java\Models\tblCart.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblRating.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\BrandDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\OrderController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblProduct.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\CategoryDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblCategory.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblOrder.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblRateCart.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\AdminController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblBrand.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\CartDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\RatingDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblOrderStatus.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblFAQ.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\CartController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblOrderDetail.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\OrderDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\EncodeMD5\MD5.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblRole.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblCart.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblUser.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\AccountDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\ForgotPassword\ForgotPassword.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\ProductController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\AccountController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\HomeController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DatabaseConnection\DatabaseConnection.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblWishList.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\ForgotPassword\ResetPassword.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Controllers\LoginController.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\ProductDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\DAOs\OrderDetailDAO.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\ForgotPassword\OTP.java
+C:\SWP_PROJECT\SWP_FINAL\src\main\java\Models\tblAddress.java

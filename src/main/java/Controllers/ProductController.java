@@ -151,19 +151,22 @@ public class ProductController extends HttpServlet {
 
         if (request.getParameter("btnUpdatePro") != null) {
             try {
-                int Product_ID = Integer.parseInt(request.getParameter("txtProID"));
-                int Category_ID = Integer.parseInt(request.getParameter("slctCatID"));
-                String P_name = request.getParameter("txtProName");
-                int Brand_ID = Integer.parseInt(request.getParameter("slctBrand"));
-                String P_price = request.getParameter("txtProPrice");
-                String P_size = request.getParameter("txtProSize");
-                String P_Status = request.getParameter("slctStatus");
-                String P_country = request.getParameter("txtProCountry");
-                tblProduct newPro = new tblProduct(); //EDIT TUANKIET
+                int ProductID = Integer.parseInt(request.getParameter("txtProductID"));
+                int CategoryID = Integer.parseInt(request.getParameter("selectCategoryID"));
+                String ProductName = request.getParameter("txtProductName");
+                int Price = Integer.parseInt(request.getParameter("txtPrice"));
+                int BrandID = Integer.parseInt(request.getParameter("selectBrand"));
+                int RatingID = Integer.parseInt(request.getParameter("selectRatingID"));
+                String ProductDes = request.getParameter("txtProductDes");
+                int Quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+                byte Active = (byte) Integer.parseInt(request.getParameter("txtActive"));
+                String ProductImageURL = request.getParameter("txtProductImageURL");
+                int Size = Integer.parseInt(request.getParameter("txtSize"));
+                tblProduct newPro = new tblProduct();
                 ProductDAO dao = new ProductDAO();
                 int result = dao.UpdateProduct(newPro);
                 if (result != 0) {
-                    response.sendRedirect("/Product/View/" + Category_ID);
+                    response.sendRedirect("/Product/View/" + CategoryID);
                 } else {
                     response.sendRedirect("/Product/Update/" + bruh);
                 }
@@ -174,24 +177,22 @@ public class ProductController extends HttpServlet {
         if (request.getParameter("btnInsertPro") != null) {
             try {
                 ProductDAO dao = new ProductDAO();
-                int Product_ID = Integer.parseInt(request.getParameter("txtProID"));
-                int Category_ID = Integer.parseInt(request.getParameter("slctCatID"));
-                String P_name = request.getParameter("txtProName");
-                int Brand_ID = Integer.parseInt(request.getParameter("slctBrand"));
-                String P_price = request.getParameter("txtProPrice");
-                String P_size = request.getParameter("txtProSize");
-                String P_Status = request.getParameter("slctStatus");
-                String P_country = request.getParameter("txtProCountry");
+                int ProductID = Integer.parseInt(request.getParameter("txtProductID"));
+                String ProductName = request.getParameter("txtProductName");
+                int Price = Integer.parseInt(request.getParameter("txtPrice"));
+                int BrandID = Integer.parseInt(request.getParameter("selectBrand"));
+                int CategoryID = Integer.parseInt(request.getParameter("selectCategoryID"));
+                int RatingID = Integer.parseInt(request.getParameter("selectRatingID"));
+                String ProductDes = request.getParameter("txtProductDes");
+                int Quantity = Integer.parseInt(request.getParameter("txtQuantity"));
+                byte Active = (byte) Integer.parseInt(request.getParameter("txtActive"));
                 String Image_URL = "Image\\" + (String) request.getAttribute("fileProImg");
-                tblProduct newPro = new tblProduct();//EDIT TUANKIET
-                int ImageID = dao.GetLastImageID();
-//                ProductImage newProImg = new ProductImage(ImageID, Product_ID, Image_URL);
+                int Size = Integer.parseInt(request.getParameter("txtSize"));
+                tblProduct newPro = new tblProduct(ProductID, ProductName, Price, BrandID, CategoryID, RatingID, ProductDes, Quantity, Active ,Image_URL , Size );//EDIT TUANKIET
                 int result1 = dao.AddNew(newPro);
-//                int result2 = dao.AddImage(newProImg);
-//                if (result1 != 0 && result2 != 0) {
-//                    response.sendRedirect("/Product/View/" + Category_ID);
-//                } else
-                {
+                if (result1 != 0 ) {
+                    response.sendRedirect("/Product/View/" + CategoryID);
+                } else {
                     response.sendRedirect("/Product/Create");
                 }
             } catch (Exception ex) {

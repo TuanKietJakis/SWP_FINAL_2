@@ -33,31 +33,25 @@
         <!-- SIDEBAR -->
         <%@include file="/JSP/SectionList.jsp" %>     
         <!-- SIDEBAR -->
-
-
-
         <!-- CONTENT -->
         <section id="content">
             <!-- MAIN -->
-            
             <main>
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
-                            <h3>Catagories Management</h3>
-                            
+                            <h3>Category Management</h3>
                         </div>
                         <div class="text-center">
-                                <a href="/Product/Create"class="button-5" role="button"><i class="fa-solid fa-plus"></i></a>
-                                <!-- HTML !-->
-                            </div>
+                            <a href="/Product/Create"class="button-5" role="button"><i class="fa-solid fa-plus"></i></a>
+                            <!-- HTML !-->
+                        </div>
                         <table id="example">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
-                                    <th>Strength</th>
-                                    <th>Lasting</th>
+                                    <th>Active</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -69,15 +63,15 @@
                                     while (rs.next()) {
                                 %>
                                 <tr>
-                                    <td> <%=rs.getInt("Category_ID")%></td>
-                                    <td> <%=rs.getString("Cat_name")%></td>
-                                    <td> <%=rs.getString("Cat_Strength")%></td>
-                                    <td> <%=rs.getString("Cat_Lasting")%></td>
+                                    <td> <%=rs.getInt("CategoryID")%></td>
+                                    <td> <%=rs.getString("CatName")%></td>
+                                    <td> <%=rs.getInt("Active")%></td>
+
                                     <td>
                                         <div> More Info</div>
                                     </td>
                                     <td>
-                                        <a href="/Product/View/<%=rs.getInt("Category_ID")%>">Show Product</a>
+                                        <a href="/Product/View/<%=rs.getInt("CategoryID")%>">Show Product</a>
                                     </td>
                                 </tr>
                                 <%
@@ -95,5 +89,4 @@
         <script src="<%= request.getContextPath()%>/JavaScript/script.js"></script>
         <script src="https://kit.fontawesome.com/53d8d93477.js" crossorigin="anonymous"></script>
     </body>
-</body>
 </html>

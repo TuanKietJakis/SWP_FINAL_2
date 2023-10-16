@@ -33,12 +33,9 @@
         <!-- SIDEBAR -->
         <<%@include file="/JSP/SectionList.jsp" %>  
         <!-- SIDEBAR -->
-
-
-
         <!-- CONTENT -->
         <section id="content">
-            
+
             <!-- MAIN -->
             <main>
                 <div class="table-data">
@@ -53,13 +50,15 @@
                         <table id="example">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Product ID</th>
+                                    <th>Product Name</th>
                                     <th>Price</th>
-                                    <th>Brand</th>
-                                    <th>Size</th>
-                                    <th>Country</th>
-                                    <th>Status</th>
+                                    <th>Brand ID</th>
+                                    <th>Rating ID</th>
+                                    <th>Product Description</th>
+                                    <th>Quantity</th>
+                                    <th>Active</th>
+                                    <th>ProductImageURL</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -67,22 +66,24 @@
                                 <%
                                     int infonum = (Integer) session.getAttribute("CategoryID");
                                     ProductDAO Dao = new ProductDAO();
-                                    ResultSet rs = Dao.GetAllBasedOnCatagory(infonum);
+                                    ResultSet rs = Dao.getAllProduct2(infonum);
                                     while (rs.next()) {
                                 %>
                                 <tr>
-                                    <td> <%=rs.getInt("Product_ID")%></td>
-                                    <td> <%=rs.getString("P_Name")%></td>
-                                    <td> <%=rs.getString("P_Price")%>$</td>
-                                    <td> <%=rs.getString("Brand_Name")%></td>
-                                    <td> <%=rs.getString("P_Size")%></td>
-                                    <td> <%=rs.getString("P_Country")%></td>
-                                    <td> <span class="status <%=rs.getString("P_Status")%>"><%=rs.getString("P_Status")%></span></td>
+                                    <td> <%=rs.getInt("ProductID")%></td>
+                                    <td> <%=rs.getString("ProductName")%></td>
+                                    <td> <%=rs.getInt("Price")%>$</td>
+                                    <td> <%=rs.getInt("BrandID")%></td>
+                                    <td> <%=rs.getInt("RatingID")%></td>
+                                    <td> <%=rs.getString("ProductDes")%></td>  
+                                    <td> <%=rs.getInt("Quantity")%></td>
+                                    <td> <%=rs.getInt("Active")%></td>
+                                    <td> <%=rs.getString("ProductImageURL")%></td>
                                     <td>
                                         <div class="text-center">
-                                            <a href="/Product/Update/<%=rs.getInt("Product_ID")%>"class="button-2" role="button"><i class="fa-solid fa-pen-nib"></i></a>
+                                            <a href="/Product/Update/<%=rs.getInt("ProductID")%>" class="button-2" role="button"><i class="fa-solid fa-pen-nib"></i></a>
                                             <!-- HTML !-->
-                                            <a onclick="return confirm('Confirm for deletion?');" href="/Product/Delete/<%=rs.getInt("Product_ID")%>"class="button-1" role="button"><i class="fa-solid fa-trash"></i></i></a>
+                                            <a onclick="return confirm('Confirm for deletion?');" href="/Product/Delete/<%=rs.getInt("ProductID")%>" class="button-1" role="button"><i class="fa-solid fa-trash"></i> </a>
                                         </div>
                                     </td>
                                 </tr>
@@ -102,5 +103,4 @@
         <script src="<%= request.getContextPath()%>/JavaScript/script.js"></script>
         <script src="https://kit.fontawesome.com/53d8d93477.js" crossorigin="anonymous"></script>
     </body>
-</body>
 </html>
