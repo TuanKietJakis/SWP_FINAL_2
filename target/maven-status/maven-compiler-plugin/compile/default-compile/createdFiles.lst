@@ -1,8 +1,11 @@
 DAOs\CategoryDAO.class
+Controllers\HomeController$1.class
+Controllers\ProfileController.class
 Models\tblFAQ.class
 Controllers\ProductController.class
 Models\tblWishList.class
 DAOs\OrderDAO.class
+Controllers\SignupController2.class
 Models\tblRateCart.class
 Controllers\LoginController.class
 Controllers\AdminController.class
@@ -27,9 +30,11 @@ Models\tblProduct.class
 Controllers\OrderController.class
 EncodeMD5\MD5.class
 Models\tblRating.class
+DAOs\FaQDAO.class
 Models\tblUser.class
 Models\tblAddress.class
 Models\tblOrderStatus.class
 Controllers\CartController.class
 Models\tblOrder.class
+Controllers\ShopController.class
 ForgotPassword\OTP.class

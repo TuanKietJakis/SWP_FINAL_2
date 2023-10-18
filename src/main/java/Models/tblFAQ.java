@@ -23,6 +23,11 @@ public class tblFAQ {
         this.Answer = Answer;
         this.Active = Active;
     }
+    
+    public tblFAQ (String Question, String Answer) {
+        this.Question = Question;
+        this.Answer = Answer;
+    }
 
     public int getFAQID() {
         return FAQID;

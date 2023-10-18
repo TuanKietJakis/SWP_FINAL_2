@@ -42,7 +42,7 @@
                         <a class="Forget_pass" href="/ForgotPassword">Forgot password?</a>
                     </div>
                     <div class="Create">
-                        <a class="create_account" href="#">Create an account</a>
+                        <a class="create_account" href="/SignUp">Create an account</a>
                         <ion-icon name="arrow-forward-outline"></ion-icon>
                     </div>
                 </form>

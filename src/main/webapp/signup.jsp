@@ -30,7 +30,7 @@
             <span id="close"><ion-icon  name="close-circle-outline"></ion-icon></span>
         </div>
         <div class="Sign up">
-            <form action="/SignupController2" id="form_sign up" method="POST">
+            <form action="/SignUp" id="form_sign up" method="POST">
                 <h1>Sign up</h1>
             <div class="Signup_quote"><text>Sign up to experience shopping features for you</text></div>
             <div class="input_box">
@@ -57,8 +57,8 @@
                 <div class="Login_button">
                     <input type="submit" value="Sign up" id="Login_btn">
                 </div>
-                <a class="Login_account" href="#">Already have an account?</a>
-                <a class="create_account" href="#">Login</a>
+                <p class="Login_account">Already have an account?</p>
+                <a class="create_account" href="/Login">Login</a>
                 <ion-icon name="arrow-forward-outline"></ion-icon>
             </div>
             </form>

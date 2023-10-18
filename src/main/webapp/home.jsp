@@ -376,7 +376,7 @@
                             <div class="pproduct_data_content">
                                 <div class="pproduct_data_des">
                                     <a href="#" class="pproduct_data_name"><%=rs2.getString("ProductName")%></a>
-                                    <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
+                                    <p class="pproduct_data_price">$<%=rs2.getInt("Price")%></p>
                                 </div>
                             </div>
                         </div>

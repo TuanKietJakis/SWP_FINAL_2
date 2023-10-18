@@ -60,7 +60,10 @@ public class SignupController2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String path = request.getRequestURI();
+        if(path.endsWith("/SignUp")){
+            request.getRequestDispatcher("/signup.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -94,7 +97,7 @@ public class SignupController2 extends HttpServlet {
 
             if (dao.checkUserNameIsExist(username)) {
                 request.setAttribute("Wrong", "Error! Username Already Exists!");
-                request.getRequestDispatcher("/JSP/Login/signup.jsp").forward(request, response);
+                request.getRequestDispatcher("/signup.jsp").forward(request, response);
 
             } else {
 
