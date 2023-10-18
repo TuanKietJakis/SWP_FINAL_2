@@ -102,14 +102,14 @@ public class LoginController extends HttpServlet {
                        }
                    }
                    
-                   String fullname = dao.GetFullName(us);
-                    int ID = dao.GetIDFromFullname(fullname);
+//                   String fullname = dao.GetFullName(us);
+                    int ID = dao.GetIDFromUsername(us);
                     if (isAdmin) { // Kiểm tra nếu là quản trị viên
-                        session.setAttribute("Adminstrator", fullname);
+                        session.setAttribute("Adminstrator", us);
                         session.setAttribute("AdminstratorID", ID);
                         response.sendRedirect("/Admin"); // Chuyển hướng đến trang "admin.jsp" P/S: thay doi
                     } else {
-                        session.setAttribute("Customer", fullname);
+                        session.setAttribute("Customer", us);
                         session.setAttribute("CustomerID", ID);
                         response.sendRedirect("/Home"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
                     }

@@ -4,8 +4,8 @@
  */
 package Controllers;
 
-import DAOs.CartDAO;
-import Models.tblProduct;
+import DAOs.AccountDAO;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author ddand
  */
-public class HomeController extends HttpServlet {
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet ProfileController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +60,11 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.endsWith("/Home") || path.endsWith("/Home/")) {
-            request.getRequestDispatcher("/home.jsp").forward(request, response);
-        }else{
-            if (path.endsWith("/AboutUs") || path.endsWith("/AboutUs/")) {
-                        request.getRequestDispatcher("/AbouUs.jsp").forward(request, response);
-            }
+         if (path.endsWith("/Profile/Update")) {
+            HttpSession session = request.getSession();
+            int id = (int) session.getAttribute("CustomerID");
+            request.setAttribute("rs", id);
+            request.getRequestDispatcher("/ProfileUpdate.jsp").forward(request, response);
         }
     }
 
@@ -80,36 +79,24 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("addtoCart".equals(action)) {
-            int UserID = Integer.parseInt(request.getParameter("UserID"));
-            if (UserID != 0) {
-                int ProductID = Integer.parseInt(request.getParameter("ProductID"));
-                CartDAO addDAO = null;
-                tblProduct pro = new tblProduct();
-                try {
-                    addDAO = new CartDAO();
-                } catch (Exception ex) {
-                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                pro = addDAO.getProductforAdd(ProductID);
-                int kq = addDAO.AddNewCart(UserID, pro);
-                if (kq != 0) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá thành công.\"}");
-                    out.flush();
-                } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá that bai.\"}");
-                    out.flush();
-                }
-            }else{
-                response.sendRedirect("/Login");
+        AccountDAO accDAO;
+        try {
+            accDAO = new AccountDAO();
+            String btnUpdate = request.getParameter("btnUpdate");
+            if (btnUpdate != null && btnUpdate.equals("Update")) {
+                String fullname = request.getParameter("Fullname");
+                String username = request.getParameter("Username");
+                String dob = request.getParameter("DoB");
+                String gender = request.getParameter("Gender");
+                String phone = request.getParameter("Mobile_Number");
+                String email = request.getParameter("Email");
+                String address = request.getParameter("Address");
+                int userID = Integer.parseInt(request.getParameter("hiddenID"));
+                int kq = accDAO.UpdateAccount(fullname, username, dob, gender, phone, email, address, userID);
+                response.sendRedirect("/Account/Update");
             }
+        } catch (Exception ex) {
+            Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -10,48 +10,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/docs_src/assets/vendors/jquery.min.js"></script>
-        <script src="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/docs/assets/owlcarousel/owl.carousel.min.js"></script>
-        <link rel="stylesheet" href="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css"/>
-        <link rel="stylesheet" href="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css"/>
+
+        <link rel="stylesheet" href="/js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css"/>
+        <link rel="stylesheet" href="/js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css"/>
+        <!--        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">-->
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="/CSS/detailProduct.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Product's Detail</title>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
-        <!--        <script src="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/docs_src/assets/vendors/jquery.min.js"></script>
-                <script src="js/OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/docs/assets/owlcarousel/owl.carousel.min.js"></script>-->
-        <script>
-            $(document).ready(function () {
-                $('#example').DataTable();
-            });
-        </script>
-
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"/>
-        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="CSS/detailProduct.css"/>
     </head>    
     <body>
-        <header>
-            <div class="taskbar">
-                <div class="logo"> <img src="img/Logo_img.png" alt=""></div>
 
-                <div class="taskbar_link">
-                    <a href="http://">Home</a>
-                    <a href="http://">Shop Online</a>
-                    <a href="http://">What's New</a>
-                    <a href="http://">Contact</a>
-                    <a chref="http://">About us</a>
-                </div>
-
-                <div class="taskbar_logo"><a href="http://"><img width="38px" height="37px" src="img/logoSearch.png" alt=""></a>
-                    <a href="http://"><img width="38px" height="37px" src="img/logoStore.png" alt=""></a>
-                </div>
-
-                <div class="account">LHAnh <img src="img/logo3.png" width="30px" height="30px" alt=""></div>
-            </div>
-        </header
+        <%
+            System.out.println(session.getAttribute("CustomerID"));
+            int ID = 0;
+            if (session.getAttribute("CustomerID") != null) {
+                ID = (int) session.getAttribute("CustomerID");
+            }
+        %>
+        <jsp:include page="header.jsp">
+            <jsp:param name="ID" value="<%=ID%>"/>
+        </jsp:include>
 
         <!--Product's Detail-->
         <div class="container">
@@ -112,30 +92,38 @@
                         <div class="detail_2" style="margin-top: 99px" >
                             <input class="category" type="button"  value="Category: eau de perfume">
                         </div>
-                        <h6>Retated Products</h6>
 
+                        <!--/* ================= Retated Product=================== */-->
 
-
-                        <section class="pproduct_section section">
+                        <section class="pproduct_section section maylike_section col-12">
                             <div class="pproduct_container container ">
-                                <!--<h1 class="pproduct_title relate_title">Relate Product</h1>-->
-                                <div class="owl-carousel owl-theme  owl-loaded retatedProduct_container"> 
-                                    <div class="row">
-                                        <% while (rs.next()) {%>
-
-                                        <div class="col-md-3">
-                                            <div class="item">
-                                                <img src="<%= rs.getString("ProductImageURL")%>" class="card-img" alt="Product Image">
-                                                <span id="addToCart">Add to cart</span>
-                                                <div class="card-body">
-                                                    <h5 class="card-name"><%= rs.getString("ProductName")%></h5>
-                                                    <p class="card-price"><%= rs.getString("Price")%></p>
+                                <h6 class="pproduct_title">Retated Products</h6>
+                                <div class="owl-carousel owl-theme mayLike_container">
+                                    <!-- ================ Card 1 -->
+                                    <% while (rs.next()) {%>
+                                    <div class="pproduct_card item">
+                                        <div class="pproduct_data_img">
+                                            <button onclick="location.href = '#'"><img src="<%=rs.getString("ProductImageURL")%>" alt=""></button>
+                                            <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
+                                                <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
+                                            </form>
+                                            <form class="pproduct_addCart">
+                                                <div class="input_flip">
+                                                    <input type="submit" class="pproduct_addCart_btn" value="Add to cart">
+                                                    <div class="input_back">
+                                                        <i class="fa-solid fa-check"></i>
+                                                    </div>
                                                 </div>
+                                            </form>
+                                        </div>
+                                        <div class="pproduct_data_content">
+                                            <div class="pproduct_data_des">
+                                                <a href="#" class="pproduct_data_name"><%= rs.getString("ProductName")%></a>
+                                                <p class="pproduct_data_price"><%= rs.getString("Price")%></p>
                                             </div>
                                         </div>
-
-                                        <%}%>
                                     </div>
+                                    <%}%>
                                 </div>
                             </div>
                         </section>
@@ -154,68 +142,14 @@
                         </script>
                     </div>
                 </div>
-
-                <footer>
-                    <div>
-                        <div>
-                            <div style="width: 100px; height: 93px; padding-top: 76px;"> <img src="img/Logo_footer.png" alt=""></div>
-                            <div style="width: 262px; height: 57px;color: #0D0D0D;
-                                 font-family: Inter;
-                                 font-size: 16px;
-                                 font-style: normal;
-                                 font-weight: 400;
-                                 line-height: normal; padding-top: 70px; margin-left: 30px;padding-bottom: 187px;">Lorem Ipsum is simply dummy text <br> of the printing and typesetting <br> industry.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style="padding-top: 82px; margin-left: 50px;">
-                        <span style="color: #FF9C00;
-                              font-family: Inter;
-                              font-size: 18px;
-                              font-style: normal;
-                              font-weight: 700;
-                              line-height: normal; ;">Pages</span> <br> <br>
-                        Home <br>
-                        Shop Online <br>
-                        Contact Us <br>
-                        About us <br>
-                        What's New <br>
-                        Most Popular 
-                    </div>
-
-                    <div style="padding-top: 82px; margin-left: 70px;">
-                        <span style="color: #FF9C00;
-                              font-family: Inter;
-                              font-size: 18px;
-                              font-style: normal;
-                              font-weight: 700;
-                              line-height: normal; ;">Categories</span> <br> <br>
-                        Category 1 <br>
-                        Category 2 <br>
-                        Category 3 <br>
-                        Category 4 <br>
-                        Category 5 <br>
-                        Category 6 
-                    </div>
-
-                    <div style="padding-top: 82px; margin-left: 60px;">
-                        <span style="font-family: Poppins;
-                              font-size: 20px;
-                              font-style: normal;
-                              font-weight: 500;
-                              line-height: 124.5%; /* 24.9px */
-                              letter-spacing: 0.1px; color: #5e6282;">Discover our fanpage</span> <br>
-                        <span> <img src="img/logoFooter.png" alt=""></span> <br>
-                        <span>hoanganhle0203@gmail.com <br> +011 2 345 678 </span>
-                    </div>
-
             </div>
-        </footer>
+        </div>
 
-        <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
-        <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-        <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="js/btnDes_Rev.js"></script>
-</body>
+        <jsp:include page="Footer.jsp"></jsp:include>
+
+        <script src="/js/DangScript/jquery.min.js"></script>
+        <script src="/CSS/DangStyles/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
+        <script src="/js/btnDes_Rev.js"></script>
+    </body>
 </html>

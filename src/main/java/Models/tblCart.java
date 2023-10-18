@@ -99,6 +99,15 @@ public class tblCart {
         this.ProductAmount = ProductAmount;
         this.Quantity = Quantity;
     }
+
+    public tblCart(int UserID, int ProductID, String ProductName, int ProductPrice, int ProductAmount, String ProductImageURL) {
+        this.UserID = UserID;
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.ProductPrice = ProductPrice;
+        this.ProductAmount = ProductAmount;
+        this.ProductImageURL = ProductImageURL;
+    }
     
 
     public tblCart() {

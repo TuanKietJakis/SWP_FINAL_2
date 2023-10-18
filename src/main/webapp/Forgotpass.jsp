@@ -22,7 +22,7 @@
                 <form action="/ForgotPassword" method="post" id="form_forgot" class="Forgotpassword_form">
                     <h1 class="Forgotpassword_tittle">Email Address</h1>
                     <div class="question_password">
-                        <img src="img/exept-vector 1.png" alt="question_password">               
+                        <img src="img/z4788171952368_947625e8cb4ceb0ff129811c1775c202.jpg" alt="question_password">               
                     </div>
                     <text>Please tell us your email address</text>
                     <div class="input_box">

@@ -43,7 +43,18 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>Controllers.HomeController</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>ShopController</servlet-name>
+        <servlet-class>Controllers.ShopController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignupController2</servlet-name>
+        <servlet-class>Controllers.SignupController2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileController</servlet-name>
+        <servlet-class>Controllers.ProfileController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -93,7 +104,18 @@
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>ShopController</servlet-name>
+        <url-pattern>/Shop/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupController2</servlet-name>
+        <url-pattern>/SignupController2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileController</servlet-name>
+        <url-pattern>/Profile/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

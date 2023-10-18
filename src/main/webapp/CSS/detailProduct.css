@@ -5,74 +5,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
  
     Created on : Oct 7, 2023, 2:07:07 PM
     Author     : ADMIN*/
-/*@import url('BaseStyle.css');
-@import url('Header.css');
-@import url('Footer.css');*/
+@import url('DangStyles/BaseStyle.css');
+@import url('DangStyles/Header.css');
+@import url('DangStyles/Footer.css');
 
-.taskbar {
-    padding-left: 164px;
-    display: flex;
-    justify-content: space-between;
-}
-
-a {
-    width: 40px;
-    height: 17px;
-    padding-top: 30px;
-    padding-right: 57px;
-    padding-bottom: 30px;
-    color: #000;
-    text-align: center;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-decoration: none;
-}
-
-.about {
-    padding-right: -100px;
-}
-
-.taskbar_link {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
-.taskbar_logo {
-    display: flex;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.logo {
-    padding-left: 60px;
-    padding-top: 12px;
-}
-
-.account {
-    margin-top: 14px;
-    margin-right: 166px;
-    width: 145px;
-    height: 48px;
-    flex-shrink: 0;
-    border-radius: 100px;
-    background: #C0B8EA;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-footer{
-    display: flex;
-    padding-left: 164px;
+body{
+    background: #FFF;
 }
 
 #card-name{
@@ -300,11 +238,16 @@ h6{
     display: none;
     border: 1px solid black;
     border-radius: 30px 30px 30px 30px;
-    width: 108px;
-    height: 32px;
-    text-align: center;
-    align-self: center;
-    padding-right: 20px
+    width: 180px;
+    height: 64px;
+    padding: 10px 20px 10px 20px;
+        text-align: center;
+    color: #000;
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
 }
 
 .card-img{
@@ -313,7 +256,58 @@ h6{
         text-align: center;
 }
 
-/*====================================================*/
+
+/* ================= Retated Product =================== */
+.pproduct_data_img:hover {
+/*    & img {
+        transition: 0.3s ease-in;
+        transform: scale(1.1);
+    }*/
+
+    & .pproduct_wishlist_ico {
+        right: .5rem;
+    }
+
+    & .input_flip {
+        bottom: 1.25rem;
+        border-radius: 100px;
+        /* transition: transform 0.5s; */
+            cursor: pointer;
+        transform-style: preserve-3d;
+    }
+}
+
+.input_checkAdd {
+    transform: rotateX(-180deg);
+}
+
+.pproduct_getmore {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto .5rem;
+
+    & button {
+        background: #fff;
+        color: #ad9ff4;
+        border: 1px solid #ad9ff4;
+        padding: .5rem 1.25rem;
+        border-radius: 32px;
+        transition: 0.3s;
+
+        &:hover {
+            background: #ad9ff4;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+    }
+}
+
+
+.maylike_section {
+    padding: 0rem 0 2rem;
+}
 
 .pproduct_title {
     font-size: 24px;
@@ -328,13 +322,17 @@ h6{
 
 .pproduct_data_img {
     position: relative;
-    max-width: 265px;
-    max-height: 265px;
+    width: 265px;
+    height: 265px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: .875rem;
+    background-color: white;
 
     & img {
+        background: #FFF;
+        width: 265px;
+    height: 265px;
         object-fit: cover;
         object-position: center;
     }
@@ -468,7 +466,7 @@ h6{
         bottom: 1.25rem;
         border-radius: 100px;
         /* transition: transform 0.5s; */
-            cursor: pointer;
+        cursor: pointer;
         transform-style: preserve-3d;
     }
 }
@@ -499,5 +497,3 @@ h6{
         }
     }
 }
-
-

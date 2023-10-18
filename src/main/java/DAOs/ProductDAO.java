@@ -48,8 +48,8 @@ public class ProductDAO {
     public tblProduct getInfoForUpdating(int ID) {
         tblProduct pro = null;
         try {
-            ps = conn.prepareStatement("select * from Product\n"
-                    + "where Product_ID = ?;");
+            ps = conn.prepareStatement("select * from tblProduct\n"
+                    + "where ProductID = ?;");
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if (rs.next()) {

@@ -4,8 +4,7 @@
  */
 package Controllers;
 
-import DAOs.CartDAO;
-import Models.tblProduct;
+import DAOs.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,9 +16,11 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ddand
+ * @author Kiet
  */
-public class HomeController extends HttpServlet {
+public class SignupController2 extends HttpServlet {
+
+    private AccountDAO accountDAO;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class HomeController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");
+            out.println("<title>Servlet SignupController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SignupController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,14 +60,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getRequestURI();
-        if (path.endsWith("/Home") || path.endsWith("/Home/")) {
-            request.getRequestDispatcher("/home.jsp").forward(request, response);
-        }else{
-            if (path.endsWith("/AboutUs") || path.endsWith("/AboutUs/")) {
-                        request.getRequestDispatcher("/AbouUs.jsp").forward(request, response);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -78,38 +72,39 @@ public class HomeController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+    public void init() throws jakarta.servlet.ServletException {
+        super.init();
+        try {
+            // Khởi tạo AccountDAO trong phương thức init()
+            accountDAO = new AccountDAO(); // Đảm bảo đã khởi tạo đối tượng AccountDAO trước khi sử dụng
+        } catch (Exception ex) {
+            Logger.getLogger(SignupController2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-        if ("addtoCart".equals(action)) {
-            int UserID = Integer.parseInt(request.getParameter("UserID"));
-            if (UserID != 0) {
-                int ProductID = Integer.parseInt(request.getParameter("ProductID"));
-                CartDAO addDAO = null;
-                tblProduct pro = new tblProduct();
-                try {
-                    addDAO = new CartDAO();
-                } catch (Exception ex) {
-                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                pro = addDAO.getProductforAdd(ProductID);
-                int kq = addDAO.AddNewCart(UserID, pro);
-                if (kq != 0) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá thành công.\"}");
-                    out.flush();
-                } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá that bai.\"}");
-                    out.flush();
-                }
-            }else{
+
+        try {
+            String username = request.getParameter("txtUsername");
+            String email = request.getParameter("txtEmail");
+            String password = request.getParameter("txtPassWord");
+            AccountDAO dao = new AccountDAO();
+
+            if (dao.checkUserNameIsExist(username)) {
+                request.setAttribute("Wrong", "Error! Username Already Exists!");
+                request.getRequestDispatcher("/JSP/Login/signup.jsp").forward(request, response);
+
+            } else {
+
+                //"16","Kiet2","user6","123","0797119869","onie.mann@hotmail.com ","abc","0","Female","1992-07-06"
+                accountDAO.signup(username, password, email, "null", "null", "null", "null", 1,1);
                 response.sendRedirect("/Login");
             }
+
+        } catch (Exception ex) {
+            Logger.getLogger(SignupController2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

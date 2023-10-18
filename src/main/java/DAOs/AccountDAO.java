@@ -49,12 +49,12 @@ public class AccountDAO {
         }
         return null;
     }
+
     /**
      *
-     * @param 
-     * @return
+     * @param @return
      */
-   public int UpdateAccount(String Fullname, String Username, String Mobile_Number, String Email, String Address, String Gender, Date date, int Account_ID) {
+    public int UpdateAccount(String Fullname, String Username, String Mobile_Number, String Email, String Address, String Gender, Date date, int Account_ID) {
         int kq = 0;
         String sql = "UPDATE tblUser\n"
                 + "SET  Fullname = ?, Username = ?, Mobile_Number = ?,\n"
@@ -75,6 +75,7 @@ public class AccountDAO {
         }
         return kq;
     }
+
     /**
      *
      * @param ID
@@ -110,6 +111,7 @@ public class AccountDAO {
         }
         return result;
     }
+
     /**
      * Get Account where that Account is not Admin
      *
@@ -262,19 +264,20 @@ public class AccountDAO {
         }
         return result;
     }
+
     /**
      * Get ID of Account from it fullname
      *
      * @param Fullname
      * @return
      */
-    public int GetIDFromFullname(String Fullname) {
+    public int GetIDFromUsername(String Username) {
         int ID = 0;
         String sql = "select UserID from tblUser\n"
-                + "where Fullname = ?;";
+                + "where Username = ?;";
         try {
             ps = conn.prepareStatement(sql);
-            ps.setString(1, Fullname);
+            ps.setString(1, Username);
             rs = ps.executeQuery();
             if (rs.next()) {
                 ID = rs.getInt("UserID");
@@ -283,6 +286,7 @@ public class AccountDAO {
         }
         return ID;
     }
+
     public tblUser GetCartByUserID(int ID) {
         tblUser us = new tblUser();
         try {
@@ -290,7 +294,7 @@ public class AccountDAO {
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if (rs.next()) {
-                us = new tblUser(rs.getInt("UserID") , rs.getString("Username"), rs.getString("Email"), rs.getString("FullName"), rs.getString("Gender"), rs.getString("PhoneNumber") , rs.getString("Address")) ;
+                us = new tblUser(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Email"), rs.getString("FullName"), rs.getString("Gender"), rs.getString("PhoneNumber"), rs.getString("Address"));
             }
 
         } catch (SQLException ex) {
@@ -298,6 +302,7 @@ public class AccountDAO {
         }
         return us;
     }
+
     public boolean checkEmail(String email) {
         String query = "SELECT COUNT(*) FROM tblUser WHERE Email = ?";
         try {
@@ -348,4 +353,148 @@ public class AccountDAO {
         return null;
 
     }
+
+    public String GetMaxAccountID() {
+        String maxID = "";
+
+        try {
+            ps = conn.prepareStatement("SELECT MAX(Account_ID) AS MaxID FROM Account");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                maxID = rs.getString("MaxID");
+            }
+        } catch (SQLException ex) {
+
+        }
+        return maxID;
+    }
+
+    public boolean checkUserNameIsExist(String username) {
+        try {
+            ps = conn.prepareStatement("SELECT UserID FROM tblUser WHERE Username = ?");
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            return rs.next(); // Return true if there is a result, indicating the username already exists
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+//    public boolean checkFullnameIsExist(String username) {
+//        try {
+//            ps = conn.prepareStatement("SELECT UserID FROM tblUser WHERE Fullname = ?");
+//            ps.setString(1, username);
+//            rs = ps.executeQuery();
+//            return rs.next(); // Return true if there is a result, indicating the username already exists
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        } finally {
+//            try {
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//            } catch (SQLException e) {
+//                System.out.println(e);
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        return false;
+//    }
+//    public static void main(String[] args) throws Exception {
+//        AccountDAO acc = new AccountDAO();
+//        acc.signup("15", "vy", "vy123", "1", "0123456789", "vy@gmail.com", "abv", "0", "0", "1992-07-06");
+//        System.out.println("Add thanh cong ");
+//    }
+    public void signup(
+            String UserName,
+            String Password,
+            String Email,
+            String FullName,
+            String Gender,
+            String DOB,
+            String PhoneNumber,
+            int RoleID,
+            int Active
+    
+        ) {
+
+        try {
+            ps = conn.prepareStatement("INSERT INTO tblUser VALUES (?,?,?,?,?,?,?,?,?)");
+
+            ps.setString(1, UserName);
+            ps.setString(2, EncodeMD5.MD5.encode(Password));
+            ps.setString(3, Email);
+            ps.setString(4, FullName);
+            ps.setString(5, Gender);
+            ps.setString(6, DOB);
+            ps.setString(7, PhoneNumber);
+            ps.setInt(8, RoleID);
+            ps.setInt(9, Active);
+            ps.executeUpdate();
+        } catch (Exception e) {
+
+            System.out.println(e);
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+                throw new RuntimeException(e);
+
+            }
+        }
+    }
+     public int UpdateAccount(String fullname, String username, String dob, String gender, String phone, String email, String address, int UserID) {
+        int kq = 0;
+        String sql1 = "update tblUser set FullName=?, Username=?,  DOB=?, Gender=?, PhoneNumber=?, Email=? where UserID=?;"
+                + "update tblAddress set [Address]=? where UserID=?";
+        try {
+            ps = conn.prepareStatement(sql1);
+            ps.setString(1, fullname);
+            ps.setString(2, username);
+            ps.setString(3, dob);
+            ps.setString(4, gender);
+            ps.setString(5, phone);
+            ps.setString(6, email);
+            ps.setInt(7, UserID);
+            ps.setString(8, address);
+            ps.setInt(9, UserID);
+            kq = ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kq;
+    }
 }
+

@@ -1,91 +1,214 @@
+@import url('DangStyles/BaseStyle.css');
+@import url('DangStyles/Header.css');
+@import url('DangStyles/Footer.css');
 
-            .taskbar {
-                padding-left: 164px;
-                display: flex;
-                justify-content: space-between;
-            }
+body{
+    background: white
+}
+.image2 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-            a {
-                width: 40px;
-                height: 17px;
-                padding-top: 30px;
-                padding-right: 57px;
-                padding-bottom: 30px;
-                color: #000;
-                text-align: center;
-                font-family: Inter;
-                font-size: 14px;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                text-decoration: none;
-            }
+.sentence {
+    display: flex;
+    margin-right: 500px;
+    margin-bottom: 100px;
+}
 
-            .about {
-                padding-right: -100px;
-            }
+.explore {
+    width: 142px;
+    height: 45px;
+    border-radius: 100px;
+    background: #C0B8EA;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-right: 800px ;
+    margin-top: 50px;
+}
 
-            .taskbar_link {
-                display: flex;
-                justify-content: center;
-                gap: 30px;
-                margin-left: 20px;
-                margin-right: 20px;
-            }
 
-            .taskbar_logo {
-                display: flex;
-                justify-content: center;
-                flex-shrink: 0;
-            }
+.pproduct_data_img {
+    position: relative;
+    width: 265px;
+    height: 265px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: .875rem;
+    background-color: white;
 
-            .logo {
-                padding-left: 60px;
-                padding-top: 12px;
-            }
+    & img {
+       background: #FFF;
+        width: 260px;
+        height: 260px;
+        object-fit: cover;
+        object-position: center;
+    }
 
-            .account {
-                margin-top: 14px;
-                margin-right: 166px;
-                width: 145px;
-                height: 48px;
-                flex-shrink: 0;
-                border-radius: 100px;
-                background: #C0B8EA;
-                box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
-                text-align: center;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 20px;
-            }
+    &::before {
+        content: '';
+        position: absolute;
+        background: #d9d9d9;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.2;
+    }
+    
+    &:hover {
+        box-shadow: 5px 5px 10px gray;
+    }
+}
 
-            .image2 {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
+.pproduct_data_name {
+    font-family: var(--body-font);
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s;
 
-            .sentence {
-                display: flex;
-                margin-right: 500px;
-                margin-bottom: 100px;
-            }
+    &:hover {
+        color: rgba(238, 42, 123, 1);
+    }
+}
 
-            .explore {
-                width: 142px;
-                height: 45px;
-                border-radius: 100px;
-                background: #C0B8EA;
-                position: relative;
-                display: flex;
-                justify-content: center;
-                margin-right: 800px ;
-                margin-top: 50px;
-            }
+.pproduct_data_price {
+    margin-top: .5rem;
+    font-size: 16px;
+    font-weight: 500;
+}
 
-            footer{
-                display: flex;
-                padding-left: 164px;
-            }
+.pproduct_wishlist_ico,
+.pproduct_addCart {
+    position: absolute;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.pproduct_wishlist_ico {
+    right: -5rem;
+    top: .5rem;
+    transition: 0.3s;
+
+    & button {
+        line-height: 100%;
+        padding: 5px;
+        background: #fff;
+        border-radius: 100px;
+        box-shadow: 0 2px 4px rgba(1, 1, 1, 0.25);
+    }
+}
+
+.p_w_ico_animate .i-color {
+    animation-name: bounceIn;
+    animation-duration: 0.3s;
+
+    & i {
+        font-weight: 600;
+        color: #ff3f66;
+    }
+}
+
+.pproduct_addCart {
+    width: 100%;
+    bottom: 0;
+
+    & .pproduct_addCart_btn {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #fff;
+        padding: .5rem 1.25rem;
+        border-radius: 100px;
+        cursor: pointer;
+        box-shadow: 0px 2px 4px rgba(1, 1, 1, 0.1);
+        backface-visibility: hidden;
+        transition: 0.3s;
+
+        &:hover {
+            background: #fe71b0;
+            color: #fff;
+        }
+    }
+
+    .input_flip {
+        position: absolute;
+        transition: 0.3s;
+        bottom: -5rem;
+        left: 4.75rem;
+        width: 108px;
+        height: 32px;
+        transition: 0.3s, tranform 0.5s ease-out;
+    }
+
+    .input_back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transform: rotateX(180deg);
+        background-color: #5fea61;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        overflow: hidden;
+        backface-visibility: hidden;
+        box-shadow: 0 2px 4px rgba(1, 1, 1, 0.1);
+    }
+
+}
+
+.pproduct_data_img:hover {
+    & img {
+        transition: 0.3s ease-in;
+        transform: scale(1.1);
+    }
+
+    & .pproduct_wishlist_ico {
+        right: .5rem;
+    }
+
+    & .input_flip {
+        bottom: 1.25rem;
+        border-radius: 100px;
+        /* transition: transform 0.5s; */
+        cursor: pointer;
+        transform-style: preserve-3d;
+    }
+}
+
+.input_checkAdd {
+    transform: rotateX(-180deg);
+}
+
+.pproduct_getmore {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem auto .5rem;
+
+    & button {
+        background: #fff;
+        color: #ad9ff4;
+        border: 1px solid #ad9ff4;
+        padding: .5rem 1.25rem;
+        border-radius: 32px;
+        transition: 0.3s;
+
+        &:hover {
+            background: #ad9ff4;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+    }
+}

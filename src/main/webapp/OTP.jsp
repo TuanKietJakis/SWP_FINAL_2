@@ -41,7 +41,7 @@
         <div class="section section_2">
             <div class="banner">
                 <div class="banner_image">
-                    <img src="img/Rectangle 188.png" alt="" />
+                    <img src="/img/Rectangle 188.png" alt="" />
                 </div>
                 <div class="banner_text">
                     <text>Fragrance can create better opportunities</text>

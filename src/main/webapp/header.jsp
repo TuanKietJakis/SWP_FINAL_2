@@ -18,11 +18,11 @@
         <a href="/Home/" class="nav_logo"><img src="/img/Logo_img.png" alt=""></a>
         <div class="nav_menu">
             <ul class="nav_list">
-                <li class="nav_item"><a href="/Home/" class="nav_item_link">Home</a></li>
-                <li class="nav_item"><a href="/Shop/" class="nav_item_link">Shop online</a></li>
-                <li class="nav_item"><a href="/News/" class="nav_item_link">What's new</a></li>
-                <li class="nav_item"><a href="/Contact/" class="nav_item_link">Contact</a></li>
-                <li class="nav_item"><a href="/AboutUs/" class="nav_item_link">About us</a></li>
+                <li class="nav_item"><a href="/Home" class="nav_item_link">Home</a></li>
+                <li class="nav_item"><a href="/Shop" class="nav_item_link">Shop online</a></li>
+                <li class="nav_item"><a href="/News" class="nav_item_link">What's new</a></li>
+                <li class="nav_item"><a href="/Contact" class="nav_item_link">Contact</a></li>
+                <li class="nav_item"><a href="/AboutUs" class="nav_item_link">About us</a></li>
             </ul>
             <div class="nav_acc">
                 <div>
@@ -65,5 +65,5 @@
             </div>
         </div>
     </nav>
-    <script src="js/DangScript/Header.js"></script>
+    <script src="/js/DangScript/Header.js"></script>
 </header>
