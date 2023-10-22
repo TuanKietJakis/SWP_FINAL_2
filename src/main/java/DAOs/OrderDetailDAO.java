@@ -4,6 +4,8 @@
  */
 package DAOs;
 
+import Models.tblCart;
+import Models.tblOrder;
 import Models.tblOrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +17,7 @@ import java.sql.SQLException;
  * @author Kiet
  */
 public class OrderDetailDAO {
-    
+
     private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -23,7 +25,7 @@ public class OrderDetailDAO {
     public OrderDetailDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-    
+
     public int InsertIntoOrderDetail(tblOrderDetail detail) {
         String sql = "insert into Order_Details\n"
                 + "VALUES (?,?,?,?,?,?); ";
@@ -42,7 +44,8 @@ public class OrderDetailDAO {
         }
         return result;
     }
- public ResultSet getOrderDetailFromOrderID(int Order_ID) {
+
+    public ResultSet getOrderDetailFromOrderID(int Order_ID) {
         String sql = "select * from Order_Details\n"
                 + "where Order_ID = ?;";
         try {
@@ -53,5 +56,22 @@ public class OrderDetailDAO {
         } catch (SQLException e) {
         }
         return null;
+    }
+    
+    public int AddOrderDetail(tblCart item, int OrderID){
+        String sql = "insert into tblOrderDetail values(?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            ps.setInt(2, item.getProductID());
+            ps.setInt(3, item.getProductPrice());
+            ps.setInt(4, item.getProductAmount());
+            ps.setInt(5, 1);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
     }
 }

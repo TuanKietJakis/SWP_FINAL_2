@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cart Page</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="/CSS/CartStyles.css">
+        <link rel="stylesheet" href="/CSS/DangStyles/CartStyles.css">
     </head>
 
     <body>
@@ -52,12 +52,12 @@
                             ResultSet rs = dao.ShowCartByID(us.getUserID());
                             if (!rs.next()) {
                         %>
-                        <P style="width:100%;text-align: center;padding: 1rem 0;">Không có sản phẩm trong giỏ</p>
+                        <P style="width:100%;text-align: center;padding: 1rem 0;">Please fill your cart with Fragrances</p>
                             <%
                             } else {
                                 countProduct++;
                             %>
-                        <P class="noItem" style="width:100%;text-align: center;padding: 1rem 0;display: none;">Không có sản phẩm trong giỏ</p>
+                        <P class="noItem" style="width:100%;text-align: center;padding: 1rem 0;display: none;">Please fill your cart with Fragrances</p>
                         <!-- ====================== item 1 ================== -->
                         <div class="cart_t_item" id="cart<%=rs.getInt("CartID")%>">
                             <div class="cart_t_i_content col-product">
@@ -84,13 +84,16 @@
                             </div>
                             <!--============== Modifi here ===============-->
                             <button type="button" id="deleteBtn" class="cart_t_i_func" data-product-id="<%=rs.getInt("CartID")%>">
-                                <i class="fa-solid fa-trash"></i>
-                                <input type="hidden" id="action" name="action" value="delete-product">
+                                <div>
+                                    <i class="fa-solid fa-trash"></i>
+                                    <span>Delete</span>
+                                    <input type="hidden" id="action" name="action" value="delete-product">
+                                </div>
                             </button>
                         </div>
 
                         <%
-                            msp += rs.getInt("ProductID") + ",";
+                            msp += rs.getInt("CartID") + ",";
                             subtotal += rs.getInt("ProductPrice") * rs.getInt("ProductAmount");
                             while (rs.next()) {
                                 countProduct++;
@@ -120,12 +123,15 @@
                                 </div>
                             </div>
                             <button type="button" id="deleteBtn" class="cart_t_i_func" data-product-id="<%=rs.getInt("CartID")%>">
-                                <i class="fa-solid fa-trash"></i>
-                                <input type="hidden" id="action" name="action" value="delete-product">
+                                <div>
+                                    <i class="fa-solid fa-trash"></i>
+                                    <span>Delete</span>
+                                    <input type="hidden" id="action" name="action" value="delete-product">
+                                </div>
                             </button>
                         </div>
                         <%
-                                    msp += rs.getInt("ProductID") + ",";
+                                    msp += rs.getInt("CartID") + ",";
                                     subtotal += rs.getInt("ProductPrice") * rs.getInt("ProductAmount");
                                 }
                             }
@@ -135,23 +141,50 @@
                 </div>
             </section>
             <section class="container">
-                <form action="" class="cart_container cart_checkzone">
+                <form action="/Cart" method="post" class="cart_container cart_checkzone">
                     <div class="cart_cz_summary">
                         <div class="cart_cz_title">
                             <h1>Confirm information</h1>
                         </div>
                         <div class="cart_dz_content">
-                            <p class="cart_dz_subtitle t-caution">Please confirm your information before check out.</p>
                             <div class="cart_dz_data_area">
-                                <input type="text" class="cart_dz_input" placeholder="Name of receiver" value="<%=us.getFullName()%>">
-                                <input type="text" class="cart_dz_input" placeholder="Phone number" value="<%=us.getPhoneNumber()%>">
-                                <select name="" id="" class="cart_dz_input cart_dz_select">
-                                    <option value="">Choose payment method</option>
-                                    <option value="cod">Collect on delivery</option>
-                                    <option value="op">Online payment</option>
+                                <select class="cart_dz_input cart_dz_select" id="cart_select">
+                                    <option value="">Choose Delivery Address</option>
+                                    <%
+                                        ResultSet rsAddress = dao.getAllAddress(us.getUserID());
+                                        while (rsAddress.next()) {
+                                    %>
+                                    <option value="<%=rsAddress.getInt("AddressID")%>"><%=rsAddress.getString("FullName")%> - <%=rsAddress.getString("Address")%></option>
+                                    <%
+                                        }
+                                    %>
                                 </select>
-                                <textarea class="cart_dz_input" rows="3" name="" id=""
-                                          placeholder="Your address"><%=us.getAddress()%></textarea>
+                                <input type="text" class="cart_dz_input" placeholder="Name of receiver" id="inputFullName" name="receiveName">
+                                <input type="text" class="cart_dz_input" placeholder="Phone number" id="inputPhoneNumber" name="receivePhone">
+
+                                <input type="radio" name="receivePayment" id="vnPay" style="display: none;" value="1">
+                                <input type="radio" name="receivePayment" id="cash" style="display: none;" value="2">
+
+                                <div class="cart_dz_input_label">
+                                    <label for="vnPay" class="vnpayMethod">
+                                        <div class="imgName">
+                                            <img src="/img/vnpay-seeklogo.com.svg" alt="">
+                                            <span>VN Pay</span>
+                                        </div>
+
+                                        <i class="fa-solid fa-circle-check" style="color: #2c64c3;"></i>
+                                    </label>
+                                    <label for="cash" class="cashMethod">
+                                        <div class="imgName">
+                                            <img src="/img/cash-icon.svg" alt="">
+                                            <span>Cash On Delivery</span>
+                                        </div>
+
+                                        <i class="fa-solid fa-circle-check" style="color: #2c64c3;"></i>
+                                    </label>
+                                </div>
+                                <textarea class="cart_dz_input" rows="3" name="receiveAddress" id="inputAddress"
+                                          placeholder="Your address"></textarea>
                             </div>
                         </div>
                     </div>
@@ -187,7 +220,9 @@
                                 <span class="totalClass">$<%int Total = subtotal + shipcost;%><%=Total%></span>
                                 <input type="hidden" name="total" id="total" value="<%=Total%>">
                             </h3>
-                            <input type="submit" value="Proceed to checkout" class="cart_cz_checkout">
+                            <input type="hidden" name="listProduct" id="listProduct" value="<%=msp%>">
+                            <input type="hidden" name="UserID" id="UserID" value="<%=us.getUserID()%>">
+                            <button type="submit" class="cart_cz_checkout" name="checkout">Proceed to checkout</button>
                         </div>
                     </div>
                 </form>

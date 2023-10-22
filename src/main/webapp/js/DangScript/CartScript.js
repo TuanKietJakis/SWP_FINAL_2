@@ -1,29 +1,3 @@
-//function scrollHeader() {
-//    const nav = document.getElementById('header');
-//    if (this.scrollY >= 200)
-//        nav.classList.add('scroll-header');
-//    else
-//        nav.classList.remove('scroll-header')
-//}
-//window.addEventListener('scroll', scrollHeader);
-//
-//
-//const opt_pro = document.querySelector('.nav_profile_select');
-//const acc_pro = document.querySelector('.nav_profile');
-//acc_pro.onclick = function () {
-//    opt_pro.classList.toggle("nav_profile_show");
-//};
-
-//const acc_glass_btn = document.querySelector('.nav_acc_glass');
-//const acc_glass_input = document.querySelector('.nav_acc_glass_input');
-//acc_glass_btn.onclick = function () {
-//    acc_glass_input.focus();
-//    acc_glass_input.classList.add("nav_acc_glass_show");
-//    acc_glass_input.onblur = function () {
-//        acc_glass_input.classList.remove("nav_acc_glass_show");
-//    }
-//};
-
 document.addEventListener('DOMContentLoaded', function () {
     const quantityContainers = document.querySelectorAll('.cart_t_i_quantity');
 
@@ -52,7 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
             bubbles: true,
             cancelable: true
         });
-        quantityInput.dispatchEvent(event);
+        setTimeout(function () {
+            quantityInput.dispatchEvent(event);
+        }, 1000);
+
     }
 
     function decreaseValue(quantityId) {
@@ -66,12 +43,40 @@ document.addEventListener('DOMContentLoaded', function () {
             bubbles: true,
             cancelable: true
         });
-        quantityInput.dispatchEvent(event);
+        setTimeout(function () {
+            quantityInput.dispatchEvent(event);
+        }, 1000);
+
 
     }
 });
 
+
 $(document).ready(function () {
+    document.querySelector('.cart_dz_data_area');
+    $('.cart_dz_select').on('change', function () {
+        var ID = $('.cart_dz_select').val();
+        $("#action").val("chooseAddress");
+        $.ajax({
+            method: "GET",
+            url: "/Cart",
+            data: {
+                ID: ID,
+                action: "chooseAddress"
+            },
+            success: function (data) {
+                $("#inputFullName").val(data.FullName);
+                $("#inputPhoneNumber").val(data.PhoneNumber);
+                $("#inputAddress").val(data.Address);
+                if (data.PaymentMethod === 1) {
+                    document.querySelector('#vnPay').checked = true;
+                } else if (data.PaymentMethod === 2) {
+                    document.querySelector('#cash').checked = true;
+                }
+
+            }
+        });
+    });
     document.querySelectorAll(".cart_t_item").forEach(n => {
         const deleteBtn = n.querySelector(".cart_t_i_func");
         deleteBtn.addEventListener('click', function () {
@@ -87,7 +92,9 @@ $(document).ready(function () {
 //            contentType: "application/json; charset=utf-8",
 //            dataType: "json",
                 success: function (response) {
-                    n.remove();
+//                    n.remove();
+                    window.location.reload();
+
                     if (document.querySelector('[id^="cart"]') === null) {
                         document.querySelector(".noItem").style.display = "block";
                     }
@@ -97,7 +104,6 @@ $(document).ready(function () {
     });
 
     document.querySelectorAll(".cart_t_i_quantity").forEach(element => {
-        console.log("ok");
         element.querySelector(".quantity-input").addEventListener('input', function () {
             console.log("ok");
             const ProductPrice = element.querySelector("#proPrice").value;
@@ -114,7 +120,20 @@ $(document).ready(function () {
                     action: "update-quan"
                 },
                 success: function (data) {
-                    window.location.reload();
+                    if (data.delete == "delete") {
+                        window.location.reload();
+                    }
+                    let oldAmount = data.oldAmount;
+                    let ProductPrice = data.ProductPrice;
+                    let ProductAmount = data.ProductAmount;
+                    let subtotal = document.getElementById("subtotal");
+                    let total = document.getElementById("total");
+                    total.value = parseFloat(total.value) - parseFloat(subtotal.value);
+
+                    subtotal.value = parseFloat(subtotal.value) + (ProductAmount - oldAmount) * ProductPrice;
+                    total.value = parseFloat(total.value) + parseFloat(subtotal.value);
+                    document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
+                    document.querySelector('.totalClass').innerHTML = "$" + total.value;
                 }
             });
         });

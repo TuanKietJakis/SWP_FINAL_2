@@ -7,6 +7,10 @@
     display: flex;
     gap: 5rem;
 }
+.footer_info_logo img{
+    width: 200px;
+        height:auto;
+}
 
 .footer_content {
     gap: 5rem;

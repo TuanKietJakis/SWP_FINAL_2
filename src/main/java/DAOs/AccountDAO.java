@@ -302,6 +302,21 @@ public class AccountDAO {
         }
         return us;
     }
+    public tblUser GetUserID(int ID) {
+        tblUser us = new tblUser();
+        try {
+            ps = conn.prepareStatement("select * from tblUser where tblUser.UserID=?");
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                us = new tblUser(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Email"), rs.getString("FullName"), rs.getString("Gender"), rs.getString("PhoneNumber"), rs.getString("DOB"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return us;
+    }
 
     public boolean checkEmail(String email) {
         String query = "SELECT COUNT(*) FROM tblUser WHERE Email = ?";

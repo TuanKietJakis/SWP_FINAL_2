@@ -71,7 +71,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = request.getRequestURI();
+            String path = request.getRequestURI();
         if (path.endsWith("/Home") || path.endsWith("/Home/")) {
             request.getRequestDispatcher("/home.jsp").forward(request, response);
         }else{
@@ -112,13 +112,13 @@ public class HomeController extends HttpServlet {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá thành công.\"}");
+                    out.print("{\"message\": \"success\"}");
                     out.flush();
                 } else {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"Xoá that bai.\"}");
+                    out.print("{\"message\": \"fail\"}");
                     out.flush();
                 }
             }else{

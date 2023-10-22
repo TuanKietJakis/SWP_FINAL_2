@@ -13,6 +13,33 @@ public class tblAddress {
     int UserID;
     String Address;
     byte Active;
+    String PhoneNumber;
+    String FullName;
+    byte PaymentMethod;
+
+    public String getPhoneNumber() {
+        return PhoneNumber;
+    }
+
+    public void setPhoneNumber(String PhoneNumber) {
+        this.PhoneNumber = PhoneNumber;
+    }
+
+    public String getFullName() {
+        return FullName;
+    }
+
+    public void setFullName(String FullName) {
+        this.FullName = FullName;
+    }
+
+    public byte getPaymentMethod() {
+        return PaymentMethod;
+    }
+
+    public void setPaymentMethod(byte PaymentMethod) {
+        this.PaymentMethod = PaymentMethod;
+    }
     
 
     public tblAddress() {
@@ -55,6 +82,25 @@ public class tblAddress {
         this.UserID = UserID;
         this.Address = Address;
         this.Active = Active;
+    }
+
+    public tblAddress(int AddressID, int UserID, String Address, byte Active, String PhoneNumber, String FullName, byte PaymentMethod) {
+        this.AddressID = AddressID;
+        this.UserID = UserID;
+        this.Address = Address;
+        this.Active = Active;
+        this.PhoneNumber = PhoneNumber;
+        this.FullName = FullName;
+        this.PaymentMethod = PaymentMethod;
+    }
+
+    public tblAddress(int UserID, String Address, byte Active, String PhoneNumber, String FullName, byte PaymentMethod) {
+        this.UserID = UserID;
+        this.Address = Address;
+        this.Active = Active;
+        this.PhoneNumber = PhoneNumber;
+        this.FullName = FullName;
+        this.PaymentMethod = PaymentMethod;
     }
 
     public tblAddress(int UserID, String Address, byte Active) {

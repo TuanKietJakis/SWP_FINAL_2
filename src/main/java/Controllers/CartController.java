@@ -6,7 +6,11 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
+import DAOs.OrderDAO;
+import DAOs.OrderDetailDAO;
+import Models.tblAddress;
 import Models.tblCart;
+import Models.tblOrder;
 import Models.tblUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +19,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
@@ -73,7 +80,7 @@ public class CartController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            tblUser acc = dao.GetCartByUserID(ID);
+            tblUser acc = dao.GetUserID(ID);
             HttpSession session = request.getSession();
             if (acc.getUserName() != null) {
                 session.setAttribute("UserInfo", acc);
@@ -82,6 +89,29 @@ public class CartController extends HttpServlet {
                 session.setAttribute("trigger", "asdf");
                 response.sendRedirect("/");
             }
+        }
+
+        if ("chooseAddress".equals(request.getParameter("action"))) {
+            int AddressID = Integer.parseInt(request.getParameter("ID"));
+            CartDAO dao = null;
+            try {
+                dao = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tblAddress Address = dao.getAddress(AddressID);
+            if (Address != null) {
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print("{\"FullName\":" + "\"" + Address.getFullName()
+                        + "\"" + ",\"PhoneNumber\":" + "\"" + Address.getPhoneNumber()
+                        + "\"" + ",\"PaymentMethod\":" + Address.getPaymentMethod()
+                        + ",\"Address\":" + "\"" + Address.getAddress() + "\""
+                        + "}");
+                out.flush();
+            }
+
         }
     }
 
@@ -125,8 +155,13 @@ public class CartController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (ProductAmount < 0) {
+            if (ProductAmount <= 0) {
                 updateDAO.Delete(CartID);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print("{\"delete\":\"delete\"}");
+                out.flush();
             } else {
                 tblCart cart = updateDAO.CompareAmount(CartID);
                 int oldAmount = cart.getProductAmount();
@@ -141,6 +176,55 @@ public class CartController extends HttpServlet {
                 }
             }
 
+        }
+        if (request.getParameter("checkout") != null) {
+            String[] CartID = request.getParameter("listProduct").split(",");
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+            int Total = Integer.parseInt(request.getParameter("total"));
+            String receivePhone = request.getParameter("receivePhone");
+            String receiveName = request.getParameter("receiveName");
+            byte receivePayment = Byte.parseByte(request.getParameter("receivePayment"));
+            String receiveAddress = request.getParameter("receiveAddress");
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+            String orderDate = currentDateTime.format(formatter);
+            OrderDAO dao = null;
+            CartDAO cdao = null;
+            OrderDetailDAO odao = null;
+            try {
+                dao = new OrderDAO();
+                cdao = new CartDAO();
+                odao = new OrderDetailDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (receivePayment == 2) {
+                /* On Cash */
+                tblOrder order = new tblOrder(UserID, receiveName, orderDate, Total, receivePhone, receiveAddress, Byte.parseByte("1"), receivePayment, Byte.parseByte("1"));
+                int kq = dao.AddOrderFromCart(order);
+                if (kq != 0) {
+                    int OrderID = dao.GetOrderID(orderDate, UserID);
+                    int result = 0;
+                    for (int i = 0; i < CartID.length; i++) {
+                        tblCart item = cdao.getItemforAdd(Integer.parseInt(CartID[i]));
+                        tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
+                        cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
+                        result += odao.AddOrderDetail(item, OrderID);
+                    }
+                    if(result == CartID.length){
+                        cdao.DeleteAllIteminCart(UserID);
+                        response.sendRedirect("/OrderHistory");
+                    }
+                } else {
+                    response.sendRedirect("/Cart/Info/" + order.getUserID());
+                }
+            } else {
+                /*On VNPay*/
+
+            }
         }
     }
 

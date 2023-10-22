@@ -9,15 +9,16 @@ package Models;
  * @author Kiet
  */
 public class tblOrder {
-    int OrderID;
-    int UserID;
-    String FullName;
-    String OrderDate;
-    int TotalPrice;
-    int PhoneNumber;
-    int OrderAddressID;
-    byte StatusID;
-    byte PaymentMethodID;
+    private int OrderID;
+    private int UserID;
+    private String FullName;
+    private String OrderDate;
+    private int TotalPrice;
+    private String PhoneNumber;
+    private String OrderAddress;
+    private byte StatusID;
+    private byte PaymentMethodID;
+    private byte Active;
 
     public int getOrderID() {
         return OrderID;
@@ -59,20 +60,20 @@ public class tblOrder {
         this.TotalPrice = TotalPrice;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return PhoneNumber;
     }
 
-    public void setPhoneNumber(int PhoneNumber) {
+    public void setPhoneNumber(String PhoneNumber) {
         this.PhoneNumber = PhoneNumber;
     }
 
-    public int getOrderAddressID() {
-        return OrderAddressID;
+    public String getOrderAddress() {
+        return OrderAddress;
     }
 
-    public void setOrderAddressID(int OrderAddressID) {
-        this.OrderAddressID = OrderAddressID;
+    public void setOrderAddress(String OrderAddress) {
+        this.OrderAddress = OrderAddress;
     }
 
     public byte getStatusID() {
@@ -99,14 +100,26 @@ public class tblOrder {
         this.Active = Active;
     }
 
-    public tblOrder(int OrderID, int UserID, String FullName, String OrderDate, int TotalPrice, int PhoneNumber, int OrderAddressID, byte StatusID, byte PaymentMethodID, byte Active) {
+    public tblOrder(int UserID, String FullName, String OrderDate, int TotalPrice, String PhoneNumber, String OrderAddress, byte StatusID, byte PaymentMethodID, byte Active) {
+        this.UserID = UserID;
+        this.FullName = FullName;
+        this.OrderDate = OrderDate;
+        this.TotalPrice = TotalPrice;
+        this.PhoneNumber = PhoneNumber;
+        this.OrderAddress = OrderAddress;
+        this.StatusID = StatusID;
+        this.PaymentMethodID = PaymentMethodID;
+        this.Active = Active;
+    }
+
+    public tblOrder(int OrderID, int UserID, String FullName, String OrderDate, int TotalPrice, String PhoneNumber, String OrderAddress, byte StatusID, byte PaymentMethodID, byte Active) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.FullName = FullName;
         this.OrderDate = OrderDate;
         this.TotalPrice = TotalPrice;
         this.PhoneNumber = PhoneNumber;
-        this.OrderAddressID = OrderAddressID;
+        this.OrderAddress = OrderAddress;
         this.StatusID = StatusID;
         this.PaymentMethodID = PaymentMethodID;
         this.Active = Active;
@@ -114,5 +127,4 @@ public class tblOrder {
 
     public tblOrder() {
     }
-    byte Active;
 }

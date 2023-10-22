@@ -22,11 +22,15 @@ document.querySelectorAll('.pproduct_addCart').forEach(product =>
                 action: "addtoCart",
             },
             success: function (data) {
-                var m = product.querySelector('.input_flip');
+                if(data.message === "success"){
+                    var m = product.querySelector('.input_flip');
                 m.classList.add("input_checkAdd");
                 setTimeout(function () {
                     m.classList.remove("input_checkAdd");
-                }, 2000);
+                }, 4000);
+                }else{  
+                       location.href='/Login';                
+                }              
             }
         });
     })

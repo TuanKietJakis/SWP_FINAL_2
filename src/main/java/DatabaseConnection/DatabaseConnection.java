@@ -18,8 +18,12 @@ public class DatabaseConnection {
     //+ "user=sa;password=123;encrypt=true;trustServerCertificate=true;"
     public static Connection getConnection() throws Exception {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        conn = DriverManager.getConnection("jdbc:sqlserver://LAPTOP-9J4QTB4E:1433;databaseName=FFShop;"
-                + "user=SA;password=123456789;encrypt=true;trustServerCertificate=true;");
+        conn = DriverManager.getConnection("jdbc:sqlserver://HAIDANG:1433;"
+                    + "databaseName=FFShop;"
+                    + "user=sa;password=123456;"
+                    + "encrypt=true;"
+                    + "trustServerCertificate=true;"
+                    + "sendStringParametersAsUnicode=true;");
 
         return conn;
     }

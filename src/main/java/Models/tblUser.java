@@ -64,14 +64,14 @@ public class tblUser {
         this.Address = Address;
     }
 
-    public tblUser(int UserID, String UserName, String Email, String FullName, String Gender, String PhoneNumber, String Address) {
+    public tblUser(int UserID, String UserName, String Email, String FullName, String Gender, String PhoneNumber, String DOB) {
         this.UserID = UserID;
         this.UserName = UserName;
         this.Email = Email;
         this.FullName = FullName;
         this.Gender = Gender;
         this.PhoneNumber = PhoneNumber;
-        this.Address = Address;
+        this.DOB = DOB;
     }
     
 

@@ -4,11 +4,14 @@
  */
 package DAOs;
 
+import Models.tblOrder;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -114,4 +117,42 @@ public class OrderDAO {
         }
         return result;
     }
+       
+       public int AddOrderFromCart(tblOrder order){
+           String sql = "insert into tblOrder values(?,?,?,?,?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, order.getUserID());
+            ps.setString(2, order.getFullName());
+            ps.setString(3, order.getOrderDate());
+            ps.setInt(4, order.getTotalPrice());
+            ps.setString(5, order.getPhoneNumber());
+            ps.setString(6, order.getOrderAddress());
+            ps.setInt(7, order.getStatusID());
+            ps.setInt(8, order.getPaymentMethodID());
+            ps.setInt(9, order.getActive());
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+       }
+       
+       public int GetOrderID(String orderTime, int UserID){
+           int kq = 0;
+           String sql = "select * from tblOrder where UserID = ? and OrderDate = ?;";
+           try{
+              PreparedStatement ps = conn.prepareStatement(sql);
+              ps.setInt(1, UserID);
+              ps.setString(2, orderTime);
+              rs = ps.executeQuery();
+              if(rs.next()){
+              kq = rs.getInt("OrderID");
+              }
+           }catch(SQLException e){
+               e.printStackTrace();
+           }
+           return kq;
+       }
 }

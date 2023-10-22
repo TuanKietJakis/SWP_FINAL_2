@@ -10,7 +10,7 @@
 
 
 <%AccountDAO aDAO = new AccountDAO();
-    tblUser us = aDAO.GetCartByUserID(Integer.parseInt(request.getParameter("ID")));
+    tblUser us = aDAO.GetUserID(Integer.parseInt(request.getParameter("ID")));
 %>
 
 <header class="header" id="header">
@@ -58,7 +58,7 @@
                 
                 <div class="nav_profile_select nav_profile_show">
                     <a href="#" class="nav_profile_opt">Your profile</a>
-                    <a href="#" class="nav_profile_opt">Order History</a>
+                    <a href="/OrderHistory" class="nav_profile_opt">Order History</a>
                     <a href="#" class="nav_profile_opt">Logout</a>
                 </div>
                 <%}%>

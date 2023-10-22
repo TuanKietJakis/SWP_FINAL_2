@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
         <link rel="stylesheet" href="/CSS/DangStyles/HomeStyle.css">
+        <link rel="shortcut icon" href="/img/Bloons 6のTwitterイラスト検索結果。.png">
     </head>
 
     <body>
@@ -307,22 +308,26 @@
                     <h1 class="pproduct_title">Most Popular Products</h1>
                     <div class="pproduct_content grid">
                         <%
-                        ProductDAO pDAO = new ProductDAO();
-                        ResultSet rs1 = pDAO.getAllProduct();
-                        int n = 1;
-                        while(rs1.next() && n < 5){
+                            ProductDAO pDAO = new ProductDAO();
+                            ResultSet rs1 = pDAO.getAllProduct();
+                            int n = 1;
+                            while (rs1.next() && n < 5) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card">
                             <div class="pproduct_data_img">
-                                <div onclick="location.href = '#'"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                           alt=""></div>
+                                <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
+                                                                        alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </form>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <input type="button" class="pproduct_addCart_btn" value="Add to cart" data-user-id="<%=ID%>">
+                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
+                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
+                                            <span>Add to cart</span>
+                                        </button>
                                         <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
                                         <input type="hidden" id="action" name="action" value="addtoCart">
                                         <div class="input_back">
@@ -339,10 +344,10 @@
                             </div>
                         </div>
                         <%
-                            n++;
+                                n++;
                             }
                         %>
-                
+
                     </div>
                 </div>
             </section>
@@ -353,20 +358,26 @@
                     <h1 class="pproduct_title">You May Like</h1>
                     <div class="owl-carousel owl-theme mayLike_container">
                         <%
-                        ResultSet rs2 = pDAO.getAllProduct();
-                        while(rs2.next()){
+                            ResultSet rs2 = pDAO.getAllProduct();
+                            while (rs2.next()) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
                             <div class="pproduct_data_img">
-                                <div onclick="location.href = '#'"><img src="<%=rs2.getString("ProductImageURL")%>"
-                                                                           alt=""></div>
+                                <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
+                                                                        alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </form>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <input type="submit" class="pproduct_addCart_btn" value="Add to cart">
+                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
+                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
+                                            <span>Add to cart</span>
+                                        </button>
+                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
+                                        <input type="hidden" id="action" name="action" value="addtoCart">
                                         <div class="input_back">
                                             <i class="fa-solid fa-check"></i>
                                         </div>
@@ -381,12 +392,12 @@
                             </div>
                         </div>
                         <%
-                         
+
                             }
                         %>
-                        
+
                     </div>
-                    <div class="pproduct_getmore" onclick="location.href='/Shop'"><button>More Product</button></div>
+                    <div class="pproduct_getmore" onclick="location.href = '/Shop'"><button>More Product</button></div>
                 </div>
             </section>
             <!-- ================================= brand ========================= -->
@@ -432,8 +443,9 @@
         <script src="/CSS/DangStyles/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
-                                    AOS.init();
+                        AOS.init();
         </script>
         <script src="/js/DangScript/Home.js"></script>
+
     </body>
 </html>

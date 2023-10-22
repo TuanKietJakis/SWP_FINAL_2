@@ -5,6 +5,7 @@
 package DAOs;
 
 import DatabaseConnection.DatabaseConnection;
+import Models.tblAddress;
 import Models.tblCart;
 import Models.tblProduct;
 import java.sql.Connection;
@@ -48,7 +49,6 @@ public class CartDAO {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, CartID);
             rs = ps.executeQuery();
-            System.out.println(rs);
             if (rs.next()) {
                 cart = new tblCart(rs.getInt("CartID"), rs.getInt("ProductID"), rs.getInt("ProductAmount"), rs.getInt("Quantity"));
             }
@@ -57,10 +57,36 @@ public class CartDAO {
         }
         return cart;
     }
+    
+    public int UpdateProductQuantity(int ProductAmount,int Quantity, int ProductID){
+        int kq=0;
+        try{
+            String sql = "update tblProduct SET Quantity=? where ProductID = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, Quantity - ProductAmount);
+            ps.setInt(2, ProductID);
+            kq = ps.executeUpdate();
+        }catch(SQLException e){
+            
+        }
+        return kq;
+    }
 
     public int Delete(int ID) {
         int result = 0;
         String sql = "DELETE FROM tblCart WHERE CartID=?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+    public int DeleteAllIteminCart(int ID) {
+        int result = 0;
+        String sql = "DELETE FROM tblCart WHERE UserID=?";
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
@@ -117,4 +143,46 @@ public class CartDAO {
         }
         return result;
     }
+    public ResultSet getAllAddress(int UserID){
+        String sql = "select * from tblAddress where UserID = ?;";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            return rs;
+        }catch(SQLException e){
+            
+        }
+        return null;
+    }
+    public tblAddress getAddress(int AddressID){
+        tblAddress address = null;
+        String sql = "select * from tblAddress where AddressID = ?;";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, AddressID);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                address = new tblAddress(rs.getInt("AddressID"),rs.getInt("UserID"), rs.getString("Address"), rs.getByte("Active"), rs.getString("PhoneNumber"), rs.getString("FullName"), rs.getByte("PaymentMethodID"));
+            }
+        }catch(SQLException e){
+            
+        }
+        return address;
+    }
+    public tblCart getItemforAdd(int CartID){
+        tblCart item = null;
+        try {
+            ps = conn.prepareStatement("select ProductID,ProductPrice,ProductAmount from tblCart where CartID=?;");
+            ps.setInt(1, CartID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                item = new tblCart(rs.getInt("ProductID"), rs.getInt("ProductPrice"), rs.getInt("ProductAmount"));
+            }
+        } catch (Exception e) {
+        }
+        return item;
+    }
+    
+    
 }
