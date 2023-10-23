@@ -7,69 +7,68 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign up</title>
-    <link rel="stylesheet" href="/CSS/VyStyle/signupStyle.css">
-</head>
-<body>
-    <div class="section section_2">
-        <div class="banner">
-            <div class="banner_image">
-                <img src="/img/sì.jpg" alt="">
-            </div>
-            <div class="banner_image2">
-                <img src="/img/rose.jpg" alt="">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign up</title>
+        <link rel="stylesheet" href="/CSS/VyStyle/signupStyle.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+    </head>
+    <body>
+    <div class="Signup_Container">
+        <div class="Signup_c_left">
+            <div class="Signup_banner">
+                <img src="/img/Pic2.png" alt="" class="Signup_banner_one">
+                <img src="/img/Pic3.png" alt="" class="Signup_banner_two">
             </div>
         </div>
-    </div>
-    <div class="section section_1">
-        <div id="Signup_error" class="error">
-            <p id="error_msg"></p>
-            <span id="close"><ion-icon  name="close-circle-outline"></ion-icon></span>
+        <div class="Signup_c_right">
+
+            <div id="Signup_error" class="error">
+                <p id="error_msg"></p>
+                <span id="close"><ion-icon name="close-circle-outline"></ion-icon></span>
+            </div>
+            <div class="Sign_up">
+                <form action="/SignUp" method="POST" id="form_sign_up" class="Sign_up_form">
+                    <div class="Signup_quote">
+                        <h1>Sign up</h1>
+                        <p>Sign up to experience shopping<br>features for you</p>
+                    </div>
+                    <div class="input_box">
+                        <input type="text" name="" id="username" placeholder="Username"><i class="bi bi-envelope"></i>
+                        <i class='bx bx-user'></i>
+                    </div>
+
+                    <div class="input_box">
+                        <input type="email" name="" id="email" placeholder="Email">
+                        <i class='bx bx-envelope'></i>
+                    </div>
+                    <div class="input_box">
+                        <input type="password" name="" id="password" placeholder="Password">
+                        <i class='bx bx-lock-alt'></i>
+                    </div>
+                    <div class="Signup_common">
+                        <div class="Signup_rem">
+                            <!-- <input type="checkbox" name="" id="">
+                        <span>I agree all statement in</span> <span>Terms & conditions</span> -->
+                            <input type="checkbox" name="agree" id="agree-checkbox">
+                            <label for="agree-checkbox" class="agree-checkbox-label">I agree all statement in <a
+                                    href="./term.html">Terms &amp;
+                                    conditions</a></label>
+                        </div>
+
+                    </div>
+                    <div class="Signup_button">
+                        <input type="submit" value="Sign up" id="Signup_btn">
+                        <div class="Acess_to_login">
+                            Already have an account? <a href="/Login">Login</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="Sign up">
-            <form action="/SignUp" id="form_sign up" method="POST">
-                <h1>Sign up</h1>
-            <div class="Signup_quote"><text>Sign up to experience shopping features for you</text></div>
-            <div class="input_box">
-                <input type="text" name="txtUsername" id="txtUsername" placeholder="Username">
-                <ion-icon name="person-outline"></ion-icon>
-            </div>
-            <div class="input_box">
-                <input type="email" name="txtEmail" id="txtEmail" placeholder="Email">
-                <ion-icon name="lock-closed-outline"></ion-icon>
-            </div>
-            <div class="input_box">
-                <input type="password" name="txtPassWord" id="txtPassWord" placeholder="Password">
-                <ion-icon name="lock-closed-outline"></ion-icon>
-            </div>
-            
-            <div class="Login_common">
-                <div class="Login_rem">
-                    <input type="checkbox" name="" id="">
-                    <span>I agree all statement in</span> <span>Terms & conditions</span>
-                </div>
-                       
-            </div>
-            <div class="Login">
-                <div class="Login_button">
-                    <input type="submit" value="Sign up" id="Login_btn">
-                </div>
-                <p class="Login_account">Already have an account?</p>
-                <a class="create_account" href="/Login">Login</a>
-                <ion-icon name="arrow-forward-outline"></ion-icon>
-            </div>
-            </form>
-        </div>
-    </div>   
-    </div>
-       
-        </div>
-    </form>
-    
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>

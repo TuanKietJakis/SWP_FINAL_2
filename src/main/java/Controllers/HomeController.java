@@ -71,15 +71,19 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String path = request.getRequestURI();
+        String path = request.getRequestURI();
         if (path.endsWith("/Home") || path.endsWith("/Home/")) {
             request.getRequestDispatcher("/home.jsp").forward(request, response);
-        }else{
+        } else {
             if (path.endsWith("/AboutUs") || path.endsWith("/AboutUs/")) {
-                        request.getRequestDispatcher("/AbouUs.jsp").forward(request, response);
-            }else if (path.endsWith("/Contact")) {
-            request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
-        }
+                request.getRequestDispatcher("/AbouUs.jsp").forward(request, response);
+            } else if (path.endsWith("/Contact")) {
+                request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
+            }else{
+                if(path.endsWith("/OrderHistory")){
+                    request.getRequestDispatcher("/oderHistory.jsp").forward(request, response);
+                }
+            }
         }
     }
 
@@ -121,11 +125,11 @@ public class HomeController extends HttpServlet {
                     out.print("{\"message\": \"fail\"}");
                     out.flush();
                 }
-            }else{
+            } else {
                 response.sendRedirect("/Login");
             }
         }
-         if (request.getParameter("btnContact") != null) {
+        if (request.getParameter("btnContact") != null) {
             try {
                 String email = request.getParameter("email");
                 String helpmessage = request.getParameter("message");

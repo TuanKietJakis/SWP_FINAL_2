@@ -28,13 +28,38 @@
                 <div>
                     <i class="fa-solid fa-magnifying-glass nav_acc_glass"></i>
                 </div>
-                <div onclick="location.href='/Cart/Info/<%=us.getUserID()%>';">
+                <div >
                     <i class="fa-solid fa-cart-shopping nav_acc_glass nav_acc_cart"></i>
                 </div>
                 <!-- ================= Cart popup ======== -->
-                <!-- <div class="nav_acc_cart_area">
-                  
-                </div> -->
+                    <div class="nav_acc_cart_area">
+                      <div class="nav_acc_cart_recently">
+                        <h1 class="nav_a_c_r_title">Recently Add To Cart</h1>
+                        <div class="nav_a_c_r_list">
+                            <!-- Item 1 -->
+                              <div class="nav_a_c_r_item">
+                                <div class="nav_a_c_r_i_img"><img src="/img/3b7d5965d9372f3185e778c20596d3dc.jpg" alt=""></div>
+                                <p class="nav_a_c_r_i_name">This is name of product</p>
+                                <p class="nav_a_r_i_price">$64.000</p>
+                              </div>
+                              <!-- Item 2 -->
+                              <div class="nav_a_c_r_item">
+                                <div class="nav_a_c_r_i_img"><img src="/img/3b7d5965d9372f3185e778c20596d3dc.jpg" alt=""></div>
+                                <p class="nav_a_c_r_i_name">This is name of product</p>
+                                <p class="nav_a_r_i_price">$64.000</p>
+                              </div>
+                              <!-- Item 3 -->
+                              <div class="nav_a_c_r_item">
+                                <div class="nav_a_c_r_i_img"><img src="/img/3b7d5965d9372f3185e778c20596d3dc.jpg" alt=""></div>
+                                <p class="nav_a_c_r_i_name">This is name of product</p>
+                                <p class="nav_a_r_i_price">$64.000</p>
+                              </div>
+                        </div>
+                        <div class="nav_a_c_r_func">
+                            <button class="nav_a_c_r_btn button" onclick="location.href='/Cart/Info/<%=us.getUserID()%>';">View Cart</button>
+                        </div>
+                      </div>
+                    </div>
                 <!-- ============== Search input ============= -->
                 <input type="text" class="nav_acc_glass_input" placeholder="Search name of product">
                 <%

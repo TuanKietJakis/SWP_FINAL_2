@@ -159,11 +159,6 @@
                                         <img src="/img/4.png" alt="">
                                     </div>
                                 </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -174,11 +169,6 @@
                                     <h1 class="cate_data_title">Perfume or Parfum</h1>
                                     <div class="cate_data_img">
                                         <img src="/img/5.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
                                     </div>
                                 </div>
                             </div>
@@ -192,11 +182,6 @@
                                         <img src="/img/6.png" alt="">
                                     </div>
                                 </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- ===== data 4 ====== -->
@@ -206,11 +191,6 @@
                                     <h1 class="cate_data_title">Perfume or Parfum</h1>
                                     <div class="cate_data_img">
                                         <img src="/img/1.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
                                     </div>
                                 </div>
                             </div>
@@ -224,11 +204,6 @@
                                         <img src="/img/2.png" alt="">
                                     </div>
                                 </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- ===== data 6 ====== -->
@@ -238,11 +213,6 @@
                                     <h1 class="cate_data_title">Perfume or Parfum</h1>
                                     <div class="cate_data_img">
                                         <img src="/img/3.png" alt="">
-                                    </div>
-                                </div>
-                                <div class="cate_back">
-                                    <div class="cate_btn">
-                                        <a href="#" class="cate_back_link">View Detail</a>
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +287,7 @@
                         <div class="pproduct_card">
                             <div class="pproduct_data_img">
                                 <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                        alt=""></div>
+                                                                                                         alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </form>
@@ -365,7 +335,7 @@
                         <div class="pproduct_card item">
                             <div class="pproduct_data_img">
                                 <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
-                                                                        alt=""></div>
+                                                                                                         alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </form>

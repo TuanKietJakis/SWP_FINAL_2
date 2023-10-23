@@ -1,8 +1,13 @@
-@import url('BaseStyle.css');
-@import url('Header.css');
-@import url('Footer.css');
+@import url('DangStyles/BaseStyle.css');
+@import url('DangStyles/Header.css');
+@import url('DangStyles/Footer.css');
 
-
+body{
+    background: #fff;
+}
+.footer{
+    box-shadow: inset 0 1px 10px rgba(0,0,0,0.1);
+}
 .banner {
     display: flex;
     justify-content: center;

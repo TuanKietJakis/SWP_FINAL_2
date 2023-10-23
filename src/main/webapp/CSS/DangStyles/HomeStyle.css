@@ -242,8 +242,8 @@ body {
     height: 100%;
     position: relative;
     border-radius: 16px;
-    transition: transform 0.5s ease-out, box-shadow 0.3s;
-    transform-style: preserve-3d;
+    transition: 0.3s;
+    /*transform-style: preserve-3d;*/
 }
 
 .cate_content {
@@ -299,8 +299,9 @@ body {
 .cate_data_img {
     overflow: hidden;
     margin: 0 auto;
-
-    & img {
+    height:auto;
+    padding: 12px;
+       & img {
         object-fit: cover;
     }
 }
@@ -315,11 +316,6 @@ body {
     letter-spacing: 1px;
 }
 
-.cate_flip:hover>.cate_card {
-    cursor: pointer;
-    transform: rotateY(180deg) scale(1.1);
-    box-shadow: 0 2px 4px rgba(1, 1, 1, 0.1);
-}
 
 .cate_front,
 .cate_back {
@@ -328,6 +324,14 @@ body {
     border-radius: 16px;
     position: absolute;
     backface-visibility: hidden;
+    transition: 0.3s;
+    top:0;
+    backdrop-filter: blur(15px);
+    cursor: pointer;
+}
+.cate_front:hover{
+    top:-15px;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.15));
 }
 
 .cate_back {
@@ -736,7 +740,7 @@ body {
     height: 100%;
     min-width: 50px;
     z-index: 10;
-    
+
     & img {
         object-fit: cover;
     }
