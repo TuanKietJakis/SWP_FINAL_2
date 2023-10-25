@@ -22,11 +22,35 @@ public class tblUser {
     private String Address;
     int RoleID;
     byte Active;
+    String Role;
 
     public tblUser() {
     }
 
+    public tblUser(int UserID, String UserName, String Email, String FullName, String Gender, String DOB, String PhoneNumber, int AddressID, String Address, int RoleID, String Role) {
+        this.UserID = UserID;
+        this.UserName = UserName;
+        this.Email = Email;
+        this.FullName = FullName;
+        this.Gender = Gender;
+        this.DOB = DOB;
+        this.PhoneNumber = PhoneNumber;
+        this.AddressID = AddressID;
+        this.Address = Address;
+        this.RoleID = RoleID;
+        this.Role = Role;
+    }
+
     
+
+    public String getRole() {
+        return Role;
+    }
+
+    public void setRole(String Role) {
+        this.Role = Role;
+    }
+
     public tblUser(int UserID, String UserName, String Password, String Email, String FullName, String Gender, String DOB, String PhoneNumber, int RoleID, byte Active) {
         this.UserID = UserID;
         this.UserName = UserName;
@@ -73,10 +97,7 @@ public class tblUser {
         this.PhoneNumber = PhoneNumber;
         this.DOB = DOB;
     }
-    
 
-    
-    
     public int getUserID() {
         return UserID;
     }

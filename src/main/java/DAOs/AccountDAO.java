@@ -6,6 +6,7 @@ package DAOs;
 
 import DatabaseConnection.DatabaseConnection;
 import EncodeMD5.MD5;
+import Models.tblCart;
 import Models.tblUser;
 import java.sql.Connection;
 import java.sql.Date;
@@ -39,15 +40,46 @@ public class AccountDAO {
      * @param ID
      * @return
      */
+    public ResultSet GetAllAccountDashboard() {
+        try {
+            ps = conn.prepareStatement("select * from tblUser \n"
+                    + "inner join tblRole on tblUser.RoleID = tblRole.RoleID\n"
+                    + "where tblUser.Active = 1 ");
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
     public ResultSet GetAll(int ID) {
         try {
-            ps = conn.prepareStatement("select * from tblUser where UserID=?");
+            ps = conn.prepareStatement("select * from tblUser where UserID = ?");
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
         }
         return null;
+    }
+
+    public tblUser GetAccountByID(int UserID) {
+        tblUser cart = new tblUser();
+        try {
+            String sql = "select * from tblUser\n"
+                    + "inner join tblRole on tblRole.RoleID = tblUser.RoleID\n"
+                    + "inner join tblAddress on tblAddress.UserID = tblUser.UserID\n"
+                    + "where tblUser.UserID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cart = new tblUser(rs.getInt("UserID"), rs.getString("Username"), rs.getString("Email"), rs.getString("Fullname"), rs.getString("Gender"), rs.getString("DOB"), rs.getString("PhoneNumber"), rs.getInt("AddressID"), rs.getString("Address"), rs.getInt("RoleID"), rs.getString("Role"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cart;
     }
 
     /**
@@ -156,11 +188,12 @@ public class AccountDAO {
      * @throws SQLException
      */
     public boolean Login(tblUser acc) throws SQLException {
-        String sql = "SELECT * FROM tblUser WHERE Username=? AND Password=?";
+        String sql = "SELECT * FROM tblUser WHERE Username=? AND Password=? AND Active = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, acc.getUserName());
             ps.setString(2, MD5.encode(acc.getPassword()));
+            ps.setInt(3, 1);
             rs = ps.executeQuery();
         } catch (Exception ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -253,7 +286,7 @@ public class AccountDAO {
      * @return
      */
     public int RemoveAdmin(int ID) {
-        String sql = "Update tblUser set RoleID=0 where UserID = ?";
+        String sql = "Update tblUser set Active=0 where UserID = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -302,6 +335,7 @@ public class AccountDAO {
         }
         return us;
     }
+
     public tblUser GetUserID(int ID) {
         tblUser us = new tblUser();
         try {
@@ -452,8 +486,7 @@ public class AccountDAO {
             String PhoneNumber,
             int RoleID,
             int Active
-    
-        ) {
+    ) {
 
         try {
             ps = conn.prepareStatement("INSERT INTO tblUser VALUES (?,?,?,?,?,?,?,?,?)");
@@ -489,7 +522,8 @@ public class AccountDAO {
             }
         }
     }
-     public int UpdateAccount(String fullname, String username, String dob, String gender, String phone, String email, String address, int UserID) {
+
+    public int UpdateAccount(String fullname, String username, String dob, String gender, String phone, String email, String address, int UserID) {
         int kq = 0;
         String sql1 = "update tblUser set FullName=?, Username=?,  DOB=?, Gender=?, PhoneNumber=?, Email=? where UserID=?;"
                 + "update tblAddress set [Address]=? where UserID=?";
@@ -505,11 +539,31 @@ public class AccountDAO {
             ps.setString(8, address);
             ps.setInt(9, UserID);
             kq = ps.executeUpdate();
-            
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return kq;
+    }
+    
+    public int UpdateAdminAccount(String dob, String gender, String phone, String email, String address, int UserID) {
+        int kq = 0;
+        String sql1 = "update tblUser set DOB=?, Gender=?, PhoneNumber=?, Email=? where UserID=?;"
+                + "update tblAddress set [Address]=? where UserID=?";
+        try {
+            ps = conn.prepareStatement(sql1);
+            ps.setString(1, dob);
+            ps.setString(2, gender);
+            ps.setString(3, phone);
+            ps.setString(4, email);
+            ps.setInt(5, UserID);
+            ps.setString(6, address);
+            ps.setInt(7, UserID);
+            kq = ps.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return kq;
     }
 }
-
