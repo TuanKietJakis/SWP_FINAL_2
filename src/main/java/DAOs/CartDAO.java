@@ -41,6 +41,32 @@ public class CartDAO {
         }
         return null;
     }
+    
+        public ResultSet ShowCartRecently(int UserID) {
+        String sql = "select * from (select ProductID,ProductImageURL,ProductName,ProductPrice,ROW_NUMBER() OVER (ORDER BY CartID DESC) AS Rank from tblCart where UserID = ? ) tmp where rank <= 3;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    public int showNumberItem(int UserID){
+        int kq=0;
+        String sql = "SELECT COUNT(CartID) as numberItem FROM tblCart where UserID = ?;";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            if(rs.next()){
+            kq = rs.getInt("numberItem");
+            }
+        } catch (SQLException e) {
+        }
+        return kq;
+    }
 
     public tblCart CompareAmount(int CartID) {
         tblCart cart = new tblCart();

@@ -371,7 +371,7 @@
                 </div>
             </section>
             <!-- ================================= brand ========================= -->
-            <section class="logo_section section">
+            <section class="logo_section">
                 <div class="brand_container">
                     <div class="owl-carousel owl-theme logo_container container">
                         <!--=============== item 1 ================-->

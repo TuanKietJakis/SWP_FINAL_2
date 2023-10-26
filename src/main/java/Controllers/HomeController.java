@@ -7,8 +7,11 @@ package Controllers;
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
 import DAOs.FaQDAO;
+import DAOs.ProductDAO;
+import Models.tblCart;
 import Models.tblFAQ;
 import Models.tblProduct;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +19,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -79,8 +86,8 @@ public class HomeController extends HttpServlet {
                 request.getRequestDispatcher("/AbouUs.jsp").forward(request, response);
             } else if (path.endsWith("/Contact")) {
                 request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
-            }else{
-                if(path.endsWith("/OrderHistory")){
+            } else {
+                if (path.endsWith("/OrderHistory")) {
                     request.getRequestDispatcher("/oderHistory.jsp").forward(request, response);
                 }
             }
@@ -128,6 +135,78 @@ public class HomeController extends HttpServlet {
             } else {
                 response.sendRedirect("/Login");
             }
+        }
+                if ("recentCart".equals(action)) {
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+            CartDAO dao = null;
+            try {
+                dao = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<tblCart> list = new ArrayList<>();
+            ResultSet rs = dao.ShowCartRecently(UserID);
+//            tblCart cart = new tblCart();
+            try {
+                while (rs.next()) {
+                    int ProductID = rs.getInt("ProductID");
+                    String ProductName = rs.getString("ProductName");
+                    int ProductPrice = rs.getInt("ProductPrice");
+                    String ProductImageURL = rs.getString("ProductImageURL");
+                    list.add(new tblCart(ProductID, ProductName, ProductPrice, ProductImageURL));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
+        if ("showNumberItem".equals(action)) {
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+            CartDAO dao = null;
+            try {
+                dao = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int numberItem = dao.showNumberItem(UserID);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print("{\"numberItem\": \""+ numberItem +"\"}");
+            out.flush();
+        }
+        if("searchInput".equals(action)){
+            String inputValue = request.getParameter("inputValue");
+            ProductDAO dao = null;
+            try {
+                dao = new ProductDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rs = dao.getSearchProduct(inputValue);
+            List<tblProduct> list = new ArrayList<>();
+            try {
+                while (rs.next()) {
+                    int ProductID = rs.getInt("ProductID");
+                    String ProductName = rs.getString("ProductName");
+                    int Price = rs.getInt("Price");
+                    String ProductImageURL = rs.getString("ProductImageURL");
+                    list.add(new tblProduct(ProductID, ProductName, Price, ProductImageURL));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+//            System.out.println(json);
+            response.getWriter().write(json);
+            
         }
         if (request.getParameter("btnContact") != null) {
             try {

@@ -38,6 +38,19 @@ public class tblProduct {
         this.Size = Size;
     }
 
+    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, int RatingID, String ProductDes, int Quantity, String ProductImageURL, int Size) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.BrandID = BrandID;
+        this.CategoryID = CategoryID;
+        this.RatingID = RatingID;
+        this.ProductDes = ProductDes;
+        this.Quantity = Quantity;
+        this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
+    }
+
     public tblProduct(int ProductID, String ProductName, int Price, String ProductImageURL) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;

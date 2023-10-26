@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import Models.tblCart;
 import Models.tblProduct;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,7 @@ public class ProductDAO {
     public ProductDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-    
+
     public ResultSet getAllProduct() {
         String sql = "select*from tblProduct";
         try {
@@ -44,7 +46,7 @@ public class ProductDAO {
         }
         return null;
     }
-    
+
     public tblProduct getInfoForUpdating(int ID) {
         tblProduct pro = null;
         try {
@@ -54,9 +56,9 @@ public class ProductDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"),
-                                   rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"), 
-                                   rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getByte("Active"), 
-                                   rs.getString("ProductImageURL"), rs.getInt("Size"));
+                        rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"),
+                        rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getByte("Active"),
+                        rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (Exception e) {
         }
@@ -196,42 +198,77 @@ public class ProductDAO {
         return result;
     }
 
-  public List<tblProduct> getAllProduct(int ID) {
-    List<tblProduct> productList = new ArrayList<>();
-    String sql = "SELECT * FROM tblProduct";
-    try {
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            tblProduct product = new tblProduct();
-            product.setProductID(rs.getInt("ProductID"));
-            product.setCategoryID(rs.getInt("CategoryID"));
-            product.setProductName(rs.getString("ProductName"));
-            product.setPrice(rs.getInt("Price"));
-            product.setBrandID(rs.getInt("BrandID"));
-            product.setRatingID(rs.getInt("RatingID"));
-            product.setProductDes(rs.getString("ProductDes"));
-            product.setQuantity(rs.getInt("Quantity"));
-            product.setActive(rs.getByte("Active"));
-            product.setProductImageURL(rs.getString("ProductImageURL"));
-            product.setSize(rs.getInt("Size"));
-            productList.add(product);
+    public List<tblProduct> getAllProduct(int ID) {
+        List<tblProduct> productList = new ArrayList<>();
+        String sql = "SELECT * FROM tblProduct";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                tblProduct product = new tblProduct();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCategoryID(rs.getInt("CategoryID"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("Price"));
+                product.setBrandID(rs.getInt("BrandID"));
+                product.setRatingID(rs.getInt("RatingID"));
+                product.setProductDes(rs.getString("ProductDes"));
+                product.setQuantity(rs.getInt("Quantity"));
+                product.setActive(rs.getByte("Active"));
+                product.setProductImageURL(rs.getString("ProductImageURL"));
+                product.setSize(rs.getInt("Size"));
+                productList.add(product);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return productList;
     }
-    return productList;
-}
-public ResultSet getAllProduct2(int ID) {
-    ResultSet rs = null;
-    String sql = "SELECT * FROM tblProduct";
-    try {
-        PreparedStatement ps = conn.prepareStatement(sql);
-        rs = ps.executeQuery();
-    } catch (SQLException ex) {
-        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+    public ResultSet getAllProduct2(int ID) {
+        ResultSet rs = null;
+        String sql = "SELECT * FROM tblProduct";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
     }
-    return rs;
-}
+
+    public ResultSet getSearchProduct(String inputValue) {
+        ResultSet rs = null;
+        String sql = "select ProductID,ProductName,ProductImageURL,Price from tblProduct where ProductName like ? order by ProductName OFFSET 0 ROWS\n"
+                + "FETCH NEXT 4 ROWS ONLY;";
+        String itemName = "%" + inputValue + "%";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, itemName);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public tblProduct getProductbyID(int ID) {
+        tblProduct pro = new tblProduct();
+
+        try {
+            String sql = "select * from tblProduct where ProductID = ? and Active = 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+            if(rs.next()){              
+            pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"),
+                    rs.getInt("RatingID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pro;
+    }
 
 }

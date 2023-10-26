@@ -22,19 +22,21 @@ document.querySelectorAll('.pproduct_addCart').forEach(product =>
                 action: "addtoCart",
             },
             success: function (data) {
-                if(data.message === "success"){
+                if (data.message === "success") {
                     var m = product.querySelector('.input_flip');
-                m.classList.add("input_checkAdd");
-                setTimeout(function () {
-                    m.classList.remove("input_checkAdd");
-                }, 4000);
-                }else{  
-                       location.href='/Login';                
-                }              
+                    m.classList.add("input_checkAdd");
+                    setTimeout(function () {
+                        m.classList.remove("input_checkAdd");
+                    }, 4000);
+                    document.querySelector('.number_of_item').textContent = parseInt(document.querySelector('.number_of_item').textContent) + parseInt(1);
+                } else {
+                    location.href = '/Login';
+                }
             }
         });
     })
 );
+
 $('.home_container').owlCarousel({
     animateOut: 'fadeOut',
     loop: true,

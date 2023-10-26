@@ -372,6 +372,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: .875rem;
+    cursor: pointer;
     & .pproduct_data_img_inline{
         height: 100%;
     }

@@ -4,12 +4,16 @@
  */
 package Controllers;
 
+import DAOs.ProductDAO;
+import Models.tblProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,12 +64,21 @@ public class ShopController extends HttpServlet {
             request.getRequestDispatcher("/listProuct.jsp").forward(request, response);
         } else {
             if (path.startsWith("/Shop/Detail")) {
-//                String[] s = path.split("/");
-//                int ProductID = Integer.parseInt(s[s.length - 1]);
-//                if(ProductID == 0){
-//                    response.sendRedirect("/Shop");
-//                }
-request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+                String[] s = path.split("/");
+                int ProductID = Integer.parseInt(s[s.length - 1]);
+                if (ProductID == 0) {
+                    response.sendRedirect("/Shop");
+                }else{
+                ProductDAO dao = null;
+                try {
+                    dao = new ProductDAO();
+                } catch (Exception ex) {
+                    Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tblProduct pro = dao.getProductbyID(ProductID);
+                request.setAttribute("Product", pro);
+                request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+                }
             }
         }
     }

@@ -105,6 +105,14 @@ public class tblCart {
         this.ProductPrice = ProductPrice;
         this.ProductAmount = ProductAmount;
     }
+        public tblCart(int ProductID, String ProductName, int ProductPrice, String ProductImageURL) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.ProductPrice = ProductPrice;
+        this.ProductImageURL = ProductImageURL;
+    }
+    
+
     
 
     public tblCart(int UserID, int ProductID, String ProductName, int ProductPrice, int ProductAmount, String ProductImageURL) {
