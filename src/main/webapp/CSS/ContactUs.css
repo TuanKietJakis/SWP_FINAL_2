@@ -12,7 +12,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url(../img/15cb3f93a17f051e1f4aa869f68579d6.jpg), lightgray 50% / cover no-repeat;
+    background: url(../img/Back6.jpg), lightgray 50% / cover no-repeat;
     background-size: cover;
     background-position: center;
     padding: 84px 0;
@@ -22,9 +22,11 @@ body{
     font-weight: 600;
     line-height: normal;
     margin-bottom: 5.882rem;
-    border-bottom: 1px solid;
+    box-shadow: inset 0 0 6px 1px rgba(0,0,0,0.1);
 }
-
+.Contact_cotainer{
+    box-shadow: inset 0 0 6px 1px rgba(0,0,0,0.1);
+}
 .contact_content {
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 0;

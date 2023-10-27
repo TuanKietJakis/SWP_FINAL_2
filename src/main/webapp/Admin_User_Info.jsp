@@ -23,6 +23,7 @@
             String year = birthday[birthday.length - 3];
             String month = birthday[birthday.length - 2];
             String day = birthday[birthday.length - 1];
+            
         %>
         <div class="container">
             <jsp:include page="Admin_navigation.jsp"></jsp:include>     

@@ -37,7 +37,7 @@
         </jsp:include>
         <main class="main" id="main">
             <%
-                tblProduct pro = (tblProduct)request.getAttribute("Product");
+                tblProduct pro = (tblProduct) request.getAttribute("Product");
             %>
             <section class="product_section section">
                 <div class="product_container container">
@@ -81,28 +81,73 @@
             <section class="descript_section section">
                 <div class="descript_container container">
                     <div class="des_nav">
-                        <h1 class="des_nav_list des_nav_des">Description</h1>
-                        <h1 class="des_nav_list des_nav_rev active">Review</h1>
+                        <h1 class="des_nav_list des_nav_des active">Description</h1>
+                        <h1 class="des_nav_list des_nav_rev">Review</h1>
                     </div>
                     <div class="des_content">
-                        <p class="des_content_active des_content_des ">Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.</p>
-                        <div class="des_content_active des_content_rev active">
-                            <div class="des_content_rev_img">
-                                <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
-                            </div>
-                            <div class="des_content_rev_data">
-                                <div class="des_content_rev_header">
-                                    <h1 class="des_content_rev_name">Ariana Grande</h1>
-                                    <div class="dev_content_rev_star">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-regular fa-star"></i>
+                        <p class="des_content_active des_content_des active">Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.</p>
+                        <div class="des_content_active des_content_rev">
+                            <!-- ==================comment 1 ================-->   
+                            <div class="inner">
+                                <div class="des_content_rev_img">
+                                    <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
+                                </div>
+                                <div class="des_content_rev_data">
+                                    <div class="des_content_rev_header">
+                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
+                                        <div class="dev_content_rev_star">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="des_content_rev_des">
+                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
                                     </div>
                                 </div>
-                                <div class="des_content_rev_des">
-                                    Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                            </div>
+                            <!-- ==================comment 1 ================-->   
+                            <div class="inner">
+                                <div class="des_content_rev_img">
+                                    <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
+                                </div>
+                                <div class="des_content_rev_data">
+                                    <div class="des_content_rev_header">
+                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
+                                        <div class="dev_content_rev_star">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="des_content_rev_des">
+                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ==================comment 1 ================-->   
+                            <div class="inner">
+                                <div class="des_content_rev_img">
+                                    <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
+                                </div>
+                                <div class="des_content_rev_data">
+                                    <div class="des_content_rev_header">
+                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
+                                        <div class="dev_content_rev_star">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="des_content_rev_des">
+                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,8 +157,8 @@
             <div class="background_cate">
                 Category: eau de perfume
             </div>
-            
-           <!-- ========================== May Like ============================== -->
+
+            <!-- ========================== May Like ============================== -->
             <section class="pproduct_section section maylike_section">
                 <div class="pproduct_container container ">
                     <h1 class="pproduct_title">Related Products</h1>

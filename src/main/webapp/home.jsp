@@ -50,7 +50,7 @@
                                         <br> from certified consultants, who are not just professionals but
                                         <br> also talented masters.
                                     </p>
-                                    <a href="#" class="home_slide_button ani_btn1">View collection</a>
+                                    <a href="/Shop" class="home_slide_button ani_btn1">View collection</a>
                                 </div>
                             </div>
                             <div class="home_slide_img1"><img src="/img/Back4.jpg"></div>
@@ -66,7 +66,7 @@
                                         <br> from certified consultants, who are not just professionals but
                                         <br> also talented masters.
                                     </p>
-                                    <a href="#" class="home_slide_button ani_btn2">View collection</a>
+                                    <a href="/Shop" class="home_slide_button ani_btn2">View collection</a>
                                 </div>
                             </div>
                             <div class="home_slide_img2"><img src="/img/Back2.jpg" alt=""></div>
@@ -82,7 +82,7 @@
                                         <br> from certified consultants, who are not just professionals but
                                         <br> also talented masters.
                                     </p>
-                                    <a href="#" class="home_slide_button ani_btn3">View collection</a>
+                                    <a href="/Shop" class="home_slide_button ani_btn3">View collection</a>
                                 </div>
                             </div>
                             <div class="home_slide_img3"><img src="/img/Back5.jpg" alt="">
@@ -116,7 +116,7 @@
                                 <p class="shopnow_des">Lorem Ipsum is simply dummy text of the printing <br> and typesetting
                                     industry. Lorem Ipsum has been the industry's standard dummy text.</p>
                             </div>
-                            <button class="shopnow_btn button">Read More</button>
+                            <button class="shopnow_btn button" onclick="location.href='/AboutUs'">Read More</button>
                         </div>
 
                     </div>

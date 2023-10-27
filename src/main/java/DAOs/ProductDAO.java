@@ -251,6 +251,19 @@ public class ProductDAO {
         }
         return rs;
     }
+    public ResultSet getSearchProductnolimit(String inputValue) {
+        ResultSet rs = null;
+        String sql = "select * from tblProduct where ProductName like ?";
+        String itemName = "%" + inputValue + "%";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, itemName);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
 
     public tblProduct getProductbyID(int ID) {
         tblProduct pro = new tblProduct();

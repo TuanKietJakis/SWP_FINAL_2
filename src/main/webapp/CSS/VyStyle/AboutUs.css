@@ -30,9 +30,11 @@ body {
     height: 225px;
     justify-content: center;
     align-items: center;
-    background-image: url(/img/Back7.jpg);
+    background-image: url(../..//img/Back6.jpg);
     background-position: center center;
     background-size: cover;
+        box-shadow: inset 0 0 6px 1px rgba(0,0,0,0.1);
+
 }
 
 /* .banner {
@@ -47,6 +49,9 @@ body {
         object-fit: cover;
     }
 } */
+.about_section{
+    padding: 40px 0 99px;
+}
 
 .text {
     width: 818px;

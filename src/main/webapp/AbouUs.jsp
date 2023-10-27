@@ -34,7 +34,7 @@
 
     <div class="image-container">
         <!-- <div class="banner">
-            <img src="img/Back7.jpg" alt="">
+            <img src="/img/Back7.jpg" alt="">
         </div> -->
         <h1 class="text-overlay">About</h1>
     </div>

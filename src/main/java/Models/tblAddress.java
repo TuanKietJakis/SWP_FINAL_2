@@ -94,6 +94,14 @@ public class tblAddress {
         this.PaymentMethod = PaymentMethod;
     }
 
+    public tblAddress(int UserID, String Address, String PhoneNumber, String FullName, byte PaymentMethod) {
+        this.UserID = UserID;
+        this.Address = Address;
+        this.PhoneNumber = PhoneNumber;
+        this.FullName = FullName;
+        this.PaymentMethod = PaymentMethod;
+    }
+
     public tblAddress(int UserID, String Address, byte Active, String PhoneNumber, String FullName, byte PaymentMethod) {
         this.UserID = UserID;
         this.Address = Address;

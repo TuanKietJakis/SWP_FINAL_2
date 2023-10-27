@@ -20,9 +20,17 @@ acc_glass_btn.onclick = function () {
     acc_glass_input.focus();
     acc_glass_input.classList.add("nav_acc_glass_show");
     document.querySelector('.nav_acc_search_result').style.display = "block";
+    acc_glass_input.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            window.location.href = '/Shop/Search=' + acc_glass_input.value + '';
+        }
+    });
     acc_glass_input.onblur = function () {
-        document.querySelector('.nav_acc_search_result').style.display = "none";
-        acc_glass_input.classList.remove("nav_acc_glass_show");
+        setTimeout(function () {
+            acc_glass_input.classList.remove("nav_acc_glass_show");
+            document.querySelector('.nav_acc_search_result').style.display = "none";
+        }, 100);
+
     }
 };
 const hoverCart1 = document.querySelector('.nav_acc_cart');
@@ -111,7 +119,7 @@ document.querySelector('.nav_acc_glass_input').addEventListener('input', () => {
                     $.each(data, function (index, value) {
                         // Assuming your HTML has a div with the class 'product-container'
                         $('.search_result_list').append(`
-                              <div class="search_result_item" onclick="location.href='${value.productID}'">
+                              <div class="search_result_item" onclick="location.href='/Shop/Detail/${value.productID}'">
                                            <div class="search_result_item_img"><img src="${value.productImageURL}" alt=""></div>
                                            <div class="search_result_item_data">
                                                <h1 class="search_result_item_name">${value.productName}</h1>
@@ -120,12 +128,13 @@ document.querySelector('.nav_acc_glass_input').addEventListener('input', () => {
                                </div>
                       `);
                     });
-                        $('.search_result_list').append(`
+                    $('.search_result_list').append(`
                               <div class="search_result_more">
-                                        <a href="#" class="search_result_more_link">Show More</a>
+                                        <a href="/Shop/Search=${inputValue}" class="search_result_more_link">Show More</a>
                                     </div>
                       `);
-                    
+
+
                 } else {
                     $('.search_result_list').empty();
                 }

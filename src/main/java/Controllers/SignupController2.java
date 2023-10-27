@@ -5,12 +5,15 @@
 package Controllers;
 
 import DAOs.AccountDAO;
+import Models.tblAddress;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,7 +64,7 @@ public class SignupController2 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        if(path.endsWith("/SignUp")){
+        if (path.endsWith("/SignUp")) {
             request.getRequestDispatcher("/signup.jsp").forward(request, response);
         }
     }
@@ -102,7 +105,15 @@ public class SignupController2 extends HttpServlet {
             } else {
 
                 //"16","Kiet2","user6","123","0797119869","onie.mann@hotmail.com ","abc","0","Female","1992-07-06"
-                accountDAO.signup(username, password, email, "null", "null", "null", "null", 1,1);
+                LocalDate today = LocalDate.now();
+
+                // Format the date into a string
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedDate = today.format(formatter);
+                dao.signup(username, password, email, "", "", formattedDate, "", 1, 1);
+                int UserID = dao.getUserID(username);
+                tblAddress address = new tblAddress(UserID, "", "", "", Byte.parseByte("2"));
+                dao.addAddress(address);
                 response.sendRedirect("/Login");
             }
 

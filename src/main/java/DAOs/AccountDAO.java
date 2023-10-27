@@ -6,6 +6,7 @@ package DAOs;
 
 import DatabaseConnection.DatabaseConnection;
 import EncodeMD5.MD5;
+import Models.tblAddress;
 import Models.tblCart;
 import Models.tblUser;
 import java.sql.Connection;
@@ -383,21 +384,6 @@ public class AccountDAO {
             ps.executeUpdate();
         } catch (Exception e) {
 
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
         }
         return null;
 
@@ -426,21 +412,6 @@ public class AccountDAO {
             return rs.next(); // Return true if there is a result, indicating the username already exists
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-            }
         }
         return false;
     }
@@ -487,9 +458,9 @@ public class AccountDAO {
             int RoleID,
             int Active
     ) {
-
         try {
-            ps = conn.prepareStatement("INSERT INTO tblUser VALUES (?,?,?,?,?,?,?,?,?)");
+            String sql = "INSERT INTO tblUser VALUES (?,?,?,?,?,?,?,?,?)";
+            ps = conn.prepareStatement(sql);
 
             ps.setString(1, UserName);
             ps.setString(2, EncodeMD5.MD5.encode(Password));
@@ -504,22 +475,6 @@ public class AccountDAO {
         } catch (Exception e) {
 
             System.out.println(e);
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                System.out.println(e);
-                throw new RuntimeException(e);
-
-            }
         }
     }
 
@@ -545,7 +500,7 @@ public class AccountDAO {
         }
         return kq;
     }
-    
+
     public int UpdateAdminAccount(String dob, String gender, String phone, String email, String address, int UserID) {
         int kq = 0;
         String sql1 = "update tblUser set DOB=?, Gender=?, PhoneNumber=?, Email=? where UserID=?;"
@@ -565,5 +520,39 @@ public class AccountDAO {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return kq;
+    }
+
+    public int addAddress(tblAddress address) {
+        int kq = 0;
+        try {
+            String sql = "insert into tblAddress values(?,?,?,?,?,?)";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, address.getUserID());
+            ps.setString(2, address.getAddress());
+            ps.setInt(3, 1);
+            ps.setString(4, address.getPhoneNumber());
+            ps.setString(5, address.getFullName());
+            ps.setInt(6, address.getPaymentMethod());
+            kq = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
+    public int getUserID(String username) {
+        int UserID = 0;
+        String sql = "SELECT UserID FROM tblUser WHERE Username=?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+            UserID = rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return UserID;
     }
 }

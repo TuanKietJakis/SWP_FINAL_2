@@ -243,13 +243,14 @@
 .nav_profile {
     display: flex;
     align-items: center;
-    background: #ad9ff4;
+    background: #C0B8EA;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.10);
     border-radius: 100px;
     padding: 9px 13px;
     transition: var(--img-transition);
     cursor: pointer;
 }
+
 
 
 .nav_profile:hover {

@@ -40,7 +40,7 @@ a {
 .Signup_c_left {
   position: relative;
   background: linear-gradient(218deg, rgba(245, 40, 166, 0.54) 28.16%, #F8E49D 66.27%);
-  width: 53.13%;
+  width: 52%;
   height: 100vh;
   transition: 0.3s;
 }

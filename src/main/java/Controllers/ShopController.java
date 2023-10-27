@@ -79,6 +79,13 @@ public class ShopController extends HttpServlet {
                 request.setAttribute("Product", pro);
                 request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
                 }
+            }else{
+                if(path.startsWith("/Shop/Search")){
+                    String[] s = path.split("=");
+                    String inputValue = s[s.length-1];
+                    request.setAttribute("inputValue", inputValue);
+                    request.getRequestDispatcher("/SearchProduct.jsp").forward(request, response);
+                }
             }
         }
     }
