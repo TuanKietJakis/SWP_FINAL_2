@@ -196,7 +196,7 @@
                         %>
 
                     </div>
-                    <div class="pproduct_getmore" onclick="location.href = '/Shop'"><button>More Product</button></div>
+                    <div class="pproduct_getmore"><button id="btn-load-more">More Product</button></div>
                     <%
                         }
                     %>
@@ -210,7 +210,9 @@
         <script src="/CSS/DangStyles/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
         <!--<script src="/js/btnAddToCart.js"></script>-->
-        <script src="/js/DangScript/Home.js"></script>      
+        <script src="/js/DangScript/Home.js"></script>    
+        <!--<script src="/js/listProduct.js"></script>-->      
+
     </body>
 </html>
 

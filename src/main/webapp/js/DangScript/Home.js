@@ -1,3 +1,4 @@
+
 document.querySelectorAll(".pproduct_wishlist_ico").forEach(n => n.addEventListener('click', () => {
         n.classList.toggle("p_w_ico_animate");
     }));

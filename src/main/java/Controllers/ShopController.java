@@ -6,12 +6,17 @@ package Controllers;
 
 import DAOs.ProductDAO;
 import Models.tblProduct;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,21 +73,21 @@ public class ShopController extends HttpServlet {
                 int ProductID = Integer.parseInt(s[s.length - 1]);
                 if (ProductID == 0) {
                     response.sendRedirect("/Shop");
-                }else{
-                ProductDAO dao = null;
-                try {
-                    dao = new ProductDAO();
-                } catch (Exception ex) {
-                    Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    ProductDAO dao = null;
+                    try {
+                        dao = new ProductDAO();
+                    } catch (Exception ex) {
+                        Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    tblProduct pro = dao.getProductbyID(ProductID);
+                    request.setAttribute("Product", pro);
+                    request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
                 }
-                tblProduct pro = dao.getProductbyID(ProductID);
-                request.setAttribute("Product", pro);
-                request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
-                }
-            }else{
-                if(path.startsWith("/Shop/Search")){
+            } else {
+                if (path.startsWith("/Shop/Search")) {
                     String[] s = path.split("=");
-                    String inputValue = s[s.length-1];
+                    String inputValue = s[s.length - 1];
                     request.setAttribute("inputValue", inputValue);
                     request.getRequestDispatcher("/SearchProduct.jsp").forward(request, response);
                 }
@@ -101,7 +106,35 @@ public class ShopController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        if ("loadmore".equals(action)) {
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            int start = Integer.parseInt(request.getParameter("start"));
+            ProductDAO dao = null;
+            try {
+                dao = new ProductDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rs = dao.getAllProductLimit(start, limit);            
+            List<tblProduct> list = new ArrayList<>();
+                try {
+                    while (rs.next()) {
+                        int ProductID = rs.getInt("ProductID");
+                        String ProductName = rs.getString("ProductName");
+                        int ProductPrice = rs.getInt("Price");
+                        String ProductImageURL = rs.getString("ProductImageURL");
+                        list.add(new tblProduct(ProductID, ProductName, ProductPrice, ProductImageURL));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(list);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(json);
+            }        
     }
 
     /**

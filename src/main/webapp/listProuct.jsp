@@ -110,47 +110,10 @@
                 <div class="pproduct_container container">
                     <h1 class="pproduct_title">All Products</h1>
                     <div class="pproduct_content grid">
-                        <%
-                            ProductDAO pDAO = new ProductDAO();
-                            ResultSet rs1 = pDAO.getAllProduct();
-                            while (rs1.next()) {
-                        %>
-                        <!-- ================ Card 1 -->
-                        <div class="pproduct_card">
-                            <div class="pproduct_data_img">
-                                <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                                                         alt=""></div>
-                                <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
-                                    <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </form>
-                                <div class="pproduct_addCart">
-                                    <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
-                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
-                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
-                                            <span>Add to cart</span>
-                                        </button>
-                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
-                                        <input type="hidden" id="action" name="action" value="addtoCart">
-                                        <div class="input_back">
-                                            <i class="fa-solid fa-check"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pproduct_data_content">
-                                <div class="pproduct_data_des">
-                                    <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
-                                    <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
+                         <input type="hidden" id="userID" value="<%=ID%>">
 
                     </div>
-                        <div class="pproduct_getmore" onclick="location.href = '/Shop'"><button>More Product</button></div>
+                        <div class="pproduct_getmore"><button id="btn-load-more">More Product</button></div>
                 </div>
             </section>
 
@@ -162,6 +125,7 @@
         <script src="/CSS/DangStyles/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
         <!--<script src="/js/btnAddToCart.js"></script>-->
+        <script src="/js/listProduct.js"></script>      
         <script src="/js/DangScript/Home.js"></script>      
     </body>
 </html>
