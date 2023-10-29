@@ -1,6 +1,6 @@
 <%-- 
-    Document   : Admin_Account_Info
-    Created on : Oct 23, 2023, 2:09:09 PM
+    Document   : Admin_Account_Setting
+    Created on : Oct 29, 2023, 11:51:30 AM
     Author     : khoic
 --%>
 
@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
               integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/CSS/admininfo.css">
+        <link rel="stylesheet" href="/CSS/Admin_Account_setting.css">
     </head>
     <body>
         <%
@@ -26,12 +26,12 @@
         %>
         <div class="container">
             <jsp:include page="Admin_navigation.jsp">
-                <jsp:param name="ID" value="<%= us.getUserID() %>"/>
+                <jsp:param name="ID" value="<%= us.getUserID()%>"/>
             </jsp:include>     
-                <div class="admin_background">
+            <div class="admin_background">
 
-                </div>
-                <div class="admin_info grid-item">
+            </div>
+            <div class="admin_info grid-item">
                 <jsp:include page="Admin_anlyzes.jsp"></jsp:include>    
                     <div class="admin_background"></div>
                     <div class="admin_content">
@@ -77,17 +77,29 @@
                             <div class="inputbox">
                                 <textarea class="input" placeholder="Address" name="address" id="" cols="30" rows="10"><%= us.getAddress()%></textarea>
                             </div>
+                            <div class="message">
+                                <p id="show_message" style="color: green;"></p>
+                            </div>
                             <div class="btn_admin">
-                                <input type="button" name="btn_remove" id="remove_account" class="ld" value="Remove account">
                                 <input type="hidden" id="userID" name="userId" value="<%= us.getUserID()%>" >
-                                <input type="submit" id="updateinfo" class="dm" name="btn_admin" value="Update Info">
+                                <input type="submit" id="updateinfo" class="dm" name="btn_setting" value="Update Info">
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
+            </div>  
         </div>
         <script src="/js/DangScript/jquery.min.js"></script>
-        <script src="/js/admininfo.js"></script>
+        <script src="/js/Admin_Account_setting.js"></script> 
+        <script>
+            <% String message = (String) request.getAttribute("success");
+                if (message != null && !message.isEmpty()) {
+            %>
+            let message = document.querySelector('#show_message');
+            message.innerHTML = "<%=message%>";
+            <%
+                }
+            %>
+        </script>
     </body>
 </html>

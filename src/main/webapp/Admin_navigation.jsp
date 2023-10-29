@@ -4,7 +4,12 @@
     Author     : khoic
 --%>
 
+<%@page import="Models.tblUser"%>
+<%@page import="DAOs.AccountDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+int usId = Integer.parseInt(request.getParameter("ID")) ;
+%>
 <div class="navigation grid-item">
     <div class="logo">
         <img src="/img/Rectangle 201.png" alt="">
@@ -14,7 +19,7 @@
 
             <li>
                 <i class="fa-solid fa-house-chimney"></i>
-                <a href="#">Dashboard</a>
+                <a href="/Admin">Dashboard</a>
             </li>
             <li><i class="fa-solid fa-box-archive"></i>
                 <a href="">My Product</a>
@@ -31,7 +36,7 @@
 
             <li>
                 <i class="fa-solid fa-user-gear"></i>
-                <a href="#">Account Setting</a>
+                <a href="/Admin/Setting/<%=usId%>">Account Setting</a>
             </li>
             <li>
                 <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>

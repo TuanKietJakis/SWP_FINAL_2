@@ -124,6 +124,21 @@ public class AdminController extends HttpServlet {
             } catch (Exception e) {
             }
 
+        } else {
+            if (path.startsWith("/Admin/Setting/")) {
+                try {
+                    String[] s = path.split("/");
+                    int UserID = Integer.parseInt(s[s.length - 1]);
+                    AccountDAO dao = new AccountDAO();
+                    tblUser us = new tblUser();
+                    us = dao.GetAccountByID(UserID);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", us);
+                    request.getRequestDispatcher("/Admin_Account_Setting.jsp").forward(request, response);
+                } catch (Exception e) {
+
+                }
+            }
         }
     }
 
@@ -194,6 +209,33 @@ public class AdminController extends HttpServlet {
             }
 
         } catch (Exception e) {
+        }
+        
+        if (request.getParameter("btn_setting") != null) {
+            try {
+                String day = request.getParameter("day");
+                String month = request.getParameter("month");
+                String year = request.getParameter("year");
+                String gender = request.getParameter("genderSelect");
+                String email = request.getParameter("email");
+                String phone = request.getParameter("phonenumber");
+                String address = request.getParameter("address");
+                int userId = Integer.parseInt(request.getParameter("userId"));
+                String birthday = year + "-" + month + "-" + day;             
+                AccountDAO dao = new AccountDAO();
+                int kq = dao.UpdateAdminAccount(birthday, gender, phone, email, address, userId);
+                tblUser user = dao.GetAccountByID(userId);
+                if (kq != 0) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    request.setAttribute("success", "Account update successfully");
+                    request.getRequestDispatcher("/Admin_Account_Setting.jsp").forward(request, response);
+//                      response.sendRedirect("/Admin/Setting/" + userId);
+                } else {
+
+                }
+            } catch (Exception e) {
+            }
         }
 
     }

@@ -22,7 +22,9 @@
             int usID = (int) session.getAttribute("AdminstratorID");
         %>
         <div class="container">
-            <jsp:include page="Admin_navigation.jsp"></jsp:include>             
+            <jsp:include page="Admin_navigation.jsp">
+                <jsp:param name="ID" value="<%=usID%>"/>
+            </jsp:include>             
                 <div class="admin_background">
 
                 </div>
