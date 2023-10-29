@@ -1,190 +1,158 @@
-<%-- 
-    Document   : Analytics
-    Created on : Jun 2, 2023, 8:34:48 AM
-    Author     : User
---%>
+<%-- Document : Analytics Created on : Jun 2, 2023, 8:34:48 AM Author : User --%>
 
-<%@page import="DAOs.RatingDAO"%>
-<%@page import="DAOs.CategoryDAO"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="DAOs.BrandDAO"%>
-<%@page import="DAOs.ProductDAO"%>
-<%@page import="Models.tblProduct"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Create Product</title>
+    <%@page import="DAOs.RatingDAO" %>
+        <%@page import="DAOs.CategoryDAO" %>
+            <%@page import="java.sql.ResultSet" %>
+                <%@page import="DAOs.BrandDAO" %>
+                    <%@page import="DAOs.ProductDAO" %>
+                        <%@page import="Models.tblProduct" %>
+                            <%@page contentType="text/html" pageEncoding="UTF-8" %>
+                                <!DOCTYPE html>
+                                <html>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/bootstrap.min.css">
-        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/fonts/icomoon/style.css">
-        <!--  -->
+                                <head>
+                                    <meta charset="UTF-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <title>Create Product</title>
+                                    <link rel="stylesheet"
+                                        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+                                        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+                                        crossorigin="anonymous" referrerpolicy="no-referrer" />
+                                    <link rel="stylesheet" href="/CSS/VyStyle/CreateProduct.css">
+                                    <style>
+                                        .table-data {
+                                            text-align: center;
+                                        }
 
-        <!-- Style -->
-        <link rel="stylesheet" href="<%=request.getContextPath()%>/CSS/StyleInputForm.css">
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/CSS/button5.css">
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/CSS/StyleAdminPanel.css">
-        <!--  -->
-        <style>
-            .table-data{
-                text-align: center;
-            }
-            .error {
-                color: red;
-                border-style: none;
-            }
-        </style>
-        <script src="<%=request.getContextPath()%>/js/ValidateProduct.js"></script>
-    </head>
-    <body>
-        <
-        <!-- SIDEBAR -->
-        <%@include file="/JSP/SectionList.jsp" %>  
-        <!-- SIDEBAR -->
+                                        .error {
+                                            color: red;
+                                            border-style: none;
+                                        }
+                                    </style>
+                                    <script src="<%=request.getContextPath()%>/js/ValidateProduct.js"></script>
+                                </head>
 
+                                <body>
+                                    <div class="container">
+                                        <jsp:include page="/Admin_navigation.jsp"></jsp:include>
+                                        <div class="admin_background"></div>
+                                        <div class="admin_info grid-item">
+                                            <jsp:include page="/Admin_anlyzes.jsp"></jsp:include>
+                                            <div class="admin_background"></div>
+                                            <div class="admin_content">
+                                                <div class="admin_content_info">
+                                                    <div class="product-img">
+                                                        <img src="/img/Item8.png" alt="">
+                                                    </div>
+                                                    <button class="admin_content_info_name" style="text-align: center;">
+                                                        <span class="file-upload"><i class="fas fa-plus"></i></span>
+                                                    </button>
+                                                    <input id="file-upload" type="file" name="txtProductImageURL"
+                                                        accept="image/png, image/jpeg" />
+                                                    <p class="admin_text"></p>
 
+                                                    <div class="admin_btn">
+                                                        <span><i class="fa-solid fa-arrow-left"></i></span>
 
-        <!-- CONTENT -->
-        <section id="content">
+                                                    </div>
+                                                </div>
+                                                <div class="admin_content_infos">
+                                                    <form class="admin_form" id="update_form"
+                                                        onsubmit="return ValidAllProductUpdate()"
+                                                        action="ProductController" enctype="multipart/form-data"
+                                                        method="post">
+                                                        <div class="inputbox">
+                                                            <div class="birthday">
+                                                                <label class="lb-title">Brand ID</label>
+                                                                <label class="lb-title">Category ID</label>
+                                                                <select name="txtBrand" class="input" id="day">
+                                                                    <% BrandDAO DaoB=new BrandDAO(); ResultSet
+                                                                        rs=DaoB.GetAll(); while (rs.next()) { %>
+                                                                        <option value="<%=rs.getInt(" BrandID")%>">
+                                                                            <%=rs.getString("BrandName")%>
+                                                                        </option>
+                                                                        <% } %>
+                                                                </select>
 
-            <!-- MAIN -->
-            <main>
-                <div class="head-title">
-                    <div class="left">
-                        <h1>Create Product</h1>
-                        <ul class="breadcrumb">
-                            <li><i class='bx bx-chevron-right' ></i></li>
-                            <li>
-                                <a class="active" href="/Product">Return to My Store</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="content">    
-                    <div class="container">
-                        <div class="table-data">
-                            <div class="col-md-12">
-                                <div class="box">
-                                    <form class="mb-5" method="post" onsubmit="return ValidAllProductCreate()" action="ProductController" enctype="multipart/form-data">
-                                        <div class="row">  
-                                            <div class="col-md-6 form-group">
-                                                <label for="email" class="col-form-label">Product ID</label>
-                                                <input type="number" class="form-control" name="txtProductID"  id="ID" >
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="name" class="col-form-label">Category</label>
-                                                <select name="slctCatID" id="brand" class="form-control"> 
-                                                    <%
-                                                        CategoryDAO Dao = new CategoryDAO();
-                                                        ResultSet rs1 = Dao.GetAll();
-                                                        while (rs1.next()) {
-                                                    %>
-                                                    <option value="<%=rs1.getInt("CategoryID")%>"><%=rs1.getString("CatName")%></option>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
-                                            </div>
-                                        </div>
+                                                                <select name="txtCategoryID" class="input" id="month">
+                                                                    <% CategoryDAO Dao=new CategoryDAO(); ResultSet
+                                                                        rs1=Dao.GetAll(); while (rs1.next()) { %>
+                                                                        <option value="<%=rs1.getInt(" CategoryID")%>" >
+                                                                            <%=rs1.getString("CatName")%>
+                                                                        </option>
+                                                                        <% } %>
+                                                                </select>
+                                                                <input type="hidden" name="txtRatingID" value="1">
+                                                            </div>
+                                                        </div>
 
-                                        <div class="row">                                   
-                                            <div class="col-md-6 form-group">
-                                                <label for="name" class="col-form-label">Name</label>
-                                                <input type="text" class="form-control" name="txtProName" id="name">
-                                                <div class="error" id="ErrorProName"></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 form-group">
-                                                    <label for="email" class="col-form-label">Price</label>
-                                                    <input type="text" class="form-control" name="txtPrice" id="price" >
-                                                    <div class="error" id="ErrorProPrice"></div>
+                                                        <div class="inputbox">
+                                                            <div class="label-group"><label class="lb-title-np">Product
+                                                                    Name</label>
+                                                                <input class="input" placeholder="Product Name"
+                                                                    type="text" name="txtProductName" value=""
+                                                                    id="email">
+                                                            </div>
+                                                        </div>
+                                                        <div class="inputbox">
+                                                            <div class="label-group"><label
+                                                                    class="lb-title-np">Price</label>
+                                                                <input class="input" placeholder="Price" type="text"
+                                                                    name="txtPrice" value="" id="phone">
+                                                            </div>
+                                                        </div>
+                                                        <div class="inputbox">
+                                                            <div class="birthday-1">
+                                                                <label class="lb-title">Quantity</label>
+                                                                <label class="lb-title">Size</label>
+                                                                <label class="lb-title">Active</label>
+                                                                <input type="text" placeholder="Quantity"
+                                                                    name="txtQuantity" value="" class="input" id="day">
+                                                                <input type="text" placeholder="Size" name="txtSize"
+                                                                    value="" class="input" id="month">
+                                                                <select name="txtActive" class="input" id="month">
+                                                                    <option value="1"> In Stock
+                                                                    </option>
+                                                                    <option value="2"> Sold Out
+                                                                    </option>
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inputbox">
+                                                            <div class="label-group"><label
+                                                                    class="lb-title-np">Description</label>
+                                                                <textarea class="input" placeholder="Description"
+                                                                    name="txtProductDes" value="" id="" cols="30"
+                                                                    rows="3"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="btn_admin">
+
+                                                            <div class="btn_admin">
+                                                                <input type="hidden" id="userID" name="userId" value="">
+                                                                <input type="submit" id="updateinfo" class="dm"
+                                                                    name="btnInsertPro" value="Add Product">
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="name" class="col-form-label">Brand</label>
-                                                <select name="selectBrand" id="brand" class="form-control"> 
-                                                    <%
-                                                        BrandDAO DaoB = new BrandDAO();
-                                                        ResultSet rs = DaoB.GetAll();
-                                                        while (rs.next()) {
-                                                    %>
-                                                    <option value="<%=rs.getInt("BrandID")%>"><%=rs.getString("BrandName")%></option>
-                                                    <%
-                                                        }
-                                                    %>
-                                                </select>
-                                            </div>
                                         </div>
+                                    </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            const fileUpload = document.getElementById("file-upload");
+                                            const customUpload = document.querySelector(".admin_content_info_name");
 
-                                        <div class="col-md-6 form-group">
-                                            <label for="name" class="col-form-label">Rating</label>
-                                            <select name="selectRatingID" id="rating" class="form-control"> 
-                                                <%
-                                                    RatingDAO DaoR = new RatingDAO();
-                                                    ResultSet rs2 = DaoR.GetAll();
-                                                    while (rs.next()) {
-                                                %>
-                                                <option value="<%=rs2.getInt("RatingID")%>"><%=rs.getInt("RateNumber")%></option>
-                                                <%
-                                                    }
-                                                %>
-                                            </select>
-                                        </div>
+                                            customUpload.addEventListener("click", function () {
+                                                fileUpload.click();
+                                            });
+                                        });
+                                    </script>
+                                    <script src="<%=request.getContextPath()%>/Jquery.js"></script>
+                                    <script src="<%=request.getContextPath()%>/bootstrap.min.js"></script>
+                                </body>
 
-
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Product Des</label>
-                                                <input type="text" class="form-control" name="txtProductDes" id="productdes" >
-                                                <div class="error" id="ErrorProCountry"></div>
-                                            </div>
-                                            <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Quantity</label>
-                                                <input type="text" class="form-control" name="txtQuantity" id="quantity" >
-                                                <div class="error" id="ErrorProSize"></div>
-                                            </div>
-
-                                        </div>                               
-                                           <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Active</label>
-                                                <input type="text" class="form-control" name="txtActive" id="active" >
-                                                <div class="error" id="ErrorProSize"></div>
-                                            </div>
-                                          
-
-                                      
-                                        <div class="row">
-                                            <div class="col-md-12 form-group">
-                                                <label for="name" class="col-form-label">Product Image</label>
-                                                <input type="file"  id="ProImg" name="fileProImg" accept="image/png, image/jpeg" required />
-                                            </div>
-                                        </div>
-                                              <div class="col-md-12 form-group">
-                                                <label for="email" class="col-form-label">Size</label>
-                                                <input type="text" class="form-control" name="txtSize" id="size" >
-                                                <div class="error" id="ErrorProSize"></div>
-                                            </div> 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input type="submit" value="Submit" name="btnInsertPro" class="button-5 btn-block btn-primary rounded-0 py-2 px-4">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <!-- MAIN -->
-        </section>
-        <!-- CONTENT -->
-
-        <script src="<%=request.getContextPath()%>/Jquery.js"></script>
-        <script src="<%=request.getContextPath()%>/bootstrap.min.js"></script>
-    </body>
-</html>
+                                </html>
