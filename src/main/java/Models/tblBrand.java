@@ -9,9 +9,14 @@ package Models;
  * @author Kiet
  */
 public class tblBrand {
+
+    public tblBrand(String BrandName, int Active) {
+        this.BrandName = BrandName;
+        this.Active = Active;
+    }
     int BrandID;
     String BrandName;
-    byte Active;
+    int Active;
 
     public int getBrandID() {
         return BrandID;
@@ -29,15 +34,15 @@ public class tblBrand {
         this.BrandName = BrandName;
     }
 
-    public byte getActive() {
+    public int getActive() {
         return Active;
     }
 
-    public void setActive(byte Active) {
+    public void setActive(int Active) {
         this.Active = Active;
     }
 
-    public tblBrand(int BrandID, String BrandName, byte Active) {
+    public tblBrand(int BrandID, String BrandName, int Active) {
         this.BrandID = BrandID;
         this.BrandName = BrandName;
         this.Active = Active;

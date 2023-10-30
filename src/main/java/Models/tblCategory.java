@@ -11,7 +11,7 @@ package Models;
 public class tblCategory {
     int CategoryID;
     String CatName;
-    byte Active;
+    int Active;
 
     public int getCategoryID() {
         return CategoryID;
@@ -19,6 +19,11 @@ public class tblCategory {
 
     public void setCategoryID(int CategoryID) {
         this.CategoryID = CategoryID;
+    }
+
+    public tblCategory(String CatName, int Active) {
+        this.CatName = CatName;
+        this.Active = Active;
     }
 
     public String getCatName() {
@@ -29,15 +34,15 @@ public class tblCategory {
         this.CatName = CatName;
     }
 
-    public byte getActive() {
+    public int getActive() {
         return Active;
     }
 
-    public void setActive(byte Active) {
+    public void setActive(int Active) {
         this.Active = Active;
     }
 
-    public tblCategory(int CategoryID, String CatName, byte Active) {
+    public tblCategory(int CategoryID, String CatName, int Active) {
         this.CategoryID = CategoryID;
         this.CatName = CatName;
         this.Active = Active;

@@ -53,8 +53,8 @@
                     <div class="order">
                         <div class="Header">
                             <div class="pHeader"><%= totalProducts%> product</div>
-                            <label class="addNewBrand">Add new brands</label>                           
-                            <label class="addNewCategory">Add new categories</label>
+                            <label class="addNewBrand" onclick="location.href = '/addNewBrand'">Add new Brands</label>
+                            <label class="addNewCategory"  onclick="location.href = '/addNewCategory'">Add new categories</label>
                             <label class="addNewProduct">Add new products</label>
                         </div>
                         <table id="example">
@@ -97,5 +97,6 @@
 
         <script src="<%= request.getContextPath()%>/JavaScript/script.js"></script>
         <script src="https://kit.fontawesome.com/53d8d93477.js" crossorigin="anonymous"></script>
+
     </body>
 </html>

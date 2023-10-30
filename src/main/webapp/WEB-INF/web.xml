@@ -20,6 +20,10 @@
         <servlet-class>Controllers.ProductController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>vnpayStatus</servlet-name>
+        <servlet-class>com.vnpay.common.vnpayStatus</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>Controllers.LoginController</servlet-class>
     </servlet>
@@ -59,6 +63,14 @@
         <servlet-name>productAdminController</servlet-name>
         <servlet-class>Controllers.productAdminController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BrandController</servlet-name>
+        <servlet-class>Controllers.BrandController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BrandController</servlet-name>
+        <url-pattern>/addNewBrand/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -124,6 +136,47 @@
         <servlet-name>productAdminController</servlet-name>
         <url-pattern>/Admin/Product/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>com.vnpay.common.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>vnpayQuery</servlet-name>
+        <servlet-class>com.vnpay.common.vnpayQuery</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>vnpayRefund</servlet-name>
+        <servlet-class>com.vnpay.common.vnpayRefund</servlet-class>
+    </servlet>
+  
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vnpayQuery</servlet-name>
+        <url-pattern>/vnpayquery/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vnpayRefund</servlet-name>
+        <url-pattern>/vnpayrefund/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>vnpayStatus</servlet-name>
+        <url-pattern>/vnpayStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BrandController</servlet-name>
+        <url-pattern>/BrandController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryController</servlet-name>
+        <url-pattern>/addNewCategory</url-pattern>
+    </servlet-mapping>
+      <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>Controllers.CategoryController</servlet-class>
+    </servlet>
     <session-config>
         <session-timeout>
             30

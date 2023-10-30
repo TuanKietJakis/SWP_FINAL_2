@@ -4,6 +4,7 @@
  */
 package DAOs;
 
+import Models.tblCategory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,5 +31,36 @@ public class CategoryDAO {
         } catch (SQLException e) {
         }
         return null;
+    }
+               public int AddNewCategory(tblCategory pro) {
+        String sql = "insert into tblCategory values(?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, pro.getCatName());
+            ps.setInt(2, pro.getActive());
+   
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+ 
+
+    public boolean isCategoryExists(String Category) {
+        try {
+            String sql = "SELECT COUNT(*) FROM tblCategory WHERE CatName = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Category);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
