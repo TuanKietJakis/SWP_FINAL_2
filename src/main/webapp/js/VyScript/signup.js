@@ -14,11 +14,11 @@ if (error) {
 }
 
 document.getElementById('agree-checkbox').addEventListener('change', function () {
- if (this.checked) {
-    document.getElementById('Signup_btn').disabled = false;
- } else {
-    document.getElementById('Signup_btn').disabled = true;
- }
+    if (this.checked) {
+        document.getElementById('Signup_btn').disabled = false;
+    } else {
+        document.getElementById('Signup_btn').disabled = true;
+    }
 });
 let form = document.getElementById("form_sign_up");
 
@@ -36,6 +36,9 @@ form.addEventListener("submit", function (event) {
     } else if (username.length > 50) {
         msg += "Username must less than 50 - ";
         // error.classList.add("error_show");
+        valid = false;
+    } else if (!/^(?=.*[a-zA-Z])(?=.*[0-9])/.test(username)) {
+        msg += "Username must contain both letters and numbers - ";
         valid = false;
     }
 
@@ -69,6 +72,4 @@ form.addEventListener("submit", function (event) {
         error_msg.innerHTML = msg.substring(0, msg.length - 2);
         event.preventDefault();
     }
-});
-
-
+})
