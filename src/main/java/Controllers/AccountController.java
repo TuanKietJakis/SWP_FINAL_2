@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controllers;
 
 import DAOs.AccountDAO;
@@ -24,6 +23,7 @@ import java.util.logging.Logger;
  * @author Kiet CHUA XONG NHAAAAAAAAA
  */
 public class AccountController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,6 +72,8 @@ public class AccountController extends HttpServlet {
              * @param
              */
             request.getRequestDispatcher("JSP/AccountPage/MainPage.jsp").forward(request, response);
+        } else if (path.endsWith("/Account/UpdateProfileUser")) {
+            request.getRequestDispatcher("/Update.jsp").forward(request, response);
         } else {
             if (path.startsWith("/Account/View/")) {
                 /**
@@ -166,7 +168,7 @@ public class AccountController extends HttpServlet {
                                         request.setAttribute("ID", ID);
                                         request.getRequestDispatcher("/JSP/AccountPage/Update.jsp").forward(request, response);
                                     } catch (Exception ex) {
-                                       //homecontroller
+                                        //homecontroller
                                     }
                                 }
                             }
@@ -188,6 +190,7 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String btnUpdateProfileUser = request.getParameter("btnUpdateProfileUser");
         if (request.getParameter("btnUpdate") != null && request.getParameter("btnUpdate").equals("Update")) {
 
             try {
@@ -203,7 +206,27 @@ public class AccountController extends HttpServlet {
                 int kq = dao.UpdateAccount(fullname, username, phone, email, address, gender, DoB, ID);
                 if (kq != 0) {
                     response.sendRedirect("/Account");
-                } 
+                }
+            } catch (Exception ex) {
+
+            }
+        }
+        if (btnUpdateProfileUser != null && btnUpdateProfileUser.equals("Update")) {
+
+            try {
+                String fullname = request.getParameter("Fullname");
+                String username = request.getParameter("Username");
+                String phone = request.getParameter("Mobile_Number");
+                String email = request.getParameter("Email");
+                String address = request.getParameter("Address");
+                String gender = request.getParameter("slctGender");
+                String DoB = request.getParameter("DoB");
+                int ID = Integer.parseInt(request.getParameter("hiddenID"));
+                AccountDAO dao = new AccountDAO();
+                int kq = dao.UpdateAccount(fullname, username, DoB, gender, phone, email, address, ID);
+                if (kq != 0) {
+                    response.sendRedirect("/Account/UpdateProfileUser");
+                }
             } catch (Exception ex) {
 
             }
