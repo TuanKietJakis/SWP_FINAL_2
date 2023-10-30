@@ -55,6 +55,10 @@
         <servlet-name>ProfileController</servlet-name>
         <servlet-class>Controllers.ProfileController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>productAdminController</servlet-name>
+        <servlet-class>Controllers.productAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountController</servlet-name>
         <url-pattern>/Account/*</url-pattern>
@@ -115,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>ProfileController</servlet-name>
         <url-pattern>/Profile/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productAdminController</servlet-name>
+        <url-pattern>/Admin/Product/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

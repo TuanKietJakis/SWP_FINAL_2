@@ -34,6 +34,20 @@ public class ProductDAO {
     public ProductDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
+    
+    public int getTotalProductCount() {
+    int total = 0;
+    try {
+        ps = conn.prepareStatement("SELECT COUNT(*) AS total FROM tblProduct");
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            total = rs.getInt("total");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return total;
+}
 
     public ResultSet getAllProduct() {
         String sql = "select*from tblProduct";
