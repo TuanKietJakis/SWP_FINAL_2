@@ -4,14 +4,20 @@
  */
 package com.vnpay.common;
 
+import DAOs.CartDAO;
+import DAOs.OrderDetailDAO;
 import DAOs.vnpayDAO;
+import Models.tblCart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,37 +64,64 @@ public class vnpayStatus extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String vnp_Amount = request.getParameter("vnp_Amount");
-        String vnp_BankCode = request.getParameter("vnp_BankCode");
-        String vnp_PayDate = request.getParameter("vnp_PayDate");
-        String vnp_TmnCode = request.getParameter("vnp_TmnCode");
-        String vnp_TxnRef = request.getParameter("vnp_TxnRef");
-        String vnp_SecureHash = request.getParameter("vnp_SecureHash");
 
-        if (vnp_Amount != null && vnp_BankCode != null && vnp_PayDate != null
-                && vnp_TmnCode != null && vnp_TxnRef != null && vnp_SecureHash != null) {
-            // Các tham số đều có giá trị, bạn có thể tiếp tục xử lý.
+        String path = request.getRequestURI();
+        if (path.startsWith("/vnpayStatus")) {
+            HttpSession session = request.getSession();
+            int vnp_UserID = (int) session.getAttribute("pay_UserID");
+            String vnp_FullName = (String) session.getAttribute("pay_fullName");
+            String vnp_PayDate = request.getParameter("vnp_PayDate");
+// Chuyển đổi chuỗi thành đối tượng Date
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            Date date = null;
+            try {
+                date = inputFormat.parse(vnp_PayDate);
+            } catch (ParseException ex) {
+                Logger.getLogger(vnpayStatus.class.getName()).log(Level.SEVERE, null, ex);
+            }
+// Định dạng lại thành chuỗi theo định dạng mới
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            //sau khi format
+            String formattedDate = outputFormat.format(date);
+            int vnp_Amount = (int) session.getAttribute("pay_orderPrice");
+            String vnp_PhoneNumber = (String) session.getAttribute("pay_phone");
+            String vnp_Address = (String) session.getAttribute("pay_address");
 
-            // Tiến hành lưu vào CSDL
             vnpayDAO dao = null;
+            CartDAO cdao = null;
+            OrderDetailDAO odao = null;
             try {
                 dao = new vnpayDAO();
+                cdao = new CartDAO();
+                odao = new OrderDetailDAO();
             } catch (Exception ex) {
                 Logger.getLogger(vnpayStatus.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-//                dao.insertPaymentInfo(vnp_Amount, vnp_BankCode, vnp_PayDate, vnp_TmnCode, vnp_TxnRef, vnp_SecureHash);
-                // Insert với các trường còn lại tương ứng.
+                dao.AddOrderFromCart(vnp_UserID, vnp_FullName, formattedDate,
+                        vnp_Amount, vnp_PhoneNumber, vnp_Address); // add order in tblorder
+
+                int orderID = dao.GetOrderID(formattedDate, vnp_UserID); //lay orderID
+                int result = 0;
+
+                String[] CartID = (String[]) session.getAttribute("pay_CartID");
+                for (int i = 0; i < CartID.length; i++) {
+                    tblCart item = cdao.getItemforAdd(Integer.parseInt(CartID[i]));
+                    tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
+                    cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
+                    result += odao.AddOrderDetail(item, orderID);
+                }
+                if (result == CartID.length) {
+                    cdao.DeleteAllIteminCart(vnp_UserID);
+                    request.getRequestDispatcher("/thanksForPayMent.jsp").forward(request, response);
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            // Gửi kết quả về frontend (nếu cần)
-            response.getWriter().write("Success");
-        } else {
-            // Một hoặc nhiều tham số thiếu giá trị, xử lý tùy ý (ví dụ: trả về thông báo lỗi).
-            response.getWriter().write("Invalid Parameters");
         }
+
     }
 
     /**

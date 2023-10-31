@@ -13,6 +13,7 @@ Models\tblBrand.class
 DAOs\BrandDAO.class
 ForgotPassword\ForgotPassword$1.class
 com\vnpay\common\vnpayStatus.class
+com\vnpay\common\paymentController.class
 Models\tblOrderDetail.class
 com\vnpay\common\Config.class
 Models\tblCart.class

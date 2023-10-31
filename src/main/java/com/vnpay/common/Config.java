@@ -20,9 +20,9 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author CTT VNPAY
  */
 public class Config {
-//http://localhost:8080/vnpay_jsp/vnpay_return.jsp
+
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "index.jsp";
+    public static String vnp_ReturnUrl = "http://localhost:7777/vnpayStatus";
     public static String vnp_TmnCode = "LCT2O8FO";
     public static String secretKey = "CMBBTRLMCPYTIEBWUPATINMYNAOMRLIZ";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

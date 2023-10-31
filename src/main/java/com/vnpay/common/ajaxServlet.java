@@ -26,7 +26,7 @@ public class ajaxServlet extends HttpServlet {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        long amount = Integer.parseInt(req.getParameter("amount")) * 100;
+        long amount = Integer.parseInt(req.getParameter("amount")) *100;
         String bankCode = req.getParameter("bankCode");
 
         String vnp_TxnRef = Config.getRandomNumber(8);
@@ -106,23 +106,8 @@ public class ajaxServlet extends HttpServlet {
 
 @Override
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String vnp_Amount = request.getParameter("vnp_Amount");
-    String vnp_BankCode = request.getParameter("vnp_BankCode");
-    String vnp_BankTranNo = request.getParameter("vnp_BankTranNo");
-    String vnp_CardType = request.getParameter("vnp_CardType");
-    String vnp_OrderInfo = request.getParameter("vnp_OrderInfo");
-    String vnp_PayDate = request.getParameter("vnp_PayDate");
-    String vnp_ResponseCode = request.getParameter("vnp_ResponseCode");
-
-    try {
-        vnpayDAO dao = new vnpayDAO();
-        dao.insertPaymentInfo(vnp_Amount, vnp_BankCode, vnp_BankTranNo, vnp_CardType, vnp_OrderInfo, vnp_PayDate, vnp_ResponseCode);
-
-        System.out.println("Payment information saved successfully");
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Failed to save payment information");
-    }
+    String path = request.getRequestURI();
+       
 }
 
 

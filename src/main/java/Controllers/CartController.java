@@ -179,6 +179,7 @@ public class CartController extends HttpServlet {
         }
         if (request.getParameter("checkout") != null) {
             String[] CartID = request.getParameter("listProduct").split(",");
+            
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             int Total = Integer.parseInt(request.getParameter("total"));
             String receivePhone = request.getParameter("receivePhone");
@@ -214,7 +215,7 @@ public class CartController extends HttpServlet {
                         cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
                         result += odao.AddOrderDetail(item, OrderID);
                     }
-                    if(result == CartID.length){
+                    if (result == CartID.length) {
                         cdao.DeleteAllIteminCart(UserID);
                         response.sendRedirect("/OrderHistory");
                     }
@@ -222,8 +223,15 @@ public class CartController extends HttpServlet {
                     response.sendRedirect("/Cart/Info/" + order.getUserID());
                 }
             } else {
-                /*On VNPay*/
-
+                /*VN Pay*/
+                HttpSession session = request.getSession();
+                session.setAttribute("pay_orderPrice", Total);
+                session.setAttribute("pay_fullName", receiveName);
+                session.setAttribute("pay_phone", receivePhone);
+                session.setAttribute("pay_address", receiveAddress);
+                session.setAttribute("pay_UserID", UserID);
+                session.setAttribute("pay_CartID", CartID);
+                response.sendRedirect("/Payment");
             }
         }
     }

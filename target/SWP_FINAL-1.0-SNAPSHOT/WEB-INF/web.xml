@@ -67,6 +67,10 @@
         <servlet-name>BrandController</servlet-name>
         <servlet-class>Controllers.BrandController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>paymentController</servlet-name>
+        <servlet-class>com.vnpay.common.paymentController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BrandController</servlet-name>
         <url-pattern>/addNewBrand/*</url-pattern>
@@ -148,7 +152,6 @@
         <servlet-name>vnpayRefund</servlet-name>
         <servlet-class>com.vnpay.common.vnpayRefund</servlet-class>
     </servlet>
-  
     <servlet-mapping>
         <servlet-name>ajaxServlet</servlet-name>
         <url-pattern>/vnpayajax/*</url-pattern>
@@ -173,10 +176,14 @@
         <servlet-name>CategoryController</servlet-name>
         <url-pattern>/addNewCategory</url-pattern>
     </servlet-mapping>
-      <servlet>
+    <servlet>
         <servlet-name>CategoryController</servlet-name>
         <servlet-class>Controllers.CategoryController</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>paymentController</servlet-name>
+        <url-pattern>/Payment</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
