@@ -226,6 +226,12 @@ body{
     color: #ffffff;
     font-size: larger;
 }
+
+.update:hover{
+    background: linear-gradient(279deg, rgba(255, 7, 160, 0.46) 30.69%, rgba(253, 219, 100, 0.59) 84.48%);
+    opacity: 0.5;
+}
+
 .update a{
     /*    color: #ffffff;
         font-size: larger;*/
@@ -237,4 +243,34 @@ body{
     position: absolute;
     right: 20px;
     top: 27px;
+}
+
+
+/*Validate*/
+.error {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: -110%;
+  left: 0;
+  width: 100vw;
+  text-align: center;
+  background-color: #ee2a7b;
+  z-index: 99;
+  color: #ddd;
+  padding: 1rem;
+  transition: var(--tran-05);
+}
+
+.error span {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 24px;
+}
+
+
+.error_show {
+  position: absolute;
+  top: 0;
 }
