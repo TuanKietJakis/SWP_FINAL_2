@@ -25,8 +25,15 @@
     </head>
     <body>
     <body>
+        <%
+            int usID = (int) session.getAttribute("AdminstratorID");
+        %>
         <!-- SIDEBAR -->
-        <%@include file="Admin_navigation.jsp" %>     
+        <div class="order_list_container">
+        
+        <jsp:include page="Admin_navigation.jsp">
+                <jsp:param name="ID" value="<%=usID%>"/>
+            </jsp:include>      
         <!-- SIDEBAR -->
         <!-- CONTENT -->
         <section id="content">
@@ -93,6 +100,7 @@
             </main>
             <!-- MAIN -->
         </section>
+        </div>
         <!-- CONTENT -->
 
         <script src="<%= request.getContextPath()%>/JavaScript/script.js"></script>

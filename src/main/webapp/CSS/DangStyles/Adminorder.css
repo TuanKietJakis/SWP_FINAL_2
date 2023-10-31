@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap");
+@import url('BaseStyle.css');
+
+body {
+    margin: 0;
+    background: #fff;
+    height: 100vh;
+
+}
+
+
+/* ============================= Right side ================== */
+.order_list_rightzone {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.order_list_header {
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-height: 117px;
+    padding: 0 18px;
+    flex: 1;
+}
+
+.order_list_header_search {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    max-width: 496px;
+    flex: 1;
+    display: flex;
+    border-radius: 100px;
+
+    & input {
+        width: 100%;
+        margin: 0 14px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    & button {
+        box-shadow: -1px 0 4px 1px rgba(0, 0, 0, 0.1);
+        color: #FFF;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        padding: 10px 40px;
+        border-radius: 100px;
+        background: #C0B8EA;
+    }
+}
+
+.order_list_header_table {
+    padding: 25px;
+
+    & h1 {
+        color: #000;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
+
+.order_list_table_frame {
+    flex: 1;
+    background: #fff;
+    padding: 8px 8px 18px 21px;
+    display: flex;
+    flex-direction: column;
+}
+
+.order_list_table_title {
+    padding: 22px 0;
+
+    & h2 {
+        color: #000;
+        font-family: Inter;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: normal;
+
+        & span {
+            font-weight: 600;
+        }
+    }
+}
+
+.order_list_table_body {
+    position: relative;
+    flex: 1;
+    border: 1px solid;
+    overflow-x: hidden;
+    max-height: 736px;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+        transform: translateX(10%);
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+}
+
+.order_table_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); */
+
+    &.header,
+    &.body {
+        padding: 22px 26px;
+    }
+
+    &.header {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+        background: #fff;
+    }
+
+    &.header .order_table_col {
+        color: #000;
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    &.body .order_table_col {
+        color: #000;
+        font-family: Inter;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+}
+
+.order_table_col {
+    flex: 1;
+    text-align: center;
+
+    &.id {
+        max-width: 126px;
+    }
+
+    &.name {
+        max-width: 360px;
+        text-align: left;
+    }
+
+    &.quan {
+        max-width: 153px;
+    }
+
+    &.price {
+        max-width: 188px;
+    }
+
+    &.status {
+        max-width: 162px;
+    }
+
+    &.func {
+        max-width: 162px;
+    }
+
+    &.confirm,
+    &.pending,
+    &.denied {
+        padding: 6px 18px;
+        border-radius: 16px;
+    }
+
+    &.confirm {
+        background: rgba(127, 255, 140, 0.50);
+
+        & span {
+            color: #04B200;
+        }
+    }
+
+    &.pending {
+        background: rgba(255, 238, 89, 0.50);
+
+        & span {
+            color: #D98500;
+        }
+    }
+
+    &.denied {
+        background: rgba(255, 150, 127, 0.50);
+
+        & span {
+            color: #F12222;
+        }
+    }
+}
+
+.order_table_col.link {
+    font-weight: 600 !important;
+
+    &:hover {
+        color: #EE2A7B;
+    }
+}
