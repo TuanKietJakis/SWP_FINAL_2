@@ -43,7 +43,7 @@
                                             <!--                                    <a href="#" class="home_slide_button ani_btn1">View collection</a>-->
                                         </div>
                                     </div>
-                                    <div class="home_slide_img1"><img src="img/Back9.jpg"></div>
+                                    <div class="home_slide_img1"><img src="/img/Back9.jpg"></div>
                                 </div>
                             </div>
                             <div class="home_img1"><img src="/img/e9a9b60fc6 1.png" alt="">
@@ -108,7 +108,7 @@
                             <!-- <Button><a href="AboutUs.html" class="">Shop Now</a></Button> -->
                         </div>
                         <div class="col-2">
-                            <img src="./img/card1.png" class="img-lv">
+                            <img src="/img/card1.png" class="img-lv">
                             <div class="color-box"></div>
                         </div>
                     </section>

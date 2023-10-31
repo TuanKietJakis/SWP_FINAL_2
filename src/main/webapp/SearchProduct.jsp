@@ -3,6 +3,7 @@
     Created on : Sep 16, 2023, 11:41:15 PM
     Author     : ADMIN
 --%>
+<%@page import="DAOs.CategoryDAO"%>
 <%@page import="DAOs.ProductDAO"%>
 <%@page import="Models.tblProduct"%>
 <%@page import="java.sql.ResultSet"%>
@@ -29,26 +30,18 @@
                 ID = (int) session.getAttribute("CustomerID");
             }
         %>
-
+        <style>
+            label{
+                cursor: pointer;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+        </style>
         <jsp:include page="header.jsp">
             <jsp:param name="ID" value="<%=ID%>"/>
         </jsp:include>
 
-        <!--        <div class="image2">
-                    <img width="1108px" height="460px" src="img/Back1.jpg" alt="" srcset="">
-        
-                    <div class="sentence" style="position: absolute; width: 450px; height: 88px;">
-                        <p
-                            style="color:#000; font-family: Inter; font-size: 36px; font-style: normal; font-weight: 400; line-height: normal;">
-                            Explore a unique <br>
-                            beautiful world of
-                            <span
-                                style="color:#FF66C4; font-family: Inter; font-size: 36px; font-style: normal; font-weight: 400; line-height: normal;">scents</span>
-                        </p>
-                    </div>
-        
-                    <div class="explore" style="position: absolute; padding-top: 13px; color: #fff;">Explore now</div>
-                </div>-->
         <main class="main" id="main">
             <section class="home_section">
                 <div class="home_addition_bg">
@@ -113,7 +106,71 @@
             %>
             <!-- =========================== Product ================================== -->
             <section class="pproduct_section section">
+            <input type="text" id="regex" value="<%=regex%>..." hidden/>
                 <div class="pproduct_container container">
+                    <div class="filter_container">
+                        <div class="filter_list_chip">
+<!--                            <div class="filter_item_chip">
+                                <span class="filter_item_chip_name">
+                                    p..
+                                </span>
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>-->
+<!--                            <div class="filter_item_chip">
+                                <span class="filter_item_chip_name">
+                                    Category 1
+                                </span>
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div class="filter_item_chip">
+                                <span class="filter_item_chip_name">
+                                    Brand 1
+                                </span>
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>-->
+                        </div>
+                        <div class="filter_list_menu">
+                            <!-- ============== Item 1 ================= -->
+                            <div class="filter_list_menu_item">
+                                <h1 class="filter_list_menu_header">Category</h1>
+                                <ul class="filter_list_menu_body">
+                                    <%
+                                    CategoryDAO dao = new CategoryDAO();
+                                    ResultSet rsCate = dao.GetAllCategory();
+                                    while(rsCate.next()){
+                                    %>
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-inbox"></i> <label for="c<%=rsCate.getInt("CategoryID")%>"><%=rsCate.getString("CatName")%></label></li>
+                                    <input type="radio" id="c<%=rsCate.getInt("CategoryID")%>" name="category" data-name="<%=rsCate.getString("CatName")%>" value="<%=rsCate.getInt("CategoryID")%>" hidden/>
+                                    <%
+                                        }
+                                    %>
+                                </ul>
+                            </div>
+                            <!-- ============== Item 1 ================= -->
+                            <div class="filter_list_menu_item">
+                                <h1 class="filter_list_menu_header">Brand</h1>
+                                <ul class="filter_list_menu_body">
+                                    <%
+                                    ResultSet rsBrand = dao.GetAllBrand();
+                                    while(rsBrand.next()){
+                                    %>
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="b<%=rsBrand.getInt("BrandID")%>"><%=rsBrand.getString("BrandName")%></label></li>
+                                    <input type="radio" id="b<%=rsBrand.getInt("BrandID")%>" name="brand" data-name="<%=rsBrand.getString("BrandName")%>" value="<%=rsBrand.getInt("BrandID")%>" hidden/>
+                                    <%}%>
+                                </ul>
+                            </div>
+                            <!-- ============== Item 1 ================= -->
+                            <div class="filter_list_menu_item">
+                                <h1 class="filter_list_menu_header">Price</h1>
+                                <ul class="filter_list_menu_body">
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-arrow-up-1-9"></i><label for="price-lowtohigh"> Low to High</label></li>
+                                                                        <input type="radio" id="price-lowtohigh" name="pricesort" data-name="Low To High" value="lowtohigh" hidden/>
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-arrow-up-9-1"></i> <label for="price-hightolow">High to Low</label></li>
+                                                                        <input type="radio" id="price-hightolow" name="pricesort" data-name="High To Low" value="hightolow" hidden/>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
 
                     <%
                         ProductDAO pDAO = new ProductDAO();
@@ -211,7 +268,7 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
         <!--<script src="/js/btnAddToCart.js"></script>-->
         <script src="/js/DangScript/Home.js"></script>    
-        <!--<script src="/js/listProduct.js"></script>-->      
+        <script src="/js/DangScript/FilterProduct.js"></script>    
 
     </body>
 </html>

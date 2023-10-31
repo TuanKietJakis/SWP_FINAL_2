@@ -19,8 +19,9 @@ document.querySelectorAll('.pproduct_addCart').forEach(product =>
             url: "/Home",
             data: {
                 ProductID: ProductID,
+                Amount: "1",
                 UserID: UserID,
-                action: "addtoCart",
+                action: "addtoCart"
             },
             success: function (data) {
                 if (data.message === "success") {

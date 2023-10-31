@@ -911,3 +911,69 @@ body {
         object-position: center center;
     }
 }
+
+.pproduct_section{
+    position: relative;
+    z-index: 1;
+}
+.filter_container{
+    position: absolute;
+    top: 0;
+    left: 16px;
+    width: 20%;
+    max-width: 346px;
+    height: 100%;
+    min-height: 40vh;
+    overflow-x: hidden;
+    background: #fafafa;
+    border-radius: 16px 16px 16px 16px;
+    z-index: -1;
+}
+.filter_list_chip{
+    padding: 18px 12px;
+    display: flex; 
+    flex-wrap: wrap;
+    flex-basis: auto;
+    flex-shrink: 1;
+    gap: 0.5rem;
+}
+.filter_item_chip{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #cbabff6d;
+    border: 1px solid #b588feb3;
+    gap: 0.5rem;
+    padding: 8px 14px;
+    border-radius: 100px;
+    & i{
+        cursor: pointer;
+        color: #9d56db;
+    }
+}
+.filter_list_menu{
+    padding: 8px 12px 8px 40px;
+}
+.filter_list_menu_item{
+    margin-bottom: 1rem;
+
+    & .filter_list_menu_body{
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+        padding: 8px 12px;
+        padding-left: 22px;
+        &  .filter_list_menu_body_link a{
+            font-size: 16px;
+               color: #000;
+               &:hover{
+                text-decoration: underline;
+               }
+        }
+    }
+}
+.filter_list_menu_body_link{
+    display: flex; 
+    align-items: center;
+    gap: .5rem;
+}

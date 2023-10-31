@@ -151,7 +151,7 @@ public class CartDAO {
         return pro;
     }
 
-    public int AddNewCart(int UserID, tblProduct pro) {
+    public int AddNewCart(int UserID, tblProduct pro,int Amount) {
         String sql = "insert into tblCart values(?,?,?,?,?,?,?)";
         int result = 0;
         try {
@@ -160,7 +160,7 @@ public class CartDAO {
             ps.setInt(2, pro.getProductID());
             ps.setString(3, pro.getProductName());
             ps.setInt(4, pro.getPrice());
-            ps.setInt(5, 1);
+            ps.setInt(5, Amount);
             ps.setString(6, pro.getProductImageURL());
             ps.setInt(7, 1);
             result = ps.executeUpdate();

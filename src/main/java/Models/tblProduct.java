@@ -24,7 +24,7 @@ public class tblProduct {
     public tblProduct() {
     }
 
-    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, int RatingID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size) {
+    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;
@@ -38,7 +38,7 @@ public class tblProduct {
         this.Size = Size;
     }
 
-    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, int RatingID, String ProductDes, int Quantity, String ProductImageURL, int Size) {
+    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, String ProductImageURL, int Size) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.Price = Price;

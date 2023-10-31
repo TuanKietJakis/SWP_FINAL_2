@@ -188,7 +188,7 @@ public class ProductController extends HttpServlet {
                 byte Active = (byte) Integer.parseInt(request.getParameter("txtActive"));
                 String Image_URL = "Image\\" + (String) request.getAttribute("fileProImg");
                 int Size = Integer.parseInt(request.getParameter("txtSize"));
-                tblProduct newPro = new tblProduct(ProductID, ProductName, Price, BrandID, CategoryID, RatingID, ProductDes, Quantity, Active ,Image_URL , Size );//EDIT TUANKIET
+                tblProduct newPro = new tblProduct(ProductID, ProductName, Price, BrandID, CategoryID, ProductDes, Quantity, Active ,Image_URL , Size );//EDIT TUANKIET
                 int result1 = dao.AddNew(newPro);
                 if (result1 != 0 ) {
                     response.sendRedirect("/Product/View/" + CategoryID);

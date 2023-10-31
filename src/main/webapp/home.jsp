@@ -286,7 +286,7 @@
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card">
                             <div class="pproduct_data_img">
-                                <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
+                                <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
                                                                                                          alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
@@ -308,7 +308,7 @@
                             </div>
                             <div class="pproduct_data_content">
                                 <div class="pproduct_data_des">
-                                    <a href="#" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
+                                    <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
                                     <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
                                 </div>
                             </div>
@@ -334,7 +334,7 @@
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
                             <div class="pproduct_data_img">
-                                <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
+                                <div onclick="location.href = '/Shop/Detail/<%=rs2.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
                                                                                                          alt=""></div>
                                 <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
@@ -356,7 +356,7 @@
                             </div>
                             <div class="pproduct_data_content">
                                 <div class="pproduct_data_des">
-                                    <a href="#" class="pproduct_data_name"><%=rs2.getString("ProductName")%></a>
+                                    <a href="/Shop/Detail/<%=rs2.getInt("ProductID")%>" class="pproduct_data_name"><%=rs2.getString("ProductName")%></a>
                                     <p class="pproduct_data_price">$<%=rs2.getInt("Price")%></p>
                                 </div>
                             </div>

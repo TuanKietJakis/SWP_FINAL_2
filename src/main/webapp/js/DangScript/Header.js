@@ -3,7 +3,7 @@ function scrollHeader() {
     if (this.scrollY >= 200)
         nav.classList.add('scroll-header');
     else
-        nav.classList.remove('scroll-header')
+        nav.classList.remove('scroll-header');
 }
 window.addEventListener('scroll', scrollHeader);
 

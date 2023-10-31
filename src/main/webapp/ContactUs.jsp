@@ -79,6 +79,7 @@
             </section>
         </main>
          <jsp:include page="Footer.jsp"></jsp:include>
+                 <script src="/js/DangScript/jquery.min.js"></script>
         <script src="/js/ContactUs.js"></script>
     </body>
 </html>

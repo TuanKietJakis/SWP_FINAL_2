@@ -15,15 +15,35 @@ import java.sql.SQLException;
  * @author Kiet
  */
 public class CategoryDAO {
-       private Connection conn;
+
+    private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
-    
-     public CategoryDAO() throws Exception{
+
+    public CategoryDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-          
-      public ResultSet GetAll() {
+
+    public ResultSet GetAllBrand() {
+        try {
+            ps = conn.prepareStatement("select * from tblBrand where Active = 1;");
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+    public ResultSet GetAllCategory() {
+        try {
+            ps = conn.prepareStatement("select * from tblCategory where Active = 1;");
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetAll() {
         try {
             ps = conn.prepareStatement("select * from tblCategory");
             rs = ps.executeQuery();
@@ -32,21 +52,21 @@ public class CategoryDAO {
         }
         return null;
     }
-               public int AddNewCategory(tblCategory pro) {
+
+    public int AddNewCategory(tblCategory pro) {
         String sql = "insert into tblCategory values(?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, pro.getCatName());
             ps.setInt(2, pro.getActive());
-   
+
             result = ps.executeUpdate();
         } catch (SQLException ex) {
 
         }
         return result;
     }
- 
 
     public boolean isCategoryExists(String Category) {
         try {

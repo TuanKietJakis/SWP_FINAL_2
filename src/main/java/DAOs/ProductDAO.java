@@ -83,7 +83,7 @@ public class ProductDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"),
-                        rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getInt("RatingID"),
+                        rs.getInt("BrandID"), rs.getInt("CategoryID"),
                         rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getByte("Active"),
                         rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
@@ -204,7 +204,7 @@ public class ProductDAO {
     }
 
     public int AddNew(tblProduct pro) {
-        String sql = "insert into tblProduct values(?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into tblProduct values(?,?,?,?,?,?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -212,12 +212,11 @@ public class ProductDAO {
             ps.setString(2, pro.getProductName());
             ps.setInt(3, pro.getPrice());
             ps.setInt(4, pro.getBrandID());
-            ps.setInt(5, pro.getRatingID());
-            ps.setString(6, pro.getProductDes());
-            ps.setInt(7, pro.getQuantity());
-            ps.setInt(8, pro.getActive());
-            ps.setString(9, pro.getProductImageURL());
-            ps.setInt(10, pro.getSize());
+            ps.setString(5, pro.getProductDes());
+            ps.setInt(6, pro.getQuantity());
+            ps.setInt(7, pro.getActive());
+            ps.setString(8, pro.getProductImageURL());
+            ps.setInt(9, pro.getSize());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
 
@@ -301,8 +300,7 @@ public class ProductDAO {
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if(rs.next()){              
-            pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"),
-                    rs.getInt("RatingID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
+            pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

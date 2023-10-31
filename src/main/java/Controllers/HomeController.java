@@ -110,6 +110,7 @@ public class HomeController extends HttpServlet {
         String action = request.getParameter("action");
         if ("addtoCart".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("UserID"));
+            int Amount = Integer.parseInt(request.getParameter("Amount"));
             if (UserID != 0) {
                 int ProductID = Integer.parseInt(request.getParameter("ProductID"));
                 CartDAO addDAO = null;
@@ -120,7 +121,7 @@ public class HomeController extends HttpServlet {
                     Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 pro = addDAO.getProductforAdd(ProductID);
-                int kq = addDAO.AddNewCart(UserID, pro);
+                int kq = addDAO.AddNewCart(UserID, pro, Amount);
                 if (kq != 0) {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");

@@ -69,7 +69,8 @@
                                                 <div class="value-button increase">+
                                                 </div>
                                             </div>
-                                            <button class="product_d_c_o_addtoCart">Add To Cart</button>
+                                            <button class="product_d_c_o_addtoCart" data-user-id="<%=ID%>">Add To Cart</button>
+                                            <input type="hidden" id="productID"  value="<%=pro.getProductID()%>">
                                         </div>
                                     </div>
                                 </div>
@@ -213,5 +214,6 @@
         <script src="/CSS/DangStyles/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
         <script src="/js/btnDes_Rev.js"></script>
         <script src="/js/DangScript/Home.js"></script>
+        <script src="/js/DangScript/productDetail.js"></script>
     </body>
 </html>
