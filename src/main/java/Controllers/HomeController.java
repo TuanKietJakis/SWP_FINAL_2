@@ -90,9 +90,9 @@ public class HomeController extends HttpServlet {
                 if (path.endsWith("/OrderHistory")) {
                     request.getRequestDispatcher("/oderHistory.jsp").forward(request, response);
                 }
-            } else if (path.endsWith("/WhatNew") || path.endsWith("/WhatNew/")) {
+            }else if (path.endsWith("/News") || path.endsWith("/News/")) {
                     request.getRequestDispatcher("/WhatsNew.jsp").forward(request, response);
-               }
+                }
         }
     }
 

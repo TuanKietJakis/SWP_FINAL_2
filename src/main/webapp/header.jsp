@@ -15,7 +15,7 @@
                                 <ul class="nav_list">
                                     <li class="nav_item"><a href="/Home" class="nav_item_link">Home</a></li>
                                     <li class="nav_item"><a href="/Shop" class="nav_item_link">Shop online</a></li>
-                                    <li class="nav_item"><a href="/WhatNew" class="nav_item_link">What's new</a></li>
+                                    <li class="nav_item"><a href="/News" class="nav_item_link">What's new</a></li>
                                     <li class="nav_item"><a href="/Contact" class="nav_item_link">Contact</a></li>
                                     <li class="nav_item"><a href="/AboutUs" class="nav_item_link">About us</a></li>
                                 </ul>
