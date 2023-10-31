@@ -89,10 +89,10 @@ public class HomeController extends HttpServlet {
             } else {
                 if (path.endsWith("/OrderHistory")) {
                     request.getRequestDispatcher("/oderHistory.jsp").forward(request, response);
-                }
-            }else if (path.endsWith("/News") || path.endsWith("/News/")) {
+                } else if (path.endsWith("/News") || path.endsWith("/News/")) {
                     request.getRequestDispatcher("/WhatsNew.jsp").forward(request, response);
                 }
+            }
         }
     }
 
@@ -138,7 +138,7 @@ public class HomeController extends HttpServlet {
                 response.sendRedirect("/Login");
             }
         }
-                if ("recentCart".equals(action)) {
+        if ("recentCart".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             CartDAO dao = null;
             try {
@@ -178,10 +178,10 @@ public class HomeController extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
-            out.print("{\"numberItem\": \""+ numberItem +"\"}");
+            out.print("{\"numberItem\": \"" + numberItem + "\"}");
             out.flush();
         }
-        if("searchInput".equals(action)){
+        if ("searchInput".equals(action)) {
             String inputValue = request.getParameter("inputValue");
             ProductDAO dao = null;
             try {
@@ -208,7 +208,7 @@ public class HomeController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
 //            System.out.println(json);
             response.getWriter().write(json);
-            
+
         }
         if (request.getParameter("btnContact") != null) {
             try {

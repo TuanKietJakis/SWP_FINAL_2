@@ -16,10 +16,15 @@
     <body> 
 
         <div class="container">
+            <%
+                int usID = (int) session.getAttribute("AdminstratorID");
+            %>
+            <jsp:include page="/Admin_navigation.jsp">
 
-            <jsp:include page="/Admin_navigation.jsp"></jsp:include>
-                <div class="admin_background"></div>
-                <div class="admin_info grid-item">
+                <jsp:param name="ID" value="<%=usID%>"/>
+            </jsp:include>
+            <div class="admin_background"></div>
+            <div class="admin_info grid-item">
                 <jsp:include page="/Admin_anlyzes.jsp"></jsp:include>
                     <div class="admin_background"></div>
                     <div class="admin_content">

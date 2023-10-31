@@ -15,10 +15,14 @@
     <body> 
 
         <div class="container">
-
-            <jsp:include page="/Admin_navigation.jsp"></jsp:include>
-                <div class="admin_background"></div>
-                <div class="admin_info grid-item">
+            <%
+                int usID = (int) session.getAttribute("AdminstratorID");
+            %>
+            <jsp:include page="/Admin_navigation.jsp"> 
+                <jsp:param name="ID" value="<%=usID%>"/>
+            </jsp:include>
+            <div class="admin_background"></div>
+            <div class="admin_info grid-item">
                 <jsp:include page="/Admin_anlyzes.jsp"></jsp:include>
                     <div class="admin_background"></div>
                     <div class="admin_content">
@@ -53,7 +57,7 @@
 
                         <form class="admin_form" onsubmit="return ValidateBrandName()" action="/addNewBrand" method="post">
                             <div class="inputbox">
-                          
+
                                 <div class="label-group">
                                     <label class="lb-title-np">Brand Name</label>
                                     <input class="input" placeholder="Brand Name" type="text" name="txtBrandName" id="txtBrandName">
@@ -70,14 +74,14 @@
         <!-- Thêm mã JavaScript vào trong thẻ <head> hoặc cuối trang -->
         <script>
             <%
-                   String message = (String) request.getAttribute("message");
-                   if(message!=null){
-                    %> 
-                        alert("<%= message%>"  );
-                    
-                    <%
+                String message = (String) request.getAttribute("message");
+                if (message != null) {
+            %>
+            alert("<%= message%>");
+
+            <%
                 }
-             %>
+            %>
         </script>
 
         <script>
