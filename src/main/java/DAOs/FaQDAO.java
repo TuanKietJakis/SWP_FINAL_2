@@ -46,4 +46,13 @@ public class FaQDAO {
         }
         return ketqua;
     }
+      public ResultSet GetAll() {
+        try {
+            ps = conn.prepareStatement("select * from tblFAQ");
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 }

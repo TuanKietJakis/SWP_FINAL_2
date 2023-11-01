@@ -111,34 +111,34 @@
         <div class="navigation_menu">
             <ul class="navigation_menu_list" id="navigationMenu">
 
-                <li class="navigation_menu_item">
+                <li class="navigation_menu_item" onclick="location.href='/Admin'">
                     <i class="fa-solid fa-house-chimney"></i>
                     <a class="navigation_menu_link" href="/Admin">Dashboard</a>
                 </li>
-                <li class="navigation_menu_item"><i class="fa-solid fa-box-archive"></i>
+                <li class="navigation_menu_item" onclick="location.href='/Admin/Product/List'"><i class="fa-solid fa-box-archive"></i>
                     <a class="navigation_menu_link" href="/Admin/Product/List">List Product</a>
                 </li>
-                <li class="navigation_menu_item"><i class="fa-regular fa-square-check"></i>
+                <li class="navigation_menu_item" onclick="location.href='#'"><i class="fa-regular fa-square-check"></i>
                     <a class="navigation_menu_link" href="#">Orders</a>
                 </li>
-                <li class="navigation_menu_item">
+                <li class="navigation_menu_item" onclick="location.href='#'">
                     <i class="fa-solid fa-chart-line"></i>
                     <a class="navigation_menu_link" href="#">Income</a>
                 </li>
-                <li class="navigation_menu_item"><i class="fa-solid fa-envelope"></i>
+                <li class="navigation_menu_item" onclick="location.href='/Admin/FAQ'"><i class="fa-solid fa-envelope"></i>
                     <a class="navigation_menu_link" href="/Admin/FAQ">FAQ</a>
                 </li>
 
             </ul>
             <ul class="navigation_menu_list navigation_setting">
 
-                <li class="navigation_menu_item">
+                <li class="navigation_menu_item" onclick="location.href='/Admin/Setting/<%=usId%>'">
                     <i class="fa-solid fa-user-gear"></i>
                     <a class="navigation_menu_link" href="/Admin/Setting/<%=usId%>">Account Setting</a>
                 </li>
                 <li class="navigation_menu_item">
                     <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
-                    <a class="navigation_menu_link" href="#">Logout</a>
+                    <a class="navigation_menu_link" href="/logout.jsp">Logout</a>
                 </li>
             </ul>
         </div>

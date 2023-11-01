@@ -6,7 +6,7 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
-import DAOs.FAQDAO;
+import DAOs.FaQDAO;
 import DAOs.ProductDAO;
 import Models.tblCart;
 import Models.tblFAQ;
@@ -220,11 +220,11 @@ public class HomeController extends HttpServlet {
                 boolean checkEmail = dao.checkEmail(email);
                 HttpSession mySession = request.getSession();
                 if (checkEmail == false) {
-                    request.setAttribute("mess", "Email not exist");
+                    request.setAttribute("mess", "Emai not exist");
                     request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
                 } else {
                     if (email != null || !email.equals("")) {
-                        FAQDAO Fdao = new FAQDAO();
+                        FaQDAO Fdao = new FaQDAO();
                         tblFAQ fa = new tblFAQ(helpmessage, email);
                         int kq = Fdao.AddNewQuest(fa);
                         if (kq != 0) {

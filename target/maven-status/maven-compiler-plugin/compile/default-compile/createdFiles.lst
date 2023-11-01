@@ -1,6 +1,5 @@
 DAOs\CategoryDAO.class
 Controllers\HomeController$1.class
-DAOs\FAQDAO.class
 Models\tblFAQ.class
 Controllers\ProductController.class
 DAOs\CartDAO.class
@@ -22,6 +21,7 @@ DAOs\RatingDAO.class
 DAOs\ProductDAO.class
 ForgotPassword\ForgotPassword.class
 Models\tblRating.class
+DAOs\FaQDAO.class
 com\vnpay\common\ajaxServlet.class
 Models\tblOrder.class
 Controllers\ShopController.class

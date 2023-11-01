@@ -59,7 +59,7 @@ document.querySelector('.nav_acc_cart').addEventListener('mouseover', () => {
                 $.each(data, function (index, value) {
                     // Assuming your HTML has a div with the class 'product-container'
                     $('.nav_a_c_r_list').append(`
-                <div class="nav_a_c_r_item" onclick="location.href='${value.productID}'">
+                <div class="nav_a_c_r_item" onclick="location.href='/Shop/Detail/${value.productID}'">
                     <div class="nav_a_c_r_i_img"><img src="${value.productImageURL}" alt=""></div>
                     <p class="nav_a_c_r_i_name">${value.productName}</p>
                     <p class="nav_a_r_i_price">$${value.productPrice}</p>

@@ -1,5 +1,5 @@
 <%@page import="java.sql.ResultSet"%>
-<%@page import="DAOs.FAQDAO"%>
+<%@page import="DAOs.FaQDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,8 +13,8 @@
         <link rel="stylesheet" href="/CSS/VyStyle/CreateProduct.css">
     </head>
     <body> 
-  
-      <style>
+
+        <style>
             .faq-list {
                 list-style-type: none;
                 padding: 0;
@@ -61,68 +61,64 @@
             }
 
         </style>
-        <div class="container">
-            <%
-                int usID = (int) session.getAttribute("AdminstratorID");
-            %>
-            <jsp:include page="/Admin_navigation.jsp"> 
-                <jsp:param name="ID" value="<%=usID%>"/>
-            </jsp:include>
+         <div class="container">
+        <% int usID = (int) session.getAttribute("AdminstratorID"); %>
+        <jsp:include page="/Admin_navigation.jsp"> 
+            <jsp:param name="ID" value="<%=usID%>"/>
+        </jsp:include>
+        <div class="admin_background"></div>
+        <div class="admin_info grid-item">
+            <jsp:include page="/Admin_anlyzes.jsp"></jsp:include>
             <div class="admin_background"></div>
-            <div class="admin_info grid-item">
-                <jsp:include page="/Admin_anlyzes.jsp"></jsp:include>
-                    <div class="admin_background"></div>
-                    <div class="admin_content">
-                        <div class="admin_content_info">
-                            <div class="admin_btn" onclick="location.href = '/Admin'" >
-                                <span><i class="fa-solid fa-arrow-left "></i></span>
-                            </div>
-                                                    <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Search FAQ...">
-                        </div>
-                        </div>
-                        <div class="admin_content_infos">
-                            <div class="brand-list">
-                                <h3>FAQ List:</h3>
-                                <ul class="faq-list">
-                                <%
-                                    FAQDAO faq = new FAQDAO();
-                                    ResultSet rs = faq.GetAll();
-                                    while (rs.next()) {
-                                %>
-                                <li class="faq-item">
-                                    <strong>FAQ ID:</strong> <%= rs.getString("FAQID")%><br/>
-                                    <strong>Question:</strong> <%= rs.getString("Question")%><br/>
-                                    <strong>Answer:</strong> <%= rs.getString("Answer")%> 
-                                </li>
-                                <%
-                                    }
-                                    rs.close(); // Đóng ResultSet sau khi sử dụng
-%>
-                            </ul>
-                        </div>
-
+            <div class="admin_content">
+                <div class="admin_content_info">
+                    <div class="admin_btn" onclick="location.href = '/Admin'" >
+                        <span><i class="fa-solid fa-arrow-left"></i></span>
                     </div>
-
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search FAQ...">
+                    </div>
+                </div>
+                <div class="admin_content_infos">
+                    <div class="brand-list">
+                        <h3>FAQ List:</h3>
+                        <ul class="faq-list">
+                            <%
+                                FaQDAO faq = new FaQDAO();
+                                ResultSet rs = faq.GetAll();
+                                while (rs.next()) {
+                            %>
+                            <li class="faq-item">
+                                <strong>FAQ ID:</strong> <%= rs.getString("FAQID")%><br/>
+                                <strong>Question:</strong> <%= rs.getString("Question")%><br/>
+                                <strong>Email:</strong> <%= rs.getString("Email")%> 
+                            </li>
+                            <%
+                                }
+                                rs.close(); // Close the ResultSet after use
+                            %>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            // Xử lý tìm kiếm
-            document.getElementById('searchInput').addEventListener('input', function () {
-                var keyword = this.value.toLowerCase();
-                var faqs = document.querySelectorAll('.brand-list ul li');
+    <script>
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function () {
+            var keyword = this.value.toLowerCase();
+            var faqs = document.querySelectorAll('.brand-list ul li');
 
-                for (var i = 0; i < faqs.length; i++) {
-                    var faqInfo = faqs[i].innerText.toLowerCase();
-                    if (faqInfo.includes(keyword)) {
-                        faqs[i].style.display = 'block';
-                    } else {
-                        faqs[i].style.display = 'none';
-                    }
+            faqs.forEach(function (faq) {
+                var faqInfo = faq.innerText.toLowerCase();
+                if (faqInfo.includes(keyword)) {
+                    faq.style.display = 'block';
+                } else {
+                    faq.style.display = 'none';
                 }
             });
-        </script>
-    </body>
+        });
+    </script>
+</body>
 </html>
