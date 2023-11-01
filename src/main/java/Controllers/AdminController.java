@@ -5,6 +5,7 @@
 package Controllers;
 
 import DAOs.AccountDAO;
+import DAOs.OrderDAO;
 import Models.tblUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -142,6 +144,25 @@ public class AdminController extends HttpServlet {
                 } catch (Exception e) {
 
                 }
+            }else if(path.startsWith("/Admin/OrderManage")){
+                 request.getRequestDispatcher("/AdminOrder.jsp").forward(request, response);
+            }else if(path.startsWith("/Admin/OrderDetail/")){
+                try {
+                    String[] s = path.split("/");
+                    int OrderID = Integer.parseInt(s[s.length - 2]);
+                    int UserID = Integer.parseInt(s[s.length - 1]);
+                    OrderDAO dao = new OrderDAO();
+                    AccountDAO dao1 = new AccountDAO();
+                    ResultSet or = dao.GetOrderInfoByID(OrderID);
+                    tblUser us = new tblUser();
+                     us = dao1.GetAccountByID(UserID);
+                     HttpSession session = request.getSession();
+                     session.setAttribute("user", us);
+                     session.setAttribute("order", or);
+                     request.setAttribute("orderID", OrderID);
+                     request.getRequestDispatcher("/AdminOrderDetail.jsp").forward(request, response);
+                } catch (Exception e) {
+                }
             }
         }
     }
@@ -240,6 +261,38 @@ public class AdminController extends HttpServlet {
                 }
             } catch (Exception e) {
             }
+        }
+                try {
+            String action = request.getParameter("action");
+            if("reject order".equals(action)){
+                int orderID = Integer.parseInt(request.getParameter("order"));
+                OrderDAO dao = new OrderDAO();
+                int kq = dao.RejectOrder(orderID);
+                if(kq!=0){
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"message\": \"success\"}");
+                    out.flush();
+                }
+            }
+        } catch (Exception e) {
+        }
+        try {
+            String action = request.getParameter("action");
+            if("accept order".equals(action)){
+                int orderID = Integer.parseInt(request.getParameter("order"));
+                OrderDAO dao = new OrderDAO();
+                int kq = dao.AcceptOrder(orderID);
+                if(kq!=0){
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"message\": \"success\"}");
+                    out.flush();
+                }
+            }
+        } catch (Exception e) {
         }
 
     }

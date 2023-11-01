@@ -155,4 +155,113 @@ public class OrderDAO {
            }
            return kq;
        }
+       public ResultSet GetAllOrder() {
+        try {
+            String sql = "select * from tblOrder\n"
+                    + "inner join tblOrderStatus on tblOrderStatus.StatusID = tblOrder.StatusID";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetOrderIDQuantity() {
+        try {
+            String sql = "SELECT OrderID, SUM(Quantity) AS TotalQuantity\n"
+                    + "FROM tblOrderDetail\n"
+                    + "GROUP BY OrderID\n";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public int GetTotalOrder() {
+        int count = 0;
+        try {
+
+            String sql = "select count(OrderID) as TotalOrder from tblOrder";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("TotalOrder");
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    public ResultSet GetOrderInfoByID(int OrderID) {
+        try {
+            String sql = "select tblOrderDetail.ProductID, ProductName, tblOrderDetail.Quantity,Price from tblOrderDetail\n"
+                    + "inner join tblProduct on tblProduct.ProductID = tblOrderDetail.ProductID\n"
+                    + "where OrderID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public int GetPaymentMethodbyID(int OrderID) {
+        int count = 0;
+        try {
+            String sql = "select PaymentMethodID from tblOrder\n"
+                    + "where OrderID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("PaymentMethodID");
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    public int RejectOrder(int orderID) {
+        int result = 0;
+        try {
+            String sql = "Update tblOrder set StatusID = 3 where OrderID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            result = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
+    public int AcceptOrder(int orderID) {
+        int result = 0;
+        try {
+            String sql = "Update tblOrder set StatusID = 2 where OrderID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, orderID);
+            result = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return result;
+    }
+
+    public int GetTotalProductbyOrderID(int OrderID) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT( ProductID) AS ProductIDCount FROM tblOrderDetail\n"
+                    + "Where OrderID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("ProductIDCount");
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
 }

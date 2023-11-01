@@ -4,6 +4,9 @@
     Author     : ddand
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="DAOs.OrderDAO"%>
+<%@page import="Models.tblUser"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,49 +20,51 @@
     </head>
 
     <body>
-        
+        <%
+            int usID = (int) session.getAttribute("AdminstratorID");
+        %>
         <div class="order_list_container">
             <jsp:include page="Admin_navigation.jsp">
-                <jsp:param name="ID" value="3"/>
+                <jsp:param name="ID" value="<%= usID%>"/>
             </jsp:include>   
-<!--            <div class="orderList_leftzone">
-                            <div class="navigation grid-item">
-                                <div class="navigation_logo">
-                                    <img src="/img/Logo_img.png" alt="">
-                                </div>
-                                <div class="navigation_menu">
-                                    <ul class="navigation_menu_list">
-                
-                                        <li class="navigation_menu_item">
-                                            <i class="fa-solid fa-house-chimney"></i>
-                                            <a class="navigation_menu_link" href="#">Dashboard</a>
-                                        </li>
-                                        <li class="navigation_menu_item"><i class="fa-solid fa-box-archive"></i>
-                                            <a class="navigation_menu_link" href="#">My Product</a>
-                                        </li>
-                                        <li class="navigation_menu_item active"><i class="fa-regular fa-square-check"></i>
-                                            <a class="navigation_menu_link" href="#">Orders</a>
-                                        </li>
-                                        <li class="navigation_menu_item">
-                                            <i class="fa-solid fa-chart-line"></i>
-                                            <a class="navigation_menu_link" href="#">Income</a>
-                                        </li>
-                
-                                    </ul>
-                                    <ul class="navigation_menu_list navigation_setting">
-                
-                                        <li class="navigation_menu_item">
-                                            <i class="fa-solid fa-user-gear"></i>
-                                            <a class="navigation_menu_link" href="#">Account Setting</a>
-                                        </li>
-                                        <li class="navigation_menu_item">
-                                            <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
-                                            <a class="navigation_menu_link" href="#">Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> 
-            </div>-->
+            <!--            <div class="orderList_leftzone">
+                                        <div class="navigation grid-item">
+                                            <div class="navigation_logo">
+                                                <img src="/img/Logo_img.png" alt="">
+                                            </div>
+                                            <div class="navigation_menu">
+                                                <ul class="navigation_menu_list">
+                            
+                                                    <li class="navigation_menu_item">
+                                                        <i class="fa-solid fa-house-chimney"></i>
+                                                        <a class="navigation_menu_link" href="#">Dashboard</a>
+                                                    </li>
+                                                    <li class="navigation_menu_item"><i class="fa-solid fa-box-archive"></i>
+                                                        <a class="navigation_menu_link" href="#">My Product</a>
+                                                    </li>
+                                                    <li class="navigation_menu_item active"><i class="fa-regular fa-square-check"></i>
+                                                        <a class="navigation_menu_link" href="#">Orders</a>
+                                                    </li>
+                                                    <li class="navigation_menu_item">
+                                                        <i class="fa-solid fa-chart-line"></i>
+                                                        <a class="navigation_menu_link" href="#">Income</a>
+                                                    </li>
+                            
+                                                </ul>
+                                                <ul class="navigation_menu_list navigation_setting">
+                            
+                                                    <li class="navigation_menu_item">
+                                                        <i class="fa-solid fa-user-gear"></i>
+                                                        <a class="navigation_menu_link" href="#">Account Setting</a>
+                                                    </li>
+                                                    <li class="navigation_menu_item">
+                                                        <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+                                                        <a class="navigation_menu_link" href="#">Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div> 
+                        </div>-->
             <div class="order_list_rightzone">
                 <!-- =========================== Header =================== -->
                 <div class="order_list_header">
@@ -78,8 +83,12 @@
 
                 <div class="order_list_table_frame">
                     <!-- ================ Function =============-->
+                    <%
+                        OrderDAO dao = new OrderDAO();
+                        int count = dao.GetTotalOrder();
+                    %>
                     <div class="order_list_table_title">
-                        <h2 class="title1"><span>3</span> orders</h2>
+                        <h2 class="title1"><span><%= count%></span> orders</h2>
                     </div>
                     <!-- ================ Table =================== -->
                     <div class="order_list_table_body">
@@ -87,36 +96,30 @@
                         <div class="order_table_row header">
                             <h3 class="order_table_col id">Order ID</h3>
                             <h3 class="order_table_col name">Customer Name</h3>
-                            <h3 class="order_table_col quan">Product/Item</h3>
+                            <h3 class="order_table_col quan">Quantity</h3>
                             <h3 class="order_table_col price">Price</h3>
                             <h3 class="order_table_col status">Status</h3>
                             <h3 class="order_table_col func">Operation</h3>
                         </div>
+                        <%
+                            OrderDAO Dao = new OrderDAO();
+                            OrderDAO Dao1 = new OrderDAO();
+                            ResultSet rs = Dao.GetAllOrder();
+                            ResultSet rs1 = Dao1.GetOrderIDQuantity();
+                            while (rs.next() && rs1.next()) {
+                        %>
                         <!-- =================== Body Table =================== -->
                         <div class="order_table_row body">
-                            <p class="order_table_col id">5</p>
-                            <p class="order_table_col name">Nguyen Van A</p>
-                            <p class="order_table_col quan">10</p>
-                            <p class="order_table_col price">$160</p>
-                            <p class="order_table_col confirm status"><span>Confirmed</span></p>
-                            <a class="order_table_col link func" href="#">Info <span>></span></a>
+                            <p class="order_table_col id"><%=rs.getInt("OrderID")%></p>
+                            <p class="order_table_col name"><%=rs.getString("FullName")%></p>
+                            <p class="order_table_col quan"><%=rs1.getString("TotalQuantity")%></p>
+                            <p class="order_table_col price"><%=rs.getInt("TotalPrice")%></p>
+                            <p class="order_table_col confirm status"><span><%=rs.getString("StatusName")%></span></p>
+                            <a class="order_table_col link func" href="/Admin/OrderDetail/<%=rs.getInt("OrderID")%>/<%= usID%>">Info <span>></span></a>
                         </div>
-                        <div class="order_table_row body">
-                            <p class="order_table_col id">5</p>
-                            <p class="order_table_col name">Nguyen Van A</p>
-                            <p class="order_table_col quan">10</p>
-                            <p class="order_table_col price">$160</p>
-                            <p class="order_table_col pending status"><span>Pending</span></p>
-                            <a class="order_table_col link func" href="AdminOrderDetail.html">Info <span>></span></a>
-                        </div>
-                        <div class="order_table_row body">
-                            <p class="order_table_col id">5</p>
-                            <p class="order_table_col name">Nguyen Van A</p>
-                            <p class="order_table_col quan">10</p>
-                            <p class="order_table_col price">$160</p>
-                            <p class="order_table_col denied status"><span>Denied</span></p>
-                            <a class="order_table_col link func" href="#">Info <span>></span></a>
-                        </div>
+                        <%                            }
+
+                        %>
                     </div>
                 </div>
             </div>
@@ -151,7 +154,7 @@
                     });
                 }
             }
-
+  
         </script>
     </body>
 

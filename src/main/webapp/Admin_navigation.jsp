@@ -119,7 +119,7 @@
                     <a class="navigation_menu_link" href="/Admin/Product/List">List Product</a>
                 </li>
                 <li class="navigation_menu_item" onclick="location.href='#'"><i class="fa-regular fa-square-check"></i>
-                    <a class="navigation_menu_link" href="#">Orders</a>
+                    <a class="navigation_menu_link" href="/Admin/OrderManage">Orders</a>
                 </li>
                 <li class="navigation_menu_item" onclick="location.href='#'">
                     <i class="fa-solid fa-chart-line"></i>
