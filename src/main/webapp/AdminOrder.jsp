@@ -109,16 +109,17 @@
                             while (rs.next() && rs1.next()) {
                         %>
                         <!-- =================== Body Table =================== -->
+
                         <div class="order_table_row body">
                             <p class="order_table_col id"><%=rs.getInt("OrderID")%></p>
                             <p class="order_table_col name"><%=rs.getString("FullName")%></p>
                             <p class="order_table_col quan"><%=rs1.getString("TotalQuantity")%></p>
                             <p class="order_table_col price"><%=rs.getInt("TotalPrice")%></p>
-                            <p class="order_table_col confirm status"><span><%=rs.getString("StatusName")%></span></p>
+                            <p class="order_table_col status"><span><%=rs.getString("StatusName")%></span></p>
                             <a class="order_table_col link func" href="/Admin/OrderDetail/<%=rs.getInt("OrderID")%>/<%= usID%>">Info <span>></span></a>
                         </div>
-                        <%                            }
-
+                        <%
+                            }
                         %>
                     </div>
                 </div>
@@ -154,8 +155,22 @@
                     });
                 }
             }
-  
+
         </script>
+<!--        <script>
+            document.querySelectorAll('.status').forEach(status => {
+                const spanText = status.querySelector("span").textContent;
+
+                if (spanText === "rejected") {
+                    status.classList.add("denied");
+                } else if (spanText === "delivered") {
+                    status.classList.add("confirm");
+                } else {
+                    status.classList.add("pending");
+                }
+            });
+        </script>-->
+
     </body>
 
 </html>
