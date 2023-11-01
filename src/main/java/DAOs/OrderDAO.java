@@ -10,22 +10,40 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Kiet
  */
 public class OrderDAO {
-       private Connection conn;
+
+    private Connection conn;
     private PreparedStatement ps;
     private ResultSet rs;
 
     public OrderDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-      public int GetIncome() {
+
+    public ResultSet GetOrderDetailsByUserID(int UserID) {
+        try {
+            String sql = "SELECT o.OrderID, o.OrderDate, p.ProductName, p.Price as ProductPrice, "
+                    + "od.Quantity, o.TotalPrice, p.ProductImageURL, p.ProductID,od.Active "
+                    + "FROM tblOrder o "
+                    + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID "
+                    + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID "
+                    + "WHERE o.UserID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int GetIncome() {
         int count = 0;
         String sql = "select sum(TotalPrice) as Income from tblOrder\n"
                 + "where StatusID = 1;";
@@ -54,8 +72,8 @@ public class OrderDAO {
         }
         return count;
     }
-    
-       public ResultSet GetOrderInfo(int Status) {
+
+    public ResultSet GetOrderInfo(int Status) {
         String sql = "select Order_ID,Total_Price,Phone_Number,Delivery_Instruction,Delivery_Address,Delivery_Time, \n"
                 + "Account.Fullname as fn, Account.Email as email, Payment_Method.Payment_Method as Pay_Met, Order_Status.Order_Status as [Status] from [Order]\n"
                 + "inner join Account on Account.Account_ID = [Order].Account_ID\n"
@@ -86,7 +104,7 @@ public class OrderDAO {
         }
         return null;
     }
-    
+
     public ResultSet GetSpecificOrderInfoCustomer(int ID) {
         String sql = "select Order_ID, Total_Price,Phone_Number,Delivery_Instruction,Delivery_Address,Delivery_Time, \n"
                 + "Account.Fullname as fn, Account.Email as email, Payment_Method.Payment_Method as Pay_Met, Order_Status.Order_Status as [Status] from [Order]\n"
@@ -102,10 +120,11 @@ public class OrderDAO {
         }
         return null;
     }
-       public int CompleteOrder(int O_ID, Date time) {
+
+    public int CompleteOrder(int O_ID, Date time) {
         String sql = "Update [Order]\n"
                 + "set Order_Status_ID = 1 , Delivery_Time = ?\n"
-                + "where Order_ID = ?";        
+                + "where Order_ID = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -113,13 +132,13 @@ public class OrderDAO {
             ps.setInt(2, O_ID);
             result = ps.executeUpdate();
         } catch (Exception ex) {
-            
+
         }
         return result;
     }
-       
-       public int AddOrderFromCart(tblOrder order){
-           String sql = "insert into tblOrder values(?,?,?,?,?,?,?,?,?)";
+
+    public int AddOrderFromCart(tblOrder order) {
+        String sql = "insert into tblOrder values(?,?,?,?,?,?,?,?,?)";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -137,25 +156,26 @@ public class OrderDAO {
 
         }
         return result;
-       }
-       
-       public int GetOrderID(String orderTime, int UserID){
-           int kq = 0;
-           String sql = "select * from tblOrder where UserID = ? and OrderDate = ?;";
-           try{
-              PreparedStatement ps = conn.prepareStatement(sql);
-              ps.setInt(1, UserID);
-              ps.setString(2, orderTime);
-              rs = ps.executeQuery();
-              if(rs.next()){
-              kq = rs.getInt("OrderID");
-              }
-           }catch(SQLException e){
-               e.printStackTrace();
-           }
-           return kq;
-       }
-       public ResultSet GetAllOrder() {
+    }
+
+    public int GetOrderID(String orderTime, int UserID) {
+        int kq = 0;
+        String sql = "select * from tblOrder where UserID = ? and OrderDate = ?;";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            ps.setString(2, orderTime);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                kq = rs.getInt("OrderID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return kq;
+    }
+
+    public ResultSet GetAllOrder() {
         try {
             String sql = "select * from tblOrder\n"
                     + "inner join tblOrderStatus on tblOrderStatus.StatusID = tblOrder.StatusID";

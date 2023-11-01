@@ -11,6 +11,7 @@ Models\tblCategory.class
 Controllers\CategoryController.class
 Models\tblBrand.class
 DAOs\BrandDAO.class
+Controllers\RatingController.class
 ForgotPassword\ForgotPassword$1.class
 com\vnpay\common\vnpayStatus.class
 com\vnpay\common\paymentController.class
