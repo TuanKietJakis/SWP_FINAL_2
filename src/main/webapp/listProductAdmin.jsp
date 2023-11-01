@@ -1,4 +1,5 @@
 
+<%@page import="DAOs.BrandDAO"%>
 <%@page import="DAOs.CategoryDAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.ProductDAO"%>
@@ -25,23 +26,22 @@
     </head>
     <body>
     <body>
-        <%
-            int usID = (int) session.getAttribute("AdminstratorID");
-        %>
         <!-- SIDEBAR -->
-        <div class="order_list_container">
-        
-        <jsp:include page="Admin_navigation.jsp">
+      
+         <%
+                int usID = (int) session.getAttribute("AdminstratorID");
+            %>
+            <div class="order_list_container">
+            <jsp:include page="/Admin_navigation.jsp">
+
                 <jsp:param name="ID" value="<%=usID%>"/>
-            </jsp:include>      
-        <!-- SIDEBAR -->
-        <!-- CONTENT -->
+            </jsp:include>
         <section id="content">
             <!-- MAIN -->
             <main>
 
-                <div class="headerBox">
-                    <label class="MP">My Products</label>
+                <div class="headerBox" >
+                    <label class="MP" style="width:300px">Admin's Product</label>
 
                     <label class="searchBox">
                         <input type='test' placeholder='Product name'/>
@@ -49,12 +49,17 @@
                             Search
                         </div>
                     </label>
+                    <div class="search">
+                        Search
+                    </div>
                 </div>
                 <% ProductDAO pDao = new ProductDAO();
+
                     int totalProducts = pDao.getTotalProductCount();
+
                 %>
 
-                <i class="AP" style="">ALL PRODUCT</i>
+                <i class="AP" style="width: 200px">ALL PRODUCT</i>
 
                 <div class="table-data">
                     <div class="order">
@@ -65,9 +70,12 @@
                             <label class="addNewProduct">Add new products</label>
                         </div>
                         <table id="example">
+
                             <thead>
                                 <tr>
                                     <th style="padding-left: 20px">Product Name</th>
+                                    <th>Brand</th>
+                                    <th>Category</th>
                                     <th>Price</th>
                                     <th>Inventory</th>
                                     <th>Sold</th>
@@ -76,7 +84,6 @@
                             </thead>
                             <tbody>                               
                                 <%
-
                                     ResultSet rs = pDao.getAllProduct();
                                     while (rs.next()) {
                                 %>
@@ -85,6 +92,23 @@
                                         <img class="pImg" src="<%= rs.getString("ProductImageURL")%>" alt="alt"/>
                                         <%=rs.getString("ProductName")%>
                                     </td>
+                                    <%
+                                        int BrandID = rs.getInt("BrandID");
+                                        BrandDAO bDao = new BrandDAO();
+                                        ResultSet rs2 = bDao.getNameBrandByBrandID( BrandID);
+                                        while (rs2.next()) {
+                                    %>
+                                    <td><%=rs2.getString("BrandName")%></td>
+                                    <%}%>
+                                    
+                                    <%
+                                        int CategoryID = rs.getInt("CategoryID");
+                                        CategoryDAO cDao = new CategoryDAO();
+                                        ResultSet rs3 = cDao.getCategoryNameByCategoryID(CategoryID);
+                                        while (rs3.next()){
+                                    %>
+                                    <td><%=rs3.getString("CatName")%></td>
+                                    <%}%>
                                     <td> <%=rs.getInt("Price")%></td>
                                     <td> <%=rs.getInt("Quantity")%></td>
                                     <td> <%=rs.getByte("Active")%></td>
@@ -100,11 +124,10 @@
             </main>
             <!-- MAIN -->
         </section>
-        </div>
+                            </div>
         <!-- CONTENT -->
 
         <script src="<%= request.getContextPath()%>/JavaScript/script.js"></script>
         <script src="https://kit.fontawesome.com/53d8d93477.js" crossorigin="anonymous"></script>
-
     </body>
 </html>

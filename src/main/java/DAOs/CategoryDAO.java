@@ -83,4 +83,15 @@ public class CategoryDAO {
         }
         return false;
     }
+    
+     public ResultSet getCategoryNameByCategoryID(int CategoryID){
+          try{
+              ps = conn.prepareStatement("select * from tblCategory where CategoryID = ?");
+              ps.setInt(1, CategoryID);
+              rs = ps.executeQuery();
+              return rs;
+          }catch (SQLException e){
+              return null;
+          }
+      }
 }

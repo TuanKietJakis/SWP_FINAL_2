@@ -64,5 +64,16 @@ public class BrandDAO {
         }
         return false;
     }
+    
+    public ResultSet getNameBrandByBrandID(int BrandID) {
+        try {
+            ps = conn.prepareStatement("SELECT * FROM tblBrand WHERE BrandID = ?");
+            ps.setInt(1, BrandID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 
 }

@@ -31,4 +31,15 @@ public class RatingDAO {
         }
         return null;
     }
+      
+       public ResultSet getRateNumberByRateID(int RatingID) {
+        try {
+            ps = conn.prepareStatement("select * from tblRating where RatingID = ?");
+            ps.setInt(1, RatingID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            return null;
+        }
+    }
 }
