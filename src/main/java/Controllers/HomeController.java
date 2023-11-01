@@ -6,7 +6,7 @@ package Controllers;
 
 import DAOs.AccountDAO;
 import DAOs.CartDAO;
-import DAOs.FaQDAO;
+import DAOs.FAQDAO;
 import DAOs.ProductDAO;
 import Models.tblCart;
 import Models.tblFAQ;
@@ -224,7 +224,7 @@ public class HomeController extends HttpServlet {
                     request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
                 } else {
                     if (email != null || !email.equals("")) {
-                        FaQDAO Fdao = new FaQDAO();
+                        FAQDAO Fdao = new FAQDAO();
                         tblFAQ fa = new tblFAQ(helpmessage, email);
                         int kq = Fdao.AddNewQuest(fa);
                         if (kq != 0) {

@@ -124,7 +124,11 @@ public class AdminController extends HttpServlet {
             } catch (Exception e) {
             }
 
-        } else {
+        }
+          if (path.endsWith("/Admin/FAQ")) {
+            request.getRequestDispatcher("/Admin_FAQ.jsp").forward(request, response);
+        }
+          else {
             if (path.startsWith("/Admin/Setting/")) {
                 try {
                     String[] s = path.split("/");
