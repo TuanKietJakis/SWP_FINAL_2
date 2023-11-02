@@ -9,6 +9,7 @@ package Models;
  * @author Kiet
  */
 public class tblProduct {
+
     int ProductID;
     String ProductName;
     int Price;
@@ -20,8 +21,52 @@ public class tblProduct {
     byte Active;
     String ProductImageURL;
     int Size;
+    String BrandName;
+    String CatName;
+    int Cost;
 
     public tblProduct() {
+    }
+
+    public tblProduct(String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size, int Cost) {
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.BrandID = BrandID;
+        this.CategoryID = CategoryID;
+        this.ProductDes = ProductDes;
+        this.Quantity = Quantity;
+        this.Active = Active;
+        this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
+        this.Cost = Cost;
+    }
+
+    public tblProduct(String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size) {
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.BrandID = BrandID;
+        this.CategoryID = CategoryID;
+        this.ProductDes = ProductDes;
+        this.Quantity = Quantity;
+        this.Active = Active;
+        this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
+    }
+
+    public tblProduct(String BrandName, String CatName) {
+        this.BrandName = BrandName;
+        this.CatName = CatName;
+    }
+
+    public tblProduct(String ProductName, int Price, String ProductDes, byte Active, String ProductImageURL, int Size, String BrandName, String CatName) {
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.ProductDes = ProductDes;
+        this.Active = Active;
+        this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
+        this.BrandName = BrandName;
+        this.CatName = CatName;
     }
 
     public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size) {
@@ -57,7 +102,30 @@ public class tblProduct {
         this.Price = Price;
         this.ProductImageURL = ProductImageURL;
     }
-    
+
+    public int getCost() {
+        return Cost;
+    }
+
+    public void setCost(int Cost) {
+        this.Cost = Cost;
+    }
+
+    public String getBrandName() {
+        return BrandName;
+    }
+
+    public void setBrandName(String BrandName) {
+        this.BrandName = BrandName;
+    }
+
+    public String getCatName() {
+        return CatName;
+    }
+
+    public void setCatName(String CatName) {
+        this.CatName = CatName;
+    }
 
     public int getProductID() {
         return ProductID;
@@ -146,7 +214,5 @@ public class tblProduct {
     public void setSize(int Size) {
         this.Size = Size;
     }
-    
 
-  
 }

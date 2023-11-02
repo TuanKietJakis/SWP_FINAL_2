@@ -57,7 +57,7 @@
                                                 <div class="pHeader"><%= totalProducts%> product</div>
                                                 <label class="addNewBrand" onclick="location.href = '/addNewBrand'">Add new Brands</label>
                                                 <label class="addNewCategory"  onclick="location.href = '/addNewCategory'">Add new categories</label>
-                                                <label class="addNewProduct">Add new products</label>
+                                                <label class="addNewProduct" onclick="location.href = '/Admin/Product/addNewProduct'">Add new products</label>
                                             </div>
                                             <div class="table_example">
                                                 <table id="example">

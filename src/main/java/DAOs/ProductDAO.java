@@ -34,20 +34,20 @@ public class ProductDAO {
     public ProductDAO() throws Exception {
         conn = DatabaseConnection.DatabaseConnection.getConnection();
     }
-    
+
     public int getTotalProductCount() {
-    int total = 0;
-    try {
-        ps = conn.prepareStatement("SELECT COUNT(*) AS total FROM tblProduct");
-        rs = ps.executeQuery();
-        if (rs.next()) {
-            total = rs.getInt("total");
+        int total = 0;
+        try {
+            ps = conn.prepareStatement("SELECT COUNT(*) AS total FROM tblProduct");
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return total;
     }
-    return total;
-}
 
     public ResultSet getAllProduct() {
         String sql = "select*from tblProduct";
@@ -60,7 +60,8 @@ public class ProductDAO {
         }
         return null;
     }
-    public ResultSet getAllProductLimit(int start,int limit) {
+
+    public ResultSet getAllProductLimit(int start, int limit) {
         String sql = "select * from tblProduct order by ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             ps = conn.prepareStatement(sql);
@@ -277,6 +278,7 @@ public class ProductDAO {
         }
         return rs;
     }
+
     public ResultSet getSearchProductnolimit(String inputValue) {
         ResultSet rs = null;
         String sql = "select * from tblProduct where ProductName like ?";
@@ -299,8 +301,8 @@ public class ProductDAO {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
             rs = ps.executeQuery();
-            if(rs.next()){              
-            pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
+            if (rs.next()) {
+                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -309,4 +311,157 @@ public class ProductDAO {
         return pro;
     }
 
+    public ResultSet GetAllBrandName() {
+        try {
+            String sql = "select BrandName from tblBrand";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetAllCategoryName() {
+        try {
+            String sql = "select CatName from tblCategory";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public int GetBrandIDByBrandName(String BrandName) {
+        int count = 0;
+        try {
+            String sql = "select BrandID from tblBrand where BrandName= ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, BrandName);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("BrandID");
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    public boolean CheckBrandName(String BrandName) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) as BrandName\n"
+                    + "FROM tblBrand\n"
+                    + "WHERE BrandName = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, BrandName);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public int GetCategoryIDByCategoryName(String CategoryName) {
+        int count = 0;
+        try {
+            String sql = "select CategoryID from tblCategory where CatName= ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, CategoryName);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("CategoryID");
+            }
+        } catch (Exception e) {
+        }
+        return count;
+    }
+
+    public boolean CheckCategoryName(String CategoryName) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(*) as CatName\n"
+                    + "FROM tblCategory\n"
+                    + "WHERE CatName = ?;";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, CategoryName);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public int AddNewBrandNameCatName(tblProduct pr) {
+
+        String sql = "Insert into tblBrand(BrandName,Active) values(?,?)"
+                + "Insert into tblCategory(CatName,Active) values(?,?)";
+        int kq = 0;
+        try {
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, pr.getBrandName());
+            ps.setInt(2, 1);
+            ps.setString(3, pr.getCatName());
+            ps.setInt(4, 1);
+            kq = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return kq;
+    }
+
+    public int ImportProduct(tblProduct p) {
+        int kq = 0;
+        String sql = "INSERT INTO tblProduct(ProductName,Price,BrandID,CategoryID,ProductDes,Quantity,Active,ProductImageURL,Size,Cost)\n"
+                + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, p.getProductName());
+            ps.setInt(2, p.getPrice());
+            ps.setInt(3, p.getBrandID());
+            ps.setInt(4, p.getCategoryID());
+            ps.setString(5, p.getProductDes());
+            ps.setInt(6, p.getQuantity());
+            ps.setInt(7, 1);
+            ps.setString(8, p.getProductImageURL());
+            ps.setInt(9, p.getSize());
+            ps.setInt(10, p.getCost());
+            kq = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return kq;
+    }
+
+    public int AddNewBrandName(tblProduct pr) {
+        int kq = 0;
+        String sql = "Insert into tblBrand(BrandName,Active) values(?,?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, pr.getBrandName());
+            ps.setInt(2, 1);
+            kq = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return kq;
+    }
+
+    public int AddNewCategoryName(tblProduct pr) {
+        int kq = 0;
+        String sql = "Insert into tblCategory(CatName,Active) values(?,?)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, pr.getCatName());
+            ps.setInt(2, 1);
+            kq = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return kq;
+    }
 }
