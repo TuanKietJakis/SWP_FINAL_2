@@ -36,6 +36,7 @@ Controllers\SignupController2.class
 Models\tblRateCart.class
 Controllers\LoginController.class
 Controllers\AdminController.class
+DAOs\OrderStatusDAO.class
 DAOs\OrderDetailDAO.class
 Controllers\HomeController.class
 Models\tblRole.class

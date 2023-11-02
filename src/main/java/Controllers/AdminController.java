@@ -127,10 +127,15 @@ public class AdminController extends HttpServlet {
             }
 
         }
-          if (path.endsWith("/Admin/FAQ")) {
-            request.getRequestDispatcher("/Admin_FAQ.jsp").forward(request, response);
+        if (path.endsWith("/Admin/OrderStatus")) {
+            request.getRequestDispatcher("/OrderStatus.jsp").forward(request, response);
         }
-          else {
+        if (path.endsWith("/Admin/RevenueAndExpenditure")) {
+            request.getRequestDispatcher("/RevenueAndExpenditure.jsp").forward(request, response);
+        }
+        if (path.endsWith("/Admin/FAQ")) {
+            request.getRequestDispatcher("/Admin_FAQ.jsp").forward(request, response);
+        } else {
             if (path.startsWith("/Admin/Setting/")) {
                 try {
                     String[] s = path.split("/");
@@ -144,9 +149,9 @@ public class AdminController extends HttpServlet {
                 } catch (Exception e) {
 
                 }
-            }else if(path.startsWith("/Admin/OrderManage")){
-                 request.getRequestDispatcher("/AdminOrder.jsp").forward(request, response);
-            }else if(path.startsWith("/Admin/OrderDetail/")){
+            } else if (path.startsWith("/Admin/OrderManage")) {
+                request.getRequestDispatcher("/AdminOrder.jsp").forward(request, response);
+            } else if (path.startsWith("/Admin/OrderDetail/")) {
                 try {
                     String[] s = path.split("/");
                     int OrderID = Integer.parseInt(s[s.length - 2]);
@@ -155,12 +160,12 @@ public class AdminController extends HttpServlet {
                     AccountDAO dao1 = new AccountDAO();
                     ResultSet or = dao.GetOrderInfoByID(OrderID);
                     tblUser us = new tblUser();
-                     us = dao1.GetAccountByID(UserID);
-                     HttpSession session = request.getSession();
-                     session.setAttribute("user", us);
-                     session.setAttribute("order", or);
-                     request.setAttribute("orderID", OrderID);
-                     request.getRequestDispatcher("/AdminOrderDetail.jsp").forward(request, response);
+                    us = dao1.GetAccountByID(UserID);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", us);
+                    session.setAttribute("order", or);
+                    request.setAttribute("orderID", OrderID);
+                    request.getRequestDispatcher("/AdminOrderDetail.jsp").forward(request, response);
                 } catch (Exception e) {
                 }
             }
@@ -235,7 +240,7 @@ public class AdminController extends HttpServlet {
 
         } catch (Exception e) {
         }
-        
+
         if (request.getParameter("btn_setting") != null) {
             try {
                 String day = request.getParameter("day");
@@ -246,7 +251,7 @@ public class AdminController extends HttpServlet {
                 String phone = request.getParameter("phonenumber");
                 String address = request.getParameter("address");
                 int userId = Integer.parseInt(request.getParameter("userId"));
-                String birthday = year + "-" + month + "-" + day;             
+                String birthday = year + "-" + month + "-" + day;
                 AccountDAO dao = new AccountDAO();
                 int kq = dao.UpdateAdminAccount(birthday, gender, phone, email, address, userId);
                 tblUser user = dao.GetAccountByID(userId);
@@ -262,13 +267,13 @@ public class AdminController extends HttpServlet {
             } catch (Exception e) {
             }
         }
-                try {
+        try {
             String action = request.getParameter("action");
-            if("reject order".equals(action)){
+            if ("reject order".equals(action)) {
                 int orderID = Integer.parseInt(request.getParameter("order"));
                 OrderDAO dao = new OrderDAO();
                 int kq = dao.RejectOrder(orderID);
-                if(kq!=0){
+                if (kq != 0) {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter out = response.getWriter();
@@ -280,11 +285,11 @@ public class AdminController extends HttpServlet {
         }
         try {
             String action = request.getParameter("action");
-            if("accept order".equals(action)){
+            if ("accept order".equals(action)) {
                 int orderID = Integer.parseInt(request.getParameter("order"));
                 OrderDAO dao = new OrderDAO();
                 int kq = dao.AcceptOrder(orderID);
-                if(kq!=0){
+                if (kq != 0) {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter out = response.getWriter();
