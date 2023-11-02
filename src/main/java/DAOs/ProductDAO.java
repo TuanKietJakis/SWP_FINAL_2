@@ -88,33 +88,73 @@ public class ProductDAO {
                         rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getByte("Active"),
                         rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pro;
     }
 
-    public int UpdateProduct(tblProduct pro) {
-        String sql = "Update tblProduct set ProductID = ?, CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, RatingID = ?,"
-                + " ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
+     public int UpdateProduct(tblProduct pro) {
+        String sql = "Update tblProduct set CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, RatingID = ?, ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
         int result = 0;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, pro.getProductID());
-            ps.setInt(2, pro.getCategoryID());
-            ps.setString(3, pro.getProductName());
-            ps.setInt(4, pro.getPrice());
-            ps.setInt(5, pro.getBrandID());
-            ps.setInt(6, pro.getRatingID());
-            ps.setString(7, pro.getProductDes());
-            ps.setInt(8, pro.getQuantity());
-            ps.setInt(9, pro.getActive());
-            ps.setString(10, pro.getProductImageURL());
-            ps.setInt(11, pro.getSize());
+            ps.setInt(1, pro.getCategoryID());
+            ps.setString(2, pro.getProductName());
+            ps.setInt(3, pro.getPrice());
+            ps.setInt(4, pro.getBrandID());
+            ps.setInt(5, pro.getRatingID());
+            ps.setString(6, pro.getProductDes());
+            ps.setInt(7, pro.getQuantity());
+            ps.setInt(8, pro.getActive());
+            ps.setString(9, pro.getProductImageURL());
+            ps.setInt(10, pro.getSize());
+            ps.setInt(11, pro.getProductID());
             result = ps.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+     
+      public int UpdatetoProduct(tblProduct pro) {
+        String sql = "Update tblProduct set CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pro.getCategoryID());
+            ps.setString(2, pro.getProductName());
+            ps.setInt(3, pro.getPrice());
+            ps.setInt(4, pro.getBrandID());
+//            ps.setInt(5, pro.getRatingID());
+            ps.setString(5, pro.getProductDes());
+            ps.setInt(6, pro.getQuantity());
+            ps.setInt(7, pro.getActive());
+            ps.setString(8, pro.getProductImageURL());
+            ps.setInt(9, pro.getSize());
+            ps.setInt(10, pro.getProductID());
+            result = ps.executeUpdate();
+        } catch (Exception ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+     
+     public int ChangeActive(int ID) {
+        int ketqua = 0;
+        String sql = "Update tblProduct SET Active = 0 \n"
+                + "where ProductID = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            String URL = GetImageURL(ID);
+            DeleteImage(URL);
+            DeleteImageDB(ID);
+            ketqua = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ketqua;
     }
 
     public int Delete(int ID) {

@@ -206,7 +206,7 @@ public class productAdminController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public void uploadFile(String picture, HttpServletRequest request) {
+     public void uploadFile(String picture, HttpServletRequest request) {
         String relativePath = "img\\"; //ten folder chua anh
         String realPath = request.getServletContext().getRealPath("");
         String[] data = realPath.split(File.separator + "\\");
@@ -238,5 +238,4 @@ public class productAdminController extends HttpServlet {
             Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

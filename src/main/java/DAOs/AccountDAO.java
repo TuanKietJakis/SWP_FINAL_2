@@ -52,6 +52,18 @@ public class AccountDAO {
         }
         return null;
     }
+    
+    public ResultSet GetAllWithAddress(int ID) {
+        try {
+            ps = conn.prepareStatement("select * from tblUser u\n"
+                    + "join tblAddress a on u.UserID=a.UserID where u.UserID=?");
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 
     public ResultSet GetAll(int ID) {
         try {

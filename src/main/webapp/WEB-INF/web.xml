@@ -75,6 +75,10 @@
         <servlet-name>RatingController</servlet-name>
         <servlet-class>Controllers.RatingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WishListController</servlet-name>
+        <servlet-class>Controllers.WishListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BrandController</servlet-name>
         <url-pattern>/addNewBrand/*</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>RatingController</servlet-name>
         <url-pattern>/RatingController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WishListController</servlet-name>
+        <url-pattern>/wishlist/*</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

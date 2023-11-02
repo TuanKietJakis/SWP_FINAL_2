@@ -73,7 +73,7 @@
                                                 <a href="/Account/UpdateProfileUser" class="nav_profile_opt">Your
                                                     profile</a>
                                                 <a href="/OrderHistory" class="nav_profile_opt">Order History</a>
-                                                <a href="/Wishlist" class="nav_profile_opt">WishList</a>
+                                                <a href="/wishlist/show" class="nav_profile_opt">WishList</a>
                                                 <a href="/logout.jsp" class="nav_profile_opt">Logout</a>
                                             </div>
                                             <%}%>

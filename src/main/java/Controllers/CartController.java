@@ -11,6 +11,7 @@ import DAOs.OrderDetailDAO;
 import Models.tblAddress;
 import Models.tblCart;
 import Models.tblOrder;
+import Models.tblProduct;
 import Models.tblUser;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -88,6 +89,19 @@ public class CartController extends HttpServlet {
             } else {
                 session.setAttribute("trigger", "asdf");
                 response.sendRedirect("/");
+            }
+        }  else if (path.startsWith("/Cart/Add/")) {
+            try {
+                String[] s = path.split("/");
+                int ProductID = Integer.parseInt(s[s.length - 2]);
+                int quantity = Integer.parseInt(s[s.length - 1]);
+                CartDAO carDAO = new CartDAO();
+                tblProduct pro = carDAO.getProductforAdd(ProductID);
+                int id = (int) request.getSession().getAttribute("CustomerID");
+                int kq = carDAO.AddNewCarttoWishList(id, pro);
+                response.sendRedirect("/wishlist/show");
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

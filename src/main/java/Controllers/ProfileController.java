@@ -93,7 +93,7 @@ public class ProfileController extends HttpServlet {
                 String address = request.getParameter("Address");
                 int userID = Integer.parseInt(request.getParameter("hiddenID"));
                 int kq = accDAO.UpdateAccount(fullname, username, dob, gender, phone, email, address, userID);
-                response.sendRedirect("/Account/Update");
+                response.sendRedirect("/Profile/Update");
             }
         } catch (Exception ex) {
             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);

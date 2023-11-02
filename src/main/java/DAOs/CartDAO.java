@@ -41,8 +41,8 @@ public class CartDAO {
         }
         return null;
     }
-    
-        public ResultSet ShowCartRecently(int UserID) {
+
+    public ResultSet ShowCartRecently(int UserID) {
         String sql = "select * from (select ProductID,ProductImageURL,ProductName,ProductPrice,ROW_NUMBER() OVER (ORDER BY CartID DESC) AS Rank from tblCart where UserID = ? ) tmp where rank <= 3;";
         try {
             ps = conn.prepareStatement(sql);
@@ -53,15 +53,16 @@ public class CartDAO {
         }
         return null;
     }
-    public int showNumberItem(int UserID){
-        int kq=0;
+
+    public int showNumberItem(int UserID) {
+        int kq = 0;
         String sql = "SELECT COUNT(CartID) as numberItem FROM tblCart where UserID = ?;";
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, UserID);
             rs = ps.executeQuery();
-            if(rs.next()){
-            kq = rs.getInt("numberItem");
+            if (rs.next()) {
+                kq = rs.getInt("numberItem");
             }
         } catch (SQLException e) {
         }
@@ -83,17 +84,17 @@ public class CartDAO {
         }
         return cart;
     }
-    
-    public int UpdateProductQuantity(int ProductAmount,int Quantity, int ProductID){
-        int kq=0;
-        try{
+
+    public int UpdateProductQuantity(int ProductAmount, int Quantity, int ProductID) {
+        int kq = 0;
+        try {
             String sql = "update tblProduct SET Quantity=? where ProductID = ?;";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, Quantity - ProductAmount);
             ps.setInt(2, ProductID);
             kq = ps.executeUpdate();
-        }catch(SQLException e){
-            
+        } catch (SQLException e) {
+
         }
         return kq;
     }
@@ -110,6 +111,7 @@ public class CartDAO {
         }
         return result;
     }
+
     public int DeleteAllIteminCart(int ID) {
         int result = 0;
         String sql = "DELETE FROM tblCart WHERE UserID=?";
@@ -151,7 +153,7 @@ public class CartDAO {
         return pro;
     }
 
-    public int AddNewCart(int UserID, tblProduct pro,int Amount) {
+    public int AddNewCart(int UserID, tblProduct pro, int Amount) {
         String sql = "insert into tblCart values(?,?,?,?,?,?,?)";
         int result = 0;
         try {
@@ -169,34 +171,56 @@ public class CartDAO {
         }
         return result;
     }
-    public ResultSet getAllAddress(int UserID){
+
+    public int AddNewCarttoWishList(int UserID, tblProduct pro) {
+        String sql = "insert into tblCart values(?,?,?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            ps.setInt(2, pro.getProductID());
+            ps.setString(3, pro.getProductName());
+            ps.setInt(4, pro.getPrice());
+            ps.setInt(5, 1);
+            ps.setString(6, pro.getProductImageURL());
+            ps.setInt(7, 1);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+
+    public ResultSet getAllAddress(int UserID) {
         String sql = "select * from tblAddress where UserID = ?;";
-        try{
+        try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, UserID);
             rs = ps.executeQuery();
             return rs;
-        }catch(SQLException e){
-            
+        } catch (SQLException e) {
+
         }
         return null;
     }
-    public tblAddress getAddress(int AddressID){
+
+    public tblAddress getAddress(int AddressID) {
         tblAddress address = null;
         String sql = "select * from tblAddress where AddressID = ?;";
-        try{
+        try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, AddressID);
             rs = ps.executeQuery();
-            if(rs.next()){
-                address = new tblAddress(rs.getInt("AddressID"),rs.getInt("UserID"), rs.getString("Address"), rs.getByte("Active"), rs.getString("PhoneNumber"), rs.getString("FullName"), rs.getByte("PaymentMethodID"));
+            if (rs.next()) {
+                address = new tblAddress(rs.getInt("AddressID"), rs.getInt("UserID"), rs.getString("Address"), rs.getByte("Active"), rs.getString("PhoneNumber"), rs.getString("FullName"), rs.getByte("PaymentMethodID"));
             }
-        }catch(SQLException e){
-            
+        } catch (SQLException e) {
+
         }
         return address;
     }
-    public tblCart getItemforAdd(int CartID){
+
+    public tblCart getItemforAdd(int CartID) {
         tblCart item = null;
         try {
             ps = conn.prepareStatement("select ProductID,ProductPrice,ProductAmount from tblCart where CartID=?;");
@@ -209,6 +233,5 @@ public class CartDAO {
         }
         return item;
     }
-    
-    
+
 }

@@ -112,7 +112,7 @@
                                         <td colspan="2">
                                             <div class="text-center">
                                                 <a href="/Product/Update/<%= rs.getInt("ProductID")%>" class="button-2" role="button"><i class="fa-solid fa-pen-nib"></i> Update</a>
-                                                <a onclick="return confirm('Confirm for deletion?');" href="/Product/Delete/<%= rs.getInt("ProductID")%>" class="button-1" role="button"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                
                                             </div>
                                         </td>
                                     </tr>

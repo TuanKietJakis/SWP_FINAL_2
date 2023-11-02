@@ -29,6 +29,7 @@ Controllers\ShopController.class
 ForgotPassword\OTP.class
 Controllers\BrandController.class
 Controllers\ProfileController.class
+Controllers\WishListController.class
 DAOs\vnpayDAO.class
 Models\tblWishList.class
 DAOs\OrderDAO.class
@@ -43,6 +44,7 @@ Models\tblRole.class
 DAOs\AccountDAO.class
 Controllers\AccountController.class
 com\vnpay\common\vnpayQuery.class
+DAOs\WishListDAO.class
 Models\tblProduct.class
 Controllers\OrderController.class
 EncodeMD5\MD5.class

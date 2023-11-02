@@ -9,17 +9,29 @@ import Models.tblProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Kiet CHUA XONG NHAAAAAAAAA
+ * @author Kiet 
  */
+
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, //1MB
+        maxFileSize = 1024 * 1024 * 10, //10MB
+        maxRequestSize = 1024 * 1024 * 100//100MB
+)
+
 public class ProductController extends HttpServlet {
 
     /**
@@ -88,15 +100,16 @@ public class ProductController extends HttpServlet {
                     Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                if (path.startsWith("/Product/Delete/")) {
+                 if (path.startsWith("/Product/Delete/")) {
                     try {
                         String[] s = path.split("/");
-                        String masv = s[s.length - 1];
+                        int ProductID = Integer.parseInt(s[s.length - 1]);
                         ProductDAO dao = new ProductDAO();
-                        dao.Delete(Integer.parseInt(masv));
-                        response.sendRedirect("/Product");
+                        int ketqua = 0;
+                        ketqua = dao.ChangeActive(ProductID);
+                        response.sendRedirect("/Admin/Product/List");
                     } catch (Exception ex) {
-
+                        /* Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex); */
                     }
                 } else {
                     if (path.startsWith("/Product/Update/")) {
@@ -114,7 +127,7 @@ public class ProductController extends HttpServlet {
                                     HttpSession session = request.getSession();
                                     session.setAttribute("ProductIDToUpdate", pro);
                                     session.setAttribute("ImgURL", ImgURL);
-                                    request.getRequestDispatcher("/JSP/ProductPage/UpdateProduct.jsp").forward(request, response);
+                                    request.getRequestDispatcher("/UpdateProduct.jsp").forward(request, response);
                                 }
                             } catch (Exception ex) {
                                 Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
@@ -122,16 +135,16 @@ public class ProductController extends HttpServlet {
                         } catch (Exception ex) {
                             Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } else {
-                        if (path.endsWith("/Product/Create")) {
-                            try {
-                                request.getRequestDispatcher("/JSP/ProductPage/CreateProduct.jsp").forward(request, response);
-                            } catch (Exception ex) {
-                                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-
-                    }
+                    } 
+//                    else {
+////                        if (path.endsWith("/Product/Create")) {
+////                            try {
+////                                request.getRequestDispatcher("/JSP/ProductPage/CreateProduct.jsp").forward(request, response);
+////                            } catch (Exception ex) {
+////                                Logger.getLogger(AccountController.class.getName()).log(Level.SEVERE, null, ex);
+////                            }
+////                        }
+//                    }
                 }
             }
         }
@@ -149,28 +162,39 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (request.getParameter("btnUpdatePro") != null) {
+        String btnUpdatePro = request.getParameter("btnUpdatePro");
+        if (btnUpdatePro != null && btnUpdatePro.equals("Change Update")) {
+            String folder = "/img/";
             try {
                 int ProductID = Integer.parseInt(request.getParameter("txtProductID"));
-                int CategoryID = Integer.parseInt(request.getParameter("selectCategoryID"));
+                int CategoryID = Integer.parseInt(request.getParameter("txtCategoryID"));
                 String ProductName = request.getParameter("txtProductName");
                 int Price = Integer.parseInt(request.getParameter("txtPrice"));
-                int BrandID = Integer.parseInt(request.getParameter("selectBrand"));
-                int RatingID = Integer.parseInt(request.getParameter("selectRatingID"));
+                int BrandID = Integer.parseInt(request.getParameter("txtBrand"));
+//                int RatingID = Integer.parseInt(request.getParameter("txtRatingID"));
                 String ProductDes = request.getParameter("txtProductDes");
                 int Quantity = Integer.parseInt(request.getParameter("txtQuantity"));
                 byte Active = (byte) Integer.parseInt(request.getParameter("txtActive"));
-                String ProductImageURL = request.getParameter("txtProductImageURL");
+                String fileName = request.getPart("txtProductImageURL").getSubmittedFileName();
+                String Image_URL = folder + fileName;
                 int Size = Integer.parseInt(request.getParameter("txtSize"));
-                tblProduct newPro = new tblProduct();
+                String oldImagePath = request.getParameter("oldImagePath");
+                if (fileName.equals("")) {
+                    Image_URL = oldImagePath;
+                } else {
+                    uploadFile(fileName, request);
+                }
+                tblProduct newPro = new tblProduct(ProductID, ProductName, Price, BrandID, CategoryID, ProductDes, Quantity, Active, Image_URL, Size);
                 ProductDAO dao = new ProductDAO();
                 int result = dao.UpdateProduct(newPro);
                 if (result != 0) {
-                    response.sendRedirect("/Product/View/" + CategoryID);
+//                    response.sendRedirect("/Admin/Product/List");
+                    response.sendRedirect("/Admin/Product/List");
                 } else {
                     response.sendRedirect("/Product/Update/" + bruh);
                 }
             } catch (Exception e) {
+                 Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, e);
             }
         }
 
@@ -212,4 +236,37 @@ public class ProductController extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public void uploadFile(String picture, HttpServletRequest request) {
+        String relativePath = "img\\"; //ten folder chua anh
+        String realPath = request.getServletContext().getRealPath("");
+        String[] data = realPath.split(File.separator + "\\");
+        int position = 0;//vi tri cua target
+        for (int i = 0; i < data.length; i++) {
+            if (data[i].equals("target")) {
+                position = i;
+                break;
+            }
+        }
+        String finalPath = "";
+        for (int i = 0; i < position; i++) {
+            finalPath += data[i] + File.separator;
+        }
+        finalPath += "src\\main\\webapp\\" + relativePath + picture;
+
+//        String RootDestination = "D:\\FPT_SE1702\\Summer2023\\PRJ301\\LAB03\\lab03_model2\\src\\main\\webapp\\";
+//        String finalDestiation = RootDestination + relativePath + picture;
+        try ( InputStream inS = request.getPart("txtProductImageURL").getInputStream()) {
+            OutputStream outS, outSTarget;
+            outS = new FileOutputStream(finalPath);
+            byte[] buffer = new byte[1024];
+            int bytes;
+            while ((bytes = inS.read(buffer)) != -1) {
+                outS.write(buffer, 0, bytes);
+            }
+            outS.close();
+        } catch (IOException | ServletException ex) {
+            Logger.getLogger(ProductController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
+
