@@ -323,6 +323,7 @@ body {
     position: relative;
     width: calc(100% - 280px);
     transition: .3s ease;
+    margin-left: 5px;
 }
 #sidebar.hide ~ #content {
     width: calc(100% - 60px);
@@ -460,6 +461,8 @@ body {
     width: 100%;
     font-family: var(--poppins);
     overflow-y: auto;
+    width: 1250px;
+    margin-left: -5px
 }
 #content main .head-title {
     display: flex;
@@ -551,17 +554,19 @@ body {
 }
 
 
-
-
+.table_example{
+    overflow: auto; /* Cho phép cuộn nội dung */
+    max-height: 390px;
+}
 
 #content main .table-data {
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
-    margin-top: 25px;
+    margin-top: 10px;
     width: 100%;
     color: var(--dark);
-
+   
 }
 #content main .table-data > div {
 
@@ -588,13 +593,13 @@ body {
 #content main .table-data .order {
     flex-grow: 1;
     flex-basis: 500px;
-    margin-left: 10px
 }
 #content main .table-data .order table {
     width: 1120px;
-    height: 736px;
+    height: 730px;
     border-collapse: collapse;
-    border: 1px solid black
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    padding-left: 8px
 }
 #content main .table-data .order table th {
     color: #000;
@@ -604,8 +609,7 @@ body {
     font-weight: bold;
     line-height: normal;
     padding-top: 15px;
-    
-
+    justify-content: center
 }
 #content main .table-data .order table td {
     padding-top: 10px;
@@ -615,18 +619,25 @@ body {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    align-items: center;
+    padding-left: 8px;
 }
 #content main .table-data .order table tr td:first-child {
-/*    display: flex;*/
+    display: flex;
     align-items: center;
     grid-gap: 12px;
-    padding-left: 6px;
+    padding-left: 12px;
 }
 #content main .table-data .order table td img {
     object-fit: cover;
-    width: 86px;
-    height: 93px;
+    width: 68px;
+    height: 68px;
     background: lightgray 0px -30.505px / 100% 133.333% no-repeat;
+    border-radius:  10px;
+}
+
+#content main .table-data .order table tbody tr{
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 #content main .table-data .order table tbody tr:hover {
     background: var(--grey);
@@ -684,7 +695,7 @@ pImg{
     width: 100%;
     height: 117px;
     background: #FFF;
-    margin-left: 10px;
+    margin-left: 5px;
     display: flex;
     align-items: center
 }
@@ -730,7 +741,7 @@ pImg{
     border-radius: 100px;
     border: 1px solid rgba(0, 0, 0, 0.25);
     background: #FFF;
-    margin-left: 380px
+    margin-left: 330px
 }
 
 .searchBox input{
@@ -765,7 +776,7 @@ pImg{
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-left: 222.82px;
+    margin-left: 221px;
     cursor: pointer
 }
 
@@ -876,7 +887,9 @@ pImg{
 
 .tdName{
     width: 200px;
-    text-align: center
+    display: flex;
+    justify-content: center;
+    padding-bottom: 70px
 }
 
 .tdPrice{
@@ -912,7 +925,12 @@ pImg{
 .tdImg{
     display: flex;
     justify-content: center;
+
 }
+
+
+
+
 
 
 
@@ -924,7 +942,7 @@ pImg{
 
     #content {
         width: calc(100% - 60px);
-        
+
     }
 
     #content nav .nav-link {
