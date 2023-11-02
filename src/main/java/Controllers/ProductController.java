@@ -186,7 +186,7 @@ public class ProductController extends HttpServlet {
                 }
                 tblProduct newPro = new tblProduct(ProductID, ProductName, Price, BrandID, CategoryID, ProductDes, Quantity, Active, Image_URL, Size);
                 ProductDAO dao = new ProductDAO();
-                int result = dao.UpdateProduct(newPro);
+                int result = dao.UpdatetoProduct(newPro);
                 if (result != 0) {
 //                    response.sendRedirect("/Admin/Product/List");
                     response.sendRedirect("/Admin/Product/List");

@@ -327,9 +327,8 @@ body {
 
                 & .button-group {
                     display: grid;
-                    grid-template-columns: auto auto;
+                    grid-template-columns: auto;
                     gap: 12px;
-                    width: 100%;
                 }
 
                 & .dm {
