@@ -24,24 +24,20 @@
         <jsp:include page="header.jsp">
             <jsp:param name="ID" value="<%=userID%>" />
         </jsp:include>
-        <div class="container">
-            <h1>Order History</h1>
-            <table>
-                <thead>
-                    <tr>
-
-                        <th>Order ID</th>
-                        <th>Order Date</th>
-                        <th>Product Name</th>
-                        <th>Product Price</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
-                        <th>Product Image</th>
-                        <th>Product ID</th>
-                        <th>Rate Product</th>
-                    </tr>
-                </thead>
-                <tbody>
+          <main class="main">
+         <div class="section_title">
+                <h1 class="cart_title">Order History</h1>
+                <h2 class="cart_subtitle">Review Your Order History</h2>
+            </div>
+            <section class="container cart_container">
+                <div class="cart_table">
+                    <div class="cart_t_header">
+                        <h1 class="cart_h_title col-product">Product</h1>
+                        <h1 class="cart_h_title col-price">Price</h1>
+                        <h1 class="cart_h_title col-quantity">Quantity</h1>
+                        <h1 class="cart_h_title col-remove">Rating</h1>
+                    </div>
+                    <div class="cart_t_frame">
                     <%
                         OrderDAO oDao = new OrderDAO();
                         ResultSet rs = oDao.GetOrderDetailsByUserID(userID);
@@ -60,28 +56,25 @@
                                 // Format date
 
                     %>
-                    <!-- Hiển thị thông tin của đơn hàng tại đây -->
-                    <tr>
-
-                        <td><%= orderID%></td>
-                        <td><%= orderDate%></td>
-                        <td><%= productName%></td>
-                        <td><%= productPrice%></td>
-                        <td><%= quantity%></td>
-                        <td><%= totalPrice%></td>
-                        <td>
-                            <img src="<%= productImage%>" alt="<%= productName%>" style="max-width: 100px; max-height: 100px;">
-                        </td>
-
-                        <td><%= productID%></td>
-
-                        <td>
+                   <!-- Hiển thị thông tin của đơn hàng tại đây -->
+                      <div class="cart_t_item">
+                            <div class="cart_t_i_content col-product">
+                                <div class="cart_t_i_img">
+                                    <img src="<%=rs.getString("ProductImageURL")%>" alt="">
+                                </div>
+                                <div class="cart_t_i_data">
+                                    <h1 class="cart_t_i_title"><%= productName%></h1>
+                                    <p class="cart_t_i_subtitle">Delivery:<%= orderDate%></p>
+                                </div>
+                            </div>
+                            <h1 class="cart_t_i_price col-price">$<%= productPrice%></h1>
+                            <p class="cart_t_i_quati col-quantity">Quantity: <%= quantity%></p>
                             <%
                                 if (active == 2) {
 
                                 } else {
-                            %>
-                            <button onclick="openPopup(<%= productID%>,<%= orderID%>);">Rate Product</button> 
+                            %>                        
+                        <button class="underline-button" onclick="openPopup(<%= productID%>,<%= orderID%>);">Rate Product</button> 
                             <%}%>
 
                         </td>
@@ -101,12 +94,14 @@
                 </tbody>
             </table>
         </div>
-
+          
+                   
         <div id="ratingPopup" class="popup">
             <div class="popup-content">
                 <span class="close-popup" onclick="closePopup()">&times;</span>
                 <h2>Rate Product</h2>
                 <div class="rating-stars">
+                    <p>Please select your rating:</p>
                     <span class="star" onclick="setRating(1)">★</span>
                     <span class="star" onclick="setRating(2)">★</span>
                     <span class="star" onclick="setRating(3)">★</span>
@@ -119,13 +114,17 @@
                     <input type="hidden" name="rating" id="rating" value="">
                     <input type="hidden" name="orderID" id="orderID" value="">
 
-                    <textarea name="rateDes" id="comment" rows="4" cols="50" placeholder="Write a comment..."></textarea>
-                    <button type="submit" onclick="submitRating(event)">Submit</button>
+                    <textarea class="cart_dz_input ratingcmt"name="rateDes" id="comment" rows="4" cols="50" placeholder="Write a comment..."></textarea>
+                    <button class="PopupBtn" type="submit" onclick="submitRating(event)">Submit</button>
                 </form>
             </div>
+                  
         </div>
+               <div class="background"></div>      
+                
 
-
+</section>
+        </main>
 
         <jsp:include page="Footer.jsp"></jsp:include>
         <script src="js/DangScript/jquery.min.js"></script>
@@ -175,6 +174,8 @@
 
 
         </script>
+        <script src="/js/DangScript/CartScript.js"></script>
+        <script src="js/VyScript/orderHistory.js"></script>
     </body>
 
 </html>

@@ -294,41 +294,17 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
 }
 
-/* .openPopupBtn {
-    border: 0.5px solid grey;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0;
 
-} */
-.openPopupBtn {
-    background-color: palevioletred;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
+.underline-button{
+    padding-bottom: 14px;
+    color: palevioletred;
+    background: none;
+    text-decoration: underline;
 }
-
-.openPopupBtn:hover {
-    background-color: rgb(230, 100, 144);
+.underline-button:hover{
+ 
+   color: pink;
 }
-
-.openPopupBtn:focus {
-    outline: none;
-}
-
-.openPopupBtn:active {
-    background-color: rgb(218, 47, 104);
-}
-
-
 
 .small-star {
     font-size: 14px;
@@ -352,7 +328,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Màu nền và độ mờ */
+    /* MÃ u ná»n vÃ  Ä‘á»™ má» */
     display: none;
     align-items: center;
     justify-content: center;
@@ -395,13 +371,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 }
 
-.popup-content1 h2 {}
+
 
 .nav_acc {
     position: relative;
 }
 
-.overlay {
+/*.overlay {
     display: flex;
     position: fixed;
     top: 0;
@@ -410,15 +386,15 @@ input[type=number]::-webkit-outer-spin-button {
     height: 100vh;
     background: rgba(0, 0, 0, 0.25);
     z-index: 9998;
-}
+}*/
 
 .showpopup {
     display: flex;
 }
 
-.hideoverlay {
+/*.hideoverlay {
     display: none;
-}
+}*/
 
 .rating-stars {
     display: flex;
@@ -512,3 +488,30 @@ button {
 .Btnpopup {
     display: flex-end;
 }
+.background{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
+/*    display: none;*/
+    
+}
+.show_background{
+    z-index: 10;
+}
+/*#overlay {
+  position: fixed;  Sit on top of the page content 
+  display: none;  Hidden by default 
+  width: 100%;  Full width (cover the whole page) 
+  height: 100%;  Full height (cover the whole page) 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);  Black background with opacity 
+  z-index: 2;  Specify a stack order in case you're using a different order for other elements 
+  cursor: pointer;  Add a pointer on hover 
+}*/
