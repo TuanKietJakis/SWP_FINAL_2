@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="DAOs.CartDAO"%>
 <%@page import="Models.tblProduct"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.ProductDAO"%>
@@ -24,13 +25,25 @@
         <link rel="stylesheet" href="/CSS/detailProduct.css"/>
     </head>    
     <body>
-
+<%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
         <%
-            System.out.println(session.getAttribute("CustomerID"));
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 ID = (int) session.getAttribute("CustomerID");
             }
+        %>
+        <%
+            int AmountFromCart = 0;
         %>
         <jsp:include page="header.jsp">
             <jsp:param name="ID" value="<%=ID%>"/>
@@ -38,6 +51,10 @@
         <main class="main" id="main">
             <%
                 tblProduct pro = (tblProduct) request.getAttribute("Product");
+                if (session.getAttribute("CustomerID") != null) {
+                    CartDAO dao = new CartDAO();
+                    AmountFromCart = dao.getAmountFromCart(pro.getProductID(), ID);
+                }
             %>
             <section class="product_section section">
                 <div class="product_container container">
@@ -47,30 +64,33 @@
                             <div class="product_data_content">
                                 <div class="product_d_c_info">
                                     <h1 class="product_d_c_name"><%=pro.getProductName()%></h1>
-                                    <h2 class="product_d_c_price"><%=pro.getPrice()%></h2>
+                                    <h2 class="product_d_c_price">$ <%=pro.getPrice()%></h2>
                                     <p class="product_d_c_subdes"><%=pro.getProductDes()%></p>
                                 </div>
                                 <div class="product_d_c_option">
                                     <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1">Size</p>
-                                        <p class="product_d_c_o_col2"><%=pro.getSize()%>ML</p>
+                                        <p class="product_d_c_o_col1">Brand<span>:</span></p>
+                                        <p class="product_d_c_o_col2"><span onclick="location.href = '#'"><%=pro.getBrandName()%></span></p>
                                     </div>
                                     <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1">Brand</p>
-                                        <p class="product_d_c_o_col2">Good Brand</p>
+                                        <p class="product_d_c_o_col1">Category<span>:</span></p>
+                                        <p class="product_d_c_o_col2"><span onclick="location.href = '#'"><%=pro.getCatName()%></span></p>
                                     </div>
-                                    <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1"></p>
-                                        <div class="product_d_c_o_col">
+                                    <div class="product_d_c_o_row" style="margin-top: 18px;">
+                                        <div class="product_d_c_o_col1">
                                             <div class="cart_t_i_quantity" data-quantity-id="1">
                                                 <div class="value-button decrease">-
                                                 </div>
                                                 <input type="number" id="number1" class="quantity-input" value="1" />
                                                 <div class="value-button increase">+
                                                 </div>
-                                            </div>
+                                            </div></div>
+                                        <div class="product_d_c_o_col">
                                             <button class="product_d_c_o_addtoCart" data-user-id="<%=ID%>">Add To Cart</button>
+                                            <p class="showQuan"><span><%=pro.getQuantity()%></span> Avalaible</p>
                                             <input type="hidden" id="productID"  value="<%=pro.getProductID()%>">
+                                            <input type="hidden" id="AmountFromCart"  value="<%=AmountFromCart %>">
+                                            <input type="hidden" id="StoreQuan"  value="<%=pro.getQuantity()%>">
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +187,8 @@
                         <%
                             ProductDAO pDao = new ProductDAO();
                             ResultSet rs2 = pDao.getAllProduct();
-                            while (rs2.next()) {
+                            int n = 0;
+                            while (rs2.next() && n < 6) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
@@ -200,7 +221,7 @@
                             </div>
                         </div>
                         <%
-
+                                n++;
                             }
                         %>
 

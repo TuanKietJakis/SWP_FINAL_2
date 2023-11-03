@@ -22,8 +22,18 @@
         <link rel="stylesheet" href="/CSS/DangStyles/HomeStyle.css"/>
     </head>
     <body>
+       <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
         <%
-            System.out.println(session.getAttribute("CustomerID"));
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 ID = (int) session.getAttribute("CustomerID");

@@ -19,7 +19,23 @@
     </head>
     <body>
         <%
-            int usID = (int) session.getAttribute("AdminstratorID");
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("AdminstratorID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int usID = 0;
+            if (session.getAttribute("AdminstratorID") != null) {
+                usID = (int) session.getAttribute("AdminstratorID");
+            }else{
+            response.sendRedirect("/Home");
+            }
         %>
         <div class="container">
             <jsp:include page="Admin_navigation.jsp">

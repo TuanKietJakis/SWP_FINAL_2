@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const UserID = $('#userID').val();
-    const limit = 2;
+    const limit = 8;
     let start = 0;
     function load_more_data(limit, start) {
         $.ajax({

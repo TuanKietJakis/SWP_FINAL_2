@@ -20,13 +20,30 @@
     <body>
       
         <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("AdminstratorID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int usID = 0;
+            if (session.getAttribute("AdminstratorID") != null) {
+                usID = (int) session.getAttribute("AdminstratorID");
+            }else{
+            response.sendRedirect("/Home");
+            }
+        %>
+        <%
             // income day dã xong, xuat bill chua duoc mac du da goi DAO xong.
             String Day = request.getParameter("date");
             if (Day == null) {
                 Day = "NULL"; // xy ly null
             }
-
-            int usID = (int) session.getAttribute("AdminstratorID");
 
             OrderDAO oDAO = new OrderDAO();
             ResultSet resultSet1 = oDAO.GetIncomeOnDay(Day);

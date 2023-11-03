@@ -13,6 +13,7 @@ import Models.tblCart;
 import Models.tblOrder;
 import Models.tblProduct;
 import Models.tblUser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,9 +21,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.JsonObject;
@@ -179,17 +184,106 @@ public class CartController extends HttpServlet {
             } else {
                 tblCart cart = updateDAO.CompareAmount(CartID);
                 int oldAmount = cart.getProductAmount();
-                if (cart.getQuantity() > ProductAmount) {
+                if (cart.getQuantity() >= ProductAmount) {
                     updateDAO.UpdateCartAmount(ProductAmount, CartID);
 
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
                     PrintWriter out = response.getWriter();
-                    out.print("{\"oldAmount\":" + oldAmount + ",\"ProductPrice\":" + ProductPrice + ",\"ProductAmount\":" + ProductAmount + "}");
+                    out.print("{\"oldAmount\":" + oldAmount + ",\"ProductPrice\":" + ProductPrice + ",\"ProductAmount\":" + ProductAmount + ",\"message\":\"success\"}");
+                    out.flush();
+                } else {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"message\":\"toolarge\",\"quantity\":" + cart.getQuantity() + "}");
                     out.flush();
                 }
             }
 
+        }
+        if ("importAddress".equals(action)) {
+            int UserID = Integer.parseInt(request.getParameter("userID"));
+            String Name = request.getParameter("inputName");
+            String Phone = request.getParameter("inputPhoneNumber");
+            int Payment = Integer.parseInt(request.getParameter("payment"));
+            String Address = request.getParameter("inputAddress");
+            try {
+                CartDAO dao = new CartDAO();
+                int kq = 0;
+                kq = dao.AddAddress(UserID, Name, Phone, Payment, Address);
+                if (kq != 0) {
+//                    response.setContentType("application/json");
+//                    response.setCharacterEncoding("UTF-8");
+//                    PrintWriter out = response.getWriter();
+//                    out.print("{\"message\":\"success\"}");
+//                    out.flush();
+                    ResultSet rs = dao.getAllAddress(UserID);
+                    List<tblAddress> list = new ArrayList<>();
+                    try {
+                        while (rs.next()) {
+                            int AddressID = rs.getInt("AddressID");
+                            String Addressd = rs.getString("Address");
+                            String PhoneNumber = rs.getString("PhoneNumber");
+                            String FullName = rs.getString("FullName");
+                            int PaymentMethod = rs.getInt("PaymentMethodID");
+                            list.add(new tblAddress(AddressID, UserID, Address, PhoneNumber, FullName, PaymentMethod));
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String json = objectMapper.writeValueAsString(list);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("editAddress".equals(action)) {
+            int addressID = Integer.parseInt(request.getParameter("addressID"));
+            String Name = request.getParameter("inputName");
+            String Phone = request.getParameter("inputPhoneNumber");
+            int Payment = Integer.parseInt(request.getParameter("payment"));
+            String Address = request.getParameter("inputAddress");
+            try {
+                CartDAO dao = new CartDAO();
+                int kq = 0;
+                kq = dao.UdateAddress(addressID, Name, Phone, Payment, Address);
+                if (kq != 0) {
+                    tblAddress address = new tblAddress(addressID, 0, Address, Phone, Name, Payment);
+
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String json = objectMapper.writeValueAsString(address);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(json);
+
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if ("removeAddress".equals(action)) {
+            int addressID = Integer.parseInt(request.getParameter("addressID"));
+            try {
+                CartDAO dao = new CartDAO();
+                int kq = 0;
+                kq = dao.hideAddress(addressID);
+                if (kq != 0) {
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"message\": \"success\"}");
+                    out.flush();
+
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         if (request.getParameter("checkout") != null) {
             String[] CartID = request.getParameter("listProduct").split(",");

@@ -18,23 +18,21 @@
     Cookie[] cookies = request.getCookies();
     if (cookies != null) {
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("admin")) {
+            if (cookie.getName().equals("admin") || cookie.getName().equals("adminID")) {
                 cookie.setValue("");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
-                break;
             }
         }
         for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("user")) {
+            if (cookie.getName().equals("user") || cookie.getName().equals("userID")) {
                 cookie.setValue("");
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
-                break;
             }
         }
     }
 
     // Redirect the user to the login page or any other desired page
-    response.sendRedirect("/Login");
+    response.sendRedirect("/Home");
 %>

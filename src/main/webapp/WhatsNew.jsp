@@ -18,8 +18,23 @@
         </head>
 
         <body>
-            <% int ID=0; if (session.getAttribute("CustomerID") !=null) { ID=(int) session.getAttribute("CustomerID"); }
-                %>
+            <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int ID = 0;
+            if (session.getAttribute("CustomerID") != null) {
+                ID = (int) session.getAttribute("CustomerID");
+            }
+        %>
                 <jsp:include page="header.jsp">
                     <jsp:param name="ID" value="<%=ID%>" />
                 </jsp:include>

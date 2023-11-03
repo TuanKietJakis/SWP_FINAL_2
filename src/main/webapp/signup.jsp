@@ -50,7 +50,7 @@
                             <span>I agree all statement in</span> <span>Terms & conditions</span> -->
                                     <input type="checkbox" name="agree" id="agree-checkbox">
                                     <label for="agree-checkbox" class="agree-checkbox-label">I agree all statement in <a
-                                            href="./term.html">Terms &amp;
+                                            href="/Term">Terms &amp;
                                             conditions</a></label>
                                 </div>
 

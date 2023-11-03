@@ -337,18 +337,35 @@ public class ProductDAO {
         tblProduct pro = new tblProduct();
 
         try {
-            String sql = "select * from tblProduct where ProductID = ? and Active = 1";
+            String sql = "select * from tblProduct inner join tblCategory on tblProduct.CategoryID = tblCategory.CategoryID\n"
+                    + "                         inner join tblBrand on tblBrand.BrandID = tblProduct.BrandID\n"
+                    + "where ProductID = ? and tblProduct.Active = 1;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
             rs = ps.executeQuery();
             if (rs.next()) {
-                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
+                pro = new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getInt("BrandID"), rs.getInt("CategoryID"),
+                        rs.getString("BrandName"), rs.getString("CatName"), rs.getString("ProductDes"), rs.getInt("Quantity"), rs.getString("ProductImageURL"), rs.getInt("Size"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return pro;
+    }
+    public int getProductQuantity(int ProductID) {
+        String sql = "select Quantity from tblProduct where ProductID=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ProductID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Quantity");
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return 0;
     }
 
     public ResultSet GetAllBrandName() {

@@ -67,6 +67,8 @@ public class vnpayStatus extends HttpServlet {
 
         String path = request.getRequestURI();
         if (path.startsWith("/vnpayStatus")) {
+            String vnPayStatus = request.getParameter("vnp_TransactionStatus");
+            if ("00".equals(vnPayStatus)) {
             HttpSession session = request.getSession();
             int vnp_UserID = (int) session.getAttribute("pay_UserID");
             String vnp_FullName = (String) session.getAttribute("pay_fullName");
@@ -118,6 +120,9 @@ public class vnpayStatus extends HttpServlet {
 
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            }else{
+                response.sendRedirect("/Home");
             }
 
         }

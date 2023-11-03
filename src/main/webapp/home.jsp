@@ -26,6 +26,17 @@
 
     <body>
         <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
+        <%
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 ID = (int) session.getAttribute("CustomerID");
@@ -280,8 +291,9 @@
                         <%
                             ProductDAO pDAO = new ProductDAO();
                             ResultSet rs1 = pDAO.getAllProduct();
-                            int n = 1;
-                            while (rs1.next() && n < 5) {
+                            int n = 0;
+                            while (rs1.next() && n < 10) {
+                                if (n > 5 && n < 10) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card">
@@ -314,7 +326,8 @@
                             </div>
                         </div>
                         <%
-                                n++;
+                                }
+                                    n++;
                             }
                         %>
 
@@ -329,7 +342,8 @@
                     <div class="owl-carousel owl-theme mayLike_container">
                         <%
                             ResultSet rs2 = pDAO.getAllProduct();
-                            while (rs2.next()) {
+                            n = 0;
+                            while (rs2.next() && n < 6) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
@@ -346,7 +360,7 @@
                                             <i class="btn_icon_box fa-solid fa-parachute-box"></i>
                                             <span>Add to cart</span>
                                         </button>
-                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
+                                        <input type="hidden" id="productID"  value="<%=rs2.getInt("ProductID")%>">
                                         <input type="hidden" id="action" name="action" value="addtoCart">
                                         <div class="input_back">
                                             <i class="fa-solid fa-check"></i>
@@ -362,7 +376,7 @@
                             </div>
                         </div>
                         <%
-
+                                n++;
                             }
                         %>
 

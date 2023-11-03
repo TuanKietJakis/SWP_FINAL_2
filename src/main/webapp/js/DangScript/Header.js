@@ -1,6 +1,6 @@
 function scrollHeader() {
     const nav = document.getElementById('header');
-    if (this.scrollY >= 200)
+    if (this.scrollY >= 10)
         nav.classList.add('scroll-header');
     else
         nav.classList.remove('scroll-header');

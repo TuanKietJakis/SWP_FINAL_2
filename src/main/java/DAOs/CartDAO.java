@@ -191,8 +191,73 @@ public class CartDAO {
         return result;
     }
 
+    public int AddAddress(int UserID, String Name, String Phone, int Payment, String Address) {
+        
+        String sql = "insert into tblAddress values(?,?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            ps.setString(2, Address);
+            ps.setInt(3, 1);
+            ps.setString(4, Phone);
+            ps.setString(5, Name);
+            ps.setInt(6, Payment);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+    public int UdateAddress(int AddressID, String Name, String Phone, int Payment, String Address) {
+        
+        String sql = "update tblAddress set [Address]=?,PhoneNumber = ?, FullName = ?,PaymentMethodID = ? where AddressID = ?;";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Address);
+            ps.setString(2, Phone);
+            ps.setString(3, Name);
+            ps.setInt(4, Payment);
+            ps.setInt(5, AddressID);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+    public int hideAddress(int addressID){
+        String sql = "update tblAddress set Active = 0 where AddressID = ?;";
+        int result = 0;
+        try{
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, addressID);
+            result = ps.executeUpdate();
+        }catch(SQLException e){
+            
+        }
+        return result;
+    }
+//    public int getAddressfromUserID(int UserID, String Name) {
+//        String sql = "insert into tblCart values(?,?,?,?,?,?)";
+//        int result = 0;
+//        try {
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            ps.setInt(1, UserID);
+//            ps.setString(2, Address);
+//            ps.setInt(3, 1);
+//            ps.setString(4, Phone);
+//            ps.setString(5, Name);
+//            ps.setInt(6, Payment);
+//            result = ps.executeUpdate();
+//        } catch (SQLException ex) {
+//
+//        }
+//        return result;
+//    }
+
     public ResultSet getAllAddress(int UserID) {
-        String sql = "select * from tblAddress where UserID = ?;";
+        String sql = "select * from tblAddress where UserID = ? and active = 1;";
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, UserID);
@@ -221,7 +286,7 @@ public class CartDAO {
     }
 
     public tblCart getItemforAdd(int CartID) {
-        tblCart item = null;
+        tblCart item = new tblCart();
         try {
             ps = conn.prepareStatement("select ProductID,ProductPrice,ProductAmount from tblCart where CartID=?;");
             ps.setInt(1, CartID);
@@ -234,4 +299,55 @@ public class CartDAO {
         return item;
     }
 
+    public tblCart getCartTheSame(int ProductID, int UserID) {
+        tblCart cart = new tblCart();
+        String sql1 = "select * from tblCart where ProductID=? and UserID = ?;";
+        try {
+            ps = conn.prepareStatement(sql1);
+            ps.setInt(1, ProductID);
+            ps.setInt(2, UserID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cart = new tblCart(rs.getInt("CartID"), rs.getInt("UserID"), rs.getInt("ProductID"), "", 0, rs.getInt("ProductAmount"), "");
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return cart;
+    }
+
+    public int UpdateCombineAmount(int ProductID, int UserID, int Amount1, int Amount2) {
+        int kq = 0;
+        int CountAmount = Amount1 + Amount2;
+        String sql = "Update tblCart set ProductAmount=? where ProductID = ? and UserID = ?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, CountAmount);
+            ps.setInt(2, ProductID);
+            ps.setInt(3, UserID);
+            kq = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return kq;
+    }
+
+    public int getAmountFromCart(int ProductID, int UserID) {
+        String sql = "select ProductAmount from tblCart where UserID = ? and ProductID = ?";
+        int kq = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            ps.setInt(2, ProductID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                kq = rs.getInt("ProductAmount");
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return kq;
+    }
+
 }
+

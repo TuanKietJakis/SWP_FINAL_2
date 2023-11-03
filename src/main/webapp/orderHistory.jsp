@@ -16,6 +16,17 @@
 
     <body>
         <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
+        <%
             int userID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 userID = (int) session.getAttribute("CustomerID");

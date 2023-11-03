@@ -19,9 +19,25 @@
     <body>
 
         <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
+        <%
+            int ID = 0;
+            if (session.getAttribute("CustomerID") != null) {
+                ID = (int) session.getAttribute("CustomerID");
+            }
+        %>
+        <%
             AccountDAO accDAO = new AccountDAO();
 //            ResultSet rs = accDAO.GetAll(8);
-            int ID = (int) session.getAttribute("CustomerID");
             tblUser user = accDAO.GetAccountByID(ID);
 
         %>

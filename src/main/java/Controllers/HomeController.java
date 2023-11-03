@@ -91,6 +91,8 @@ public class HomeController extends HttpServlet {
                     request.getRequestDispatcher("/orderHistory.jsp").forward(request, response);
                 } else if (path.endsWith("/News") || path.endsWith("/News/")) {
                     request.getRequestDispatcher("/WhatsNew.jsp").forward(request, response);
+                }else if (path.endsWith("/Term")) {
+                    request.getRequestDispatcher("/term.jsp").forward(request, response);
                 }
             }
         }
@@ -111,6 +113,11 @@ public class HomeController extends HttpServlet {
         if ("addtoCart".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             int Amount = Integer.parseInt(request.getParameter("Amount"));
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+
             if (UserID != 0) {
                 int ProductID = Integer.parseInt(request.getParameter("ProductID"));
                 CartDAO addDAO = null;
@@ -121,19 +128,31 @@ public class HomeController extends HttpServlet {
                     Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 pro = addDAO.getProductforAdd(ProductID);
-                int kq = addDAO.AddNewCart(UserID, pro, Amount);
-                if (kq != 0) {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"success\"}");
-                    out.flush();
+                tblCart cart = new tblCart(0, 0, 0, "", 0, 0, "");
+                cart = addDAO.getCartTheSame(ProductID, UserID);
+                int id = cart.getCartID();
+                if (id != 0) {
+                    tblCart cart2 = new tblCart();
+                    cart2 = addDAO.CompareAmount(id);
+                    if (cart2.getQuantity() == cart2.getProductAmount()) {
+                        out.print("{\"message\": \"full\"}");
+                        out.flush();
+                    } else {
+                        addDAO.UpdateCombineAmount(ProductID, UserID, Amount, cart.getProductAmount());
+
+                        out.print("{\"message\": \"update\"}");
+                        out.flush();
+                    }
+
                 } else {
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print("{\"message\": \"fail\"}");
-                    out.flush();
+                    int kq = addDAO.AddNewCart(UserID, pro, Amount);
+                    if (kq != 0) {
+                        out.print("{\"message\": \"success\"}");
+                        out.flush();
+                    } else {
+                        out.print("{\"message\": \"fail\"}");
+                        out.flush();
+                    }
                 }
             } else {
                 response.sendRedirect("/Login");

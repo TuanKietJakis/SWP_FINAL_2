@@ -18,11 +18,28 @@
     </head>
     <body>
         <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("AdminstratorID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int usID = 0;
+            if (session.getAttribute("AdminstratorID") != null) {
+                usID = (int) session.getAttribute("AdminstratorID");
+            }else{
+            response.sendRedirect("/Home");
+            }
+        %>
+        <%
 // income Month chua xong, xuat bill chua duoc.
             String start = request.getParameter("start");
             String end = request.getParameter("end");
-
-            int usID = (int) session.getAttribute("AdminstratorID");
 
             OrderDAO oDAO = new OrderDAO();
             ResultSet resultSet2 = oDAO.GetIncomeOnMonth(start, end);

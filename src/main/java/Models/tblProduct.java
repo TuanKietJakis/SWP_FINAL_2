@@ -28,6 +28,21 @@ public class tblProduct {
     public tblProduct() {
     }
 
+    public tblProduct(int ProductID, String ProductName, int Price, int BrandID, int CategoryID, String BrandName, String CatName, String ProductDes, int Quantity, String ProductImageURL, int Size) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Price = Price;
+        this.BrandID = BrandID;
+        this.CategoryID = CategoryID;
+        this.BrandName = BrandName;
+        this.CatName = CatName;
+        this.ProductDes = ProductDes;
+        this.Quantity = Quantity;
+        this.Active = Active;
+        this.ProductImageURL = ProductImageURL;
+        this.Size = Size;
+    }
+
     public tblProduct(String ProductName, int Price, int BrandID, int CategoryID, String ProductDes, int Quantity, byte Active, String ProductImageURL, int Size, int Cost) {
         this.ProductName = ProductName;
         this.Price = Price;
@@ -102,6 +117,7 @@ public class tblProduct {
         this.Price = Price;
         this.ProductImageURL = ProductImageURL;
     }
+    
 
     public int getCost() {
         return Cost;

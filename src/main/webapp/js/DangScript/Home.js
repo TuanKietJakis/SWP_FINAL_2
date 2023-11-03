@@ -31,7 +31,16 @@ document.querySelectorAll('.pproduct_addCart').forEach(product =>
                         m.classList.remove("input_checkAdd");
                     }, 4000);
                     document.querySelector('.number_of_item').textContent = parseInt(document.querySelector('.number_of_item').textContent) + parseInt(1);
-                } else {
+                } else if (data.message === "update") {
+                    var m = product.querySelector('.input_flip');
+                    m.classList.add("input_checkAdd");
+                    setTimeout(function () {
+                        m.classList.remove("input_checkAdd");
+                    }, 4000);
+                }else if(data.message === "full"){
+                    alert("You Can not fill more food if your stomach is full");
+                }
+                else {
                     location.href = '/Login';
                 }
             }

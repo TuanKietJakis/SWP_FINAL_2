@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Controllers;
+
 import DAOs.AccountDAO;
 import Models.tblUser;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");            
+            out.println("<title>Servlet LoginController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
@@ -62,10 +62,10 @@ public class LoginController extends HttpServlet {
         String path = request.getRequestURI();
         if (path.endsWith("/Login")) {
             request.getRequestDispatcher("/Login.jsp").forward(request, response);
-        }else if(path.endsWith("/Login/OTP")){
+        } else if (path.endsWith("/Login/OTP")) {
             request.getRequestDispatcher("/OTP.jsp").forward(request, response);
-        }else if(path.endsWith("/Login/Reset")){
-             request.getRequestDispatcher("/ResetPassword.jsp").forward(request, response);
+        } else if (path.endsWith("/Login/Reset")) {
+            request.getRequestDispatcher("/ResetPassword.jsp").forward(request, response);
         }
     }
 
@@ -80,30 +80,36 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       if(request.getParameter("btnLogin") != null){
-           try {
-               String us = request.getParameter("username");
-               String ps = request.getParameter("password");
-               tblUser acc = new tblUser(us, ps);
-               AccountDAO dao = new AccountDAO();
-               boolean result = dao.Login(acc);
-               boolean isAdmin = dao.IsAdmin(us);
-               if(result){
-                   HttpSession session = request.getSession();
-                   if(request.getParameter("checkRem") != null){
-                       if(isAdmin){
-                           Cookie admin = new Cookie("admin", us);
-                           admin.setMaxAge(3 * 24 * 60 * 60);
-                           response.addCookie(admin);
-                       }else{
-                           Cookie user = new Cookie("user",us);
-                           user.setMaxAge(3 * 24 * 60 * 60);
-                           response.addCookie(user);
-                       }
-                   }
-                   
-//                   String fullname = dao.GetFullName(us);
+        if (request.getParameter("btnLogin") != null) {
+            try {
+                String us = request.getParameter("username");
+                String ps = request.getParameter("password");
+                tblUser acc = new tblUser(us, ps);
+                AccountDAO dao = new AccountDAO();
+                boolean result = dao.Login(acc);
+                boolean isAdmin = dao.IsAdmin(us);
+                if (result) {
                     int ID = dao.GetIDFromUsername(us);
+                    HttpSession session = request.getSession();
+                    if (request.getParameter("checkRem") != null) {
+                        if (isAdmin) {
+                            Cookie admin = new Cookie("admin", us);
+                            Cookie adminID = new Cookie("adminID", String.valueOf(ID));
+                            admin.setMaxAge(3 * 24 * 60 * 60);
+                            adminID.setMaxAge(3 * 24 * 60 * 60);
+                            response.addCookie(admin);
+                            response.addCookie(adminID);
+                        } else {
+                            Cookie user = new Cookie("user", us);
+                            Cookie userID = new Cookie("userID", String.valueOf(ID));
+                            user.setMaxAge(3 * 24 * 60 * 60);
+                            userID.setMaxAge(3 * 24 * 60 * 60);
+                            response.addCookie(user);
+                            response.addCookie(userID);
+                        }
+                    }
+
+//                   String fullname = dao.GetFullName(us);
                     if (isAdmin) { // Kiểm tra nếu là quản trị viên
                         session.setAttribute("Adminstrator", us);
                         session.setAttribute("AdminstratorID", ID);
@@ -113,15 +119,15 @@ public class LoginController extends HttpServlet {
                         session.setAttribute("CustomerID", ID);
                         response.sendRedirect("/Home"); // Chuyển hướng đến trang "Home.jsp" cho người dùng thông thường
                     }
-               }else{
-                   request.setAttribute("error", "Wrong username or password");
-                   request.getRequestDispatcher("/Login.jsp").forward(request, response);
-               }
-               
-           }  catch (Exception e) {
-               
-           }
-       }
+                } else {
+                    request.setAttribute("error", "Wrong username or password");
+                    request.getRequestDispatcher("/Login.jsp").forward(request, response);
+                }
+
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     /**
