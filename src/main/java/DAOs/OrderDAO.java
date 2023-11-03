@@ -64,21 +64,66 @@ public class OrderDAO {
         return null;
     }
 
-    public ResultSet GetIncomeOnMonth(String Month, String Year) {
-       
+    public ResultSet GetIncomeOnMonth(String StartMonth, String EndMonth) {
+
         String sql = "SELECT \n"
-                + "    CONVERT(DATE, o.OrderDate, 103) as OrderDay,\n"
-                + "    SUM(p.Price) as TotalProductPrice, \n"
-                + "    SUM(p.Cost) as TotalProductCost\n"
+                + "    SUM(TotalProductPrice) as GrandTotalProductPrice, \n"
+                + "    SUM(TotalProductCost) as GrandTotalProductCost\n"
+                + "FROM (\n"
+                + "    SELECT \n"
+                + "        CONVERT(DATE, o.OrderDate, 103) as OrderDay,\n"
+                + "        SUM(p.Price) as TotalProductPrice, \n"
+                + "        SUM(p.Cost) as TotalProductCost\n"
+                + "    FROM tblOrder o \n"
+                + "    INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
+                + "    INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
+                + "    WHERE CONVERT(DATE, o.OrderDate, 103) BETWEEN '?' AND '?'\n"
+                + "    GROUP BY CONVERT(DATE, o.OrderDate, 103)\n"
+                + ") AS Subquery";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, StartMonth);
+            ps.setString(2, EndMonth);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetBillOnMonth(String Month, String Month2) {
+
+        String sql = "SELECT o.OrderID, FORMAT(CONVERT(datetime, o.OrderDate, 103), 'yyyy-MM-dd') as OrderDate, p.ProductName, p.Price as ProductPrice, p.Cost as ProductCost,\n"
+                + "       od.Quantity, o.TotalPrice, p.ProductID, od.Active, r.RateNumber,u.FullName,u.Email,u.PhoneNumber\n"
                 + "FROM tblOrder o \n"
                 + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
                 + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
-                + "WHERE MONTH(CONVERT(DATE, o.OrderDate, 103)) = ? AND YEAR(CONVERT(DATE, o.OrderDate, 103)) = ?\n"
-                + "GROUP BY CONVERT(DATE, o.OrderDate, 103)";
-         try {
+                + "LEFT JOIN tblRating r ON od.ProductID = r.ProductID AND o.UserID = r.UserID\n"
+                + "LEFT JOIN tblUser u ON o.UserID = u.UserID\n"
+                + "WHERE CONVERT(datetime, o.OrderDate, 103) >= '?' AND CONVERT(datetime, o.OrderDate, 103) < '?'";
+        try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, Month);
-            ps.setString(2, Year);
+            ps.setString(2, Month2);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetBillOnDay(String Day) {
+        String sql = "SELECT o.OrderID, CONVERT(datetime, o.OrderDate, 103) as OrderDate, p.ProductName, p.Price as ProductPrice, p.Cost as ProductCost,\n"
+                + "       od.Quantity, o.TotalPrice, p.ProductID, od.Active, r.RateNumber,u.FullName,u.Email,u.PhoneNumber\n"
+                + "FROM tblOrder o \n"
+                + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
+                + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
+                + "LEFT JOIN tblRating r ON od.ProductID = r.ProductID AND o.UserID = r.UserID\n"
+                + "LEFT JOIN tblUser u ON o.UserID = u.UserID\n"
+                + "WHERE CONVERT(date, o.OrderDate, 103) = '?'";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, Day);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {

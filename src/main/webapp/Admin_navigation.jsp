@@ -123,7 +123,7 @@
                 </li>
                 <li class="navigation_menu_item" onclick="location.href='#'">
                     <i class="fa-solid fa-chart-line"></i>
-                    <a class="navigation_menu_link" href="/Admin/OrderStatus">Income</a>
+                    <a class="navigation_menu_link" href="/Admin/Income">Income</a>
                 </li>
                 <li class="navigation_menu_item" onclick="location.href='/Admin/FAQ'"><i class="fa-solid fa-envelope"></i>
                     <a class="navigation_menu_link" href="/Admin/FAQ">FAQ</a>
