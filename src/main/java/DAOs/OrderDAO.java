@@ -42,6 +42,49 @@ public class OrderDAO {
         }
         return null;
     }
+//2023-10-22
+
+    public ResultSet GetIncomeOnDay(String Day) {
+        String sql = "SELECT \n"
+                + "    CONVERT(DATE, o.OrderDate, 103) as OrderDay,\n"
+                + "    SUM(p.Price) as TotalProductPrice, \n"
+                + "    SUM(p.Cost) as TotalProductCost\n"
+                + "FROM tblOrder o \n"
+                + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
+                + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
+                + "WHERE CONVERT(DATE, o.OrderDate, 103) = ?\n"
+                + "GROUP BY CONVERT(DATE, o.OrderDate, 103)";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, Day);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public ResultSet GetIncomeOnMonth(String Month, String Year) {
+       
+        String sql = "SELECT \n"
+                + "    CONVERT(DATE, o.OrderDate, 103) as OrderDay,\n"
+                + "    SUM(p.Price) as TotalProductPrice, \n"
+                + "    SUM(p.Cost) as TotalProductCost\n"
+                + "FROM tblOrder o \n"
+                + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
+                + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
+                + "WHERE MONTH(CONVERT(DATE, o.OrderDate, 103)) = ? AND YEAR(CONVERT(DATE, o.OrderDate, 103)) = ?\n"
+                + "GROUP BY CONVERT(DATE, o.OrderDate, 103)";
+         try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, Month);
+            ps.setString(2, Year);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 
     public int GetIncome() {
         int count = 0;

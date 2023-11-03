@@ -130,6 +130,9 @@ public class AdminController extends HttpServlet {
         if (path.endsWith("/Admin/OrderStatus")) {
             request.getRequestDispatcher("/OrderStatus.jsp").forward(request, response);
         }
+         if (path.endsWith("/Admin/Income")) {
+            request.getRequestDispatcher("/Income.jsp").forward(request, response);
+        }
         if (path.endsWith("/Admin/RevenueAndExpenditure")) {
             request.getRequestDispatcher("/RevenueAndExpenditure.jsp").forward(request, response);
         }
