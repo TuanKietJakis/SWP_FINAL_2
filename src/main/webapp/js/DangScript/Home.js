@@ -72,23 +72,25 @@ function AddtoWishlist(element) {
     });
 }
 function checkLove(element) {
-                var ProductID = element.getAttribute("data-product-id");
-                var UserID = element.getAttribute("data-user-id");
-                $.ajax({
-                    method: "POST",
-                    url: "/Home",
-                    data: {
-                        ProductID: ProductID,
-                        UserID: UserID,
-                        action: "checklist"
-                    },
-                    success: function (data) {
-                        if (data.message === "success") {
-                            element.classList.add("p_w_ico_animate");
-                        }
-                    }
-                });
+    if (!element.querySelector('.p_w_ico_animate')){
+        var ProductID = element.querySelector('.pproduct_wishlist_ico').getAttribute("data-product-id");
+        var UserID = element.querySelector('.pproduct_wishlist_ico').getAttribute("data-user-id");
+        $.ajax({
+            method: "POST",
+            url: "/Home",
+            data: {
+                ProductID: ProductID,
+                UserID: UserID,
+                action: "checklist"
+            },
+            success: function (data) {
+                if (data.message === "success") {
+                    element.querySelector('.pproduct_wishlist_ico').classList.add("p_w_ico_animate");
+                }
             }
+        });
+    }
+}
 //    })
 //);
 

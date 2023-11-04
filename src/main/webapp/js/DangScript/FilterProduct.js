@@ -54,6 +54,11 @@ $(document).ready(function () {
             });
         });
     }
+    
+    function filter_data(){
+        var action = "fetch_data";
+        var brand = get_filter('brand');
+    }
 });
 
 

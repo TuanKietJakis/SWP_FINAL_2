@@ -150,7 +150,7 @@
                                     while(rsCate.next()){
                                     %>
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-inbox"></i> <label for="c<%=rsCate.getInt("CategoryID")%>"><%=rsCate.getString("CatName")%></label></li>
-                                    <input type="radio" id="c<%=rsCate.getInt("CategoryID")%>" name="category" data-name="<%=rsCate.getString("CatName")%>" value="<%=rsCate.getInt("CategoryID")%>" hidden/>
+                                    <input type="checkbox" id="c<%=rsCate.getInt("CategoryID")%>" name="category" data-name="<%=rsCate.getString("CatName")%>" value="<%=rsCate.getInt("CategoryID")%>" hidden/>
                                     <%
                                         }
                                     %>
@@ -165,7 +165,7 @@
                                     while(rsBrand.next()){
                                     %>
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="b<%=rsBrand.getInt("BrandID")%>"><%=rsBrand.getString("BrandName")%></label></li>
-                                    <input type="radio" id="b<%=rsBrand.getInt("BrandID")%>" name="brand" data-name="<%=rsBrand.getString("BrandName")%>" value="<%=rsBrand.getInt("BrandID")%>" hidden/>
+                                    <input type="checkbox" id="b<%=rsBrand.getInt("BrandID")%>" name="brand" data-name="<%=rsBrand.getString("BrandName")%>" value="<%=rsBrand.getInt("BrandID")%>" hidden/>
                                     <%}%>
                                 </ul>
                             </div>
@@ -197,10 +197,10 @@
                     <div class="pproduct_content grid">
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card">
-                            <div class="pproduct_data_img">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
                                 <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
                                                                                                                                                  alt=""></div>
-                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </div>
                                 <div class="pproduct_addCart">
@@ -230,10 +230,10 @@
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card">
-                            <div class="pproduct_data_img">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
                                 <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
                                                                                                                                                  alt=""></div>
-                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
                                     <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </div>
                                 <div class="pproduct_addCart">

@@ -17,10 +17,10 @@ $(document).ready(function () {
                     // Assuming your HTML has a div with the class 'product-container'
                     $('.pproduct_content').append(`
                 <div class="pproduct_card">
-                            <div class="pproduct_data_img">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
                                 <div onclick="location.href = '/Shop/Detail/${value.productID}'" class="pproduct_data_img_inline"><img src="${value.productImageURL}"
                                                                                                          alt=""></div>
-                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="${UserID}" data-product-id="${value.productID}">
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="${UserID}" data-product-id="${value.productID}">
                                     <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </div>
                                 <div class="pproduct_addCart">

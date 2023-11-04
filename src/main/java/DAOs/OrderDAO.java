@@ -114,19 +114,20 @@ public class OrderDAO {
 
     public ResultSet GetBillOnDay(String Day) {
         String sql = "SELECT o.OrderID, CONVERT(datetime, o.OrderDate, 103) as OrderDate, p.ProductName, p.Price as ProductPrice, p.Cost as ProductCost,\n"
-                + "       od.Quantity, o.TotalPrice, p.ProductID, od.Active, r.RateNumber,u.FullName,u.Email,u.PhoneNumber\n"
-                + "FROM tblOrder o \n"
-                + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
-                + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
-                + "LEFT JOIN tblRating r ON od.ProductID = r.ProductID AND o.UserID = r.UserID\n"
-                + "LEFT JOIN tblUser u ON o.UserID = u.UserID\n"
-                + "WHERE CONVERT(date, o.OrderDate, 103) = '?'";
+                + "                  od.Quantity, o.TotalPrice, p.ProductID, od.Active,u.FullName,u.Email,u.PhoneNumber\n"
+                + "            FROM tblOrder o \n"
+                + "           INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
+                + "           INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
+                + "            LEFT JOIN tblRating r ON od.ProductID = r.ProductID AND o.UserID = r.UserID\n"
+                + "            LEFT JOIN tblUser u ON o.UserID = u.UserID\n"
+                + "           WHERE CONVERT(date, o.OrderDate, 103) = ? ";
         try {
             ps = conn.prepareStatement(sql);
             ps.setString(1, Day);
             rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
+            e.getStackTrace();
         }
         return null;
     }

@@ -192,10 +192,10 @@
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
-                            <div class="pproduct_data_img">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
                                 <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
                                                                                                          alt=""></div>
-                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </div>
                                 <div class="pproduct_addCart">

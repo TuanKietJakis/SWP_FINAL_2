@@ -16,9 +16,9 @@
         <title>JSP Page</title>
 
     </head>
-   
+
     <body>
-      
+
         <%
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -34,8 +34,8 @@
             int usID = 0;
             if (session.getAttribute("AdminstratorID") != null) {
                 usID = (int) session.getAttribute("AdminstratorID");
-            }else{
-            response.sendRedirect("/Home");
+            } else {
+                response.sendRedirect("/Home");
             }
         %>
         <%
@@ -48,8 +48,7 @@
             OrderDAO oDAO = new OrderDAO();
             ResultSet resultSet1 = oDAO.GetIncomeOnDay(Day);
 
-            ResultSet resultSet2 = oDAO.GetBillOnDay(Day);
-
+//            ResultSet resultSet2 = oDAO.GetBillOnDay(Day);
             OrderStatusDAO orderStatusDAO = new OrderStatusDAO();
             ResultSet resultSet = orderStatusDAO.GetAll();
 
@@ -116,62 +115,67 @@
 
                                         </div>
                                         <div class="table_body">
-                                            <div class="table_data table_data2" data-table="2">
-                                                <p>13</p>
-                                                <p>2023-10-22 09:39</p>
-                                                <p class="email_input">Perfume 3</p>
-                                                <p class="role">100</p>
-                                                <p>30</p>
-                                                <p>1</p>
-                                                <p>1043</p>
-                                                <p>3</p>
-                                                <p>2</p>
-                                                <p>5</p>
-                                                <p>Regular user 2</p>
-                                                <p>khoica12@gmail.com</p>
-                                                <p>0123456789</p>
-                                            </div>
+                                        <%
+                                            ResultSet resultSet2 = oDAO.GetBillOnDay(Day);
+                                            while (resultSet2.next()) {
+                                        %>
+                                        <div class="table_data table_data2" data-table="2">
+                                            <p><%= resultSet2.getInt("OrderID")%></p>
+                                            <p><%= resultSet2.getString("OrderDate")%></p>
+                                            <p class="email_input"><%= resultSet2.getString("ProductName")%></p>
+                                            <p class="email_input"><%= resultSet2.getInt("ProductPrice")%></p>
+                                            <p class="role"><%= resultSet2.getInt("ProductCost")%> </p>
+                                            <p><%= resultSet2.getInt("Quantity")%> </p>
+                                            <p><%= resultSet2.getInt("TotalPrice")%></p>
+                                            <p><%= resultSet2.getInt("ProductID")%></p>
+                                            <p><%= resultSet2.getInt("Active")%></p>
+                                            <p><%= resultSet2.getString("FullName")%></p>
+                                            <p><%= resultSet2.getString("Email")%></p>
+                                            <p><%= resultSet2.getString("PhoneNumber")%></p>
+                                            <p><%= resultSet2.getInt("TotalPrice")%></p>
                                         </div>
+                                        <% }%>
                                     </div>
-                                    <div class="export_btn">
-                                        <input type="submit" value="Export">
-                                    </div>
-
                                 </div>
-                            </form>
+                                <div class="export_btn">
+                                    <input type="submit" value="Export">
+                                </div>
 
-                        </div>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
-
             </div>
-            <script src="js/Admin_dashboard.js"></script>
-            <script src="js/Utils.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            <script>
+        </div>
+        <script src="js/Admin_dashboard.js"></script>
+        <script src="js/Utils.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
             <%while (resultSet1.next()) {
             %>
-            const ctx1 = document.getElementById('myChart1');
-            new Chart(ctx1, {
-                type: 'bar',
-                data: {
-                    labels: ['Income'],
-                    datasets: [{
-                            label: 'Total Income',
-                            data: [<%= resultSet1.getInt("TotalProductPrice") - resultSet1.getInt("TotalProductCost")%>],
-                            borderWidth: 1,
-                            backgroundColor: ['#009900'],
-                        }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                const ctx1 = document.getElementById('myChart1');
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Income'],
+                        datasets: [{
+                                label: 'Total Income',
+                                data: [<%= resultSet1.getInt("TotalProductPrice") - resultSet1.getInt("TotalProductCost")%>],
+                                borderWidth: 1,
+                                backgroundColor: ['#009900'],
+                            }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
             <% }%>
         </script>
 

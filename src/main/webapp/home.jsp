@@ -296,40 +296,40 @@
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card" >
-                            <div class="pproduct_data_img" >
-                                 <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                                                                                             alt=""></div>
-                            <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                            </div>
-                            <div class="pproduct_addCart">
-                                <div class="input_flip">
-                                    <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                        <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
-                                        <i class="btn_icon_box fa-solid fa-parachute-box"></i>
-                                        <span>Add to cart</span>
-                                    </button>
-                                    <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
-                                    <div class="input_back">
-                                        <i class="fa-solid fa-check"></i>
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
+                                <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
+                                                                                                                                                 alt=""></div>
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
+                                    <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
+                                </div>
+                                <div class="pproduct_addCart">
+                                    <div class="input_flip">
+                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
+                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
+                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
+                                            <span>Add to cart</span>
+                                        </button>
+                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
+                                        <div class="input_back">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="pproduct_data_content">
-                            <div class="pproduct_data_des">
-                                <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
-                                <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
+                            <div class="pproduct_data_content">
+                                <div class="pproduct_data_des">
+                                    <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
+                                    <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <%
+                        <%
+                                }
+                                n++;
                             }
-                            n++;
-                        }
-                    %>
+                        %>
 
-                </div>
+                    </div>
                 </div>
             </section>
 
@@ -345,10 +345,10 @@
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
-                            <div class="pproduct_data_img">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)"> 
                                 <div onclick="location.href = '/Shop/Detail/<%=rs2.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
                                                                                                                                                  alt=""></div>
-                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
                                 </div>
                                 <div class="pproduct_addCart">
