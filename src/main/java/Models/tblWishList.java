@@ -28,6 +28,12 @@ public class tblWishList {
         this.ProductImageURL = ProductImageURL;
     }
 
+    public tblWishList(int WishListID, int UserID, int ProductID) {
+        this.WishListID = WishListID;
+        this.UserID = UserID;
+        this.ProductID = ProductID;
+    }
+
     public int getWishListID() {
         return WishListID;
     }

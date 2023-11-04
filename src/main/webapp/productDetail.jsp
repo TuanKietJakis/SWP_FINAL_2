@@ -81,7 +81,7 @@
                                             <div class="cart_t_i_quantity" data-quantity-id="1">
                                                 <div class="value-button decrease">-
                                                 </div>
-                                                <input type="number" id="number1" class="quantity-input" value="1" />
+                                                <input type="number" id="number1" class="quantity-input" value="1" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode ==8"/>
                                                 <div class="value-button increase">+
                                                 </div>
                                             </div></div>
@@ -195,12 +195,12 @@
                             <div class="pproduct_data_img">
                                 <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
                                                                                                          alt=""></div>
-                                <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
+                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </form>
+                                </div>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                             <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
                                             <i class="btn_icon_box fa-solid fa-parachute-box"></i>
                                             <span>Add to cart</span>

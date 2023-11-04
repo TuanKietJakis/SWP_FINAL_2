@@ -11,6 +11,7 @@ import DAOs.ProductDAO;
 import Models.tblCart;
 import Models.tblFAQ;
 import Models.tblProduct;
+import Models.tblWishList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -91,7 +92,7 @@ public class HomeController extends HttpServlet {
                     request.getRequestDispatcher("/orderHistory.jsp").forward(request, response);
                 } else if (path.endsWith("/News") || path.endsWith("/News/")) {
                     request.getRequestDispatcher("/WhatsNew.jsp").forward(request, response);
-                }else if (path.endsWith("/Term")) {
+                } else if (path.endsWith("/Term")) {
                     request.getRequestDispatcher("/term.jsp").forward(request, response);
                 }
             }
@@ -157,6 +158,71 @@ public class HomeController extends HttpServlet {
             } else {
                 response.sendRedirect("/Login");
             }
+        }
+        if ("addtoWishlist".equals(action)) {
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+
+            if (UserID != 0) {
+                int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+                CartDAO addDAO = null;
+                tblProduct pro = new tblProduct();
+                try {
+                    addDAO = new CartDAO();
+                } catch (Exception ex) {
+                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                pro = addDAO.getProductforAdd(ProductID);
+                tblWishList cart = new tblWishList();
+                cart = addDAO.getWishlistTheSame(ProductID, UserID);
+                if (cart.getWishListID() == 0) {
+                    int kq = addDAO.AddNewWishList(UserID, pro);
+                    if (kq != 0) {
+                        out.print("{\"message\": \"success\"}");
+                        out.flush();
+                    } else {
+                        out.print("{\"message\": \"fail\"}");
+                        out.flush();
+                    }
+                }else{
+                    int kq = addDAO.DeleteWishlist(cart.getWishListID());
+                    if (kq != 0) {
+                        out.print("{\"message\": \"delete\"}");
+                        out.flush();
+                    } else {
+                        out.print("{\"message\": \"fail\"}");
+                        out.flush();
+                    }
+                }
+
+            } else {
+                response.sendRedirect("/Login");
+            }
+        }
+        if ("checklist".equals(action)) {
+            int UserID = Integer.parseInt(request.getParameter("UserID"));
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+
+                int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+                CartDAO addDAO = null;
+                tblProduct pro = new tblProduct();
+                try {
+                    addDAO = new CartDAO();
+                } catch (Exception ex) {
+                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tblWishList cart = new tblWishList();
+                cart = addDAO.getWishlistTheSame(ProductID, UserID);
+                if (cart.getWishListID() != 0) {             
+                        out.print("{\"message\": \"success\"}");
+                        out.flush();
+                }
         }
         if ("recentCart".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("UserID"));

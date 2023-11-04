@@ -69,10 +69,13 @@ document.querySelector('.product_d_c_o_addtoCart').addEventListener('click', () 
             action: "addtoCart"
         },
         success: function (data) {
-            if (data.message === "success") {
+            console.log(data);
+            if (data.message === "success" || data.message === "update") {
                 document.querySelector('.number_of_item').textContent = parseInt(document.querySelector('.number_of_item').textContent) + parseInt(1);
-            } else {
-                location.href = '/Login';
+            } else if(data.message === "full"){
+                alert("You get too much for today");
+            }else if(data.message === "fail"){
+                alert("Add to Cart Fail");
             }
         }
     });

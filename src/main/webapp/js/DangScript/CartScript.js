@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 let form = document.getElementById("cartForm");
+if(form){   
 form.addEventListener("submit", function (event) {
     let msg = document.querySelector('.error_zone_list');
     msg.innerHTML = "";
@@ -94,6 +95,7 @@ form.addEventListener("submit", function (event) {
 
     }
 });
+}
 document.querySelector('.error_zone_close').onclick = function () {
     document.querySelector('.error_zone').classList.remove("showErrorZone");
 };

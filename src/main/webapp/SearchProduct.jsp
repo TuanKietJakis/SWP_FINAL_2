@@ -200,12 +200,12 @@
                             <div class="pproduct_data_img">
                                 <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
                                                                                                                                                  alt=""></div>
-                                <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
+                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </form>
+                                </div>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
                                             <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
                                             <i class="btn_icon_box fa-solid fa-parachute-box"></i>
                                             <span>Add to cart</span>
@@ -233,12 +233,12 @@
                             <div class="pproduct_data_img">
                                 <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
                                                                                                                                                  alt=""></div>
-                                <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
-                                    <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </form>
+                                <div class="pproduct_wishlist_ico" onload="checkLove(this)" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
+                                    <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
+                                </div>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
                                             <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
                                             <i class="btn_icon_box fa-solid fa-parachute-box"></i>
                                             <span>Add to cart</span>

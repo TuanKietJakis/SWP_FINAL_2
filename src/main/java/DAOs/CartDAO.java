@@ -8,6 +8,7 @@ import DatabaseConnection.DatabaseConnection;
 import Models.tblAddress;
 import Models.tblCart;
 import Models.tblProduct;
+import Models.tblWishList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -111,6 +112,18 @@ public class CartDAO {
         }
         return result;
     }
+    public int DeleteWishlist(int ID) {
+        int result = 0;
+        String sql = "DELETE FROM tblWishList WHERE WishListID=?";
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
 
     public int DeleteAllIteminCart(int ID) {
         int result = 0;
@@ -165,6 +178,22 @@ public class CartDAO {
             ps.setInt(5, Amount);
             ps.setString(6, pro.getProductImageURL());
             ps.setInt(7, 1);
+            result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+        }
+        return result;
+    }
+    public int AddNewWishList(int UserID, tblProduct pro) {
+        String sql = "insert into tblWishList values(?,?,?,?,?)";
+        int result = 0;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, UserID);
+            ps.setInt(2, pro.getProductID());
+            ps.setString(3, pro.getProductName());
+            ps.setInt(4, pro.getPrice());
+            ps.setString(5, pro.getProductImageURL());
             result = ps.executeUpdate();
         } catch (SQLException ex) {
 
@@ -309,6 +338,22 @@ public class CartDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 cart = new tblCart(rs.getInt("CartID"), rs.getInt("UserID"), rs.getInt("ProductID"), "", 0, rs.getInt("ProductAmount"), "");
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return cart;
+    }
+    public tblWishList getWishlistTheSame(int ProductID, int UserID) {
+        tblWishList cart = new tblWishList();
+        String sql1 = "select * from tblWishList where ProductID=? and UserID = ?;";
+        try {
+            ps = conn.prepareStatement(sql1);
+            ps.setInt(1, ProductID);
+            ps.setInt(2, UserID);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                cart = new tblWishList(rs.getInt("WishListID"), rs.getInt("UserID"), rs.getInt("ProductID"));
             }
         } catch (SQLException e) {
             e.getStackTrace();
