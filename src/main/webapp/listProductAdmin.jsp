@@ -27,24 +27,9 @@
     </head>
 
     <body>
-         <%
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
-                        session.setAttribute("AdminstratorID", Integer.parseInt(cookie.getValue()));
-                        break;
-                    }
-                }
-            }
-        %>
         <%
-            int usID = 0;
-            if (session.getAttribute("AdminstratorID") != null) {
-                usID = (int) session.getAttribute("AdminstratorID");
-            }else{
-            response.sendRedirect("/Home");
-            }
+            int usID = (int) session.getAttribute("AdminstratorID");
+
         %>
 
         <div class="container">
@@ -117,10 +102,21 @@
                                                     <%}%>
                                                     <td style="text-align: center"> <%=rs.getInt("Price")%></td>
                                                     <td style="text-align: center"> <%=rs.getInt("Quantity")%></td>
-                                                    <td style="text-align: center"> <%=rs.getByte("Active")%></td>
+                                                    <%
+                                                        byte active1 = rs.getByte("Active");
+                                                        String active = "";
+                                                        if (active1 == 1) {
+                                                            active = "available";
+                                                        } else {
+                                                            active = "unavailable";
+                                                        }
+                                                    %>
+                                                    <td style="text-align: center"> <%=active%></td>
+
                                                     <td style="text-align: center"> <a class="info" href="/Product/View/<%=rs.getInt("CategoryID")%>"><b>Info ></b></a></td>
                                                 </tr>
                                                 <%
+
                                                     }
                                                 %>
                                             </tbody>
