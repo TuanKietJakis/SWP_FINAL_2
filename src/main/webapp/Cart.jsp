@@ -75,7 +75,7 @@
                                 <div class="cart_t_i_quantity" data-quantity-id="<%=countProduct%>">
                                     <div class="value-button decrease">-
                                     </div>
-                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode ==8"/>
+                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 8"/>
                                     <input type="hidden" name="proPrice" id="proPrice" class="proPrice" value="<%=rs.getInt("ProductPrice")%>" data-cart-id="<%=rs.getInt("CartID")%>">
                                     <input type="hidden" id="action" name="action" value="update-quan">
                                     <div class="value-button increase">+
@@ -115,7 +115,7 @@
                                 <div class="cart_t_i_quantity" data-quantity-id="<%=countProduct%>" >
                                     <div class="value-button decrease">-
                                     </div>
-                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode ==8"/>
+                                    <input type="number" id="number<%=countProduct%>" class="quantity-input" value="<%=rs.getInt("ProductAmount")%>" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 8"/>
                                     <input type="hidden" name="proPrice" id="proPrice" class="proPrice" value="<%=rs.getInt("ProductPrice")%>" data-cart-id="<%=rs.getInt("CartID")%>">
                                     <input type="hidden" id="action" name="action" value="update-quan">
                                     <div class="value-button increase">+
@@ -388,7 +388,8 @@
             <div class="popup_bg"></div>
         </main>
         <jsp:include page="Footer.jsp"></jsp:include>      
-        <script src="/js/DangScript/jquery.min.js"></script>
-        <script src="/js/DangScript/CartScript.js"></script>
+            <script src="/js/DangScript/jquery.min.js"></script>
+            <script src="/js/DangScript/CartScript.js"></script>
+            
     </body>
 </html>

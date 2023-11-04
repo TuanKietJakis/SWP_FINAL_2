@@ -70,12 +70,16 @@ document.querySelector('.product_d_c_o_addtoCart').addEventListener('click', () 
         },
         success: function (data) {
             console.log(data);
-            if (data.message === "success" || data.message === "update") {
+            if (data.message === "success") {
                 document.querySelector('.number_of_item').textContent = parseInt(document.querySelector('.number_of_item').textContent) + parseInt(1);
             } else if(data.message === "full"){
                 alert("You get too much for today");
             }else if(data.message === "fail"){
                 alert("Add to Cart Fail");
+            }else if(data.message === "update"){
+                alert("Item has update to your Cart");
+            }else{
+                location.href="/Home"
             }
         }
     });

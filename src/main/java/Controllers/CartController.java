@@ -90,12 +90,12 @@ public class CartController extends HttpServlet {
             HttpSession session = request.getSession();
             if (acc.getUserName() != null) {
                 session.setAttribute("UserInfo", acc);
-                request.getRequestDispatcher("/Cart.jsp").forward(request, response);
+                    request.getRequestDispatcher("/Cart.jsp").forward(request, response);           
             } else {
                 session.setAttribute("trigger", "asdf");
                 response.sendRedirect("/");
             }
-        }  else if (path.startsWith("/Cart/Add/")) {
+        } else if (path.startsWith("/Cart/Add/")) {
             try {
                 String[] s = path.split("/");
                 int ProductID = Integer.parseInt(s[s.length - 2]);
@@ -213,11 +213,6 @@ public class CartController extends HttpServlet {
                 int kq = 0;
                 kq = dao.AddAddress(UserID, Name, Phone, Payment, Address);
                 if (kq != 0) {
-//                    response.setContentType("application/json");
-//                    response.setCharacterEncoding("UTF-8");
-//                    PrintWriter out = response.getWriter();
-//                    out.print("{\"message\":\"success\"}");
-//                    out.flush();
                     ResultSet rs = dao.getAllAddress(UserID);
                     List<tblAddress> list = new ArrayList<>();
                     try {
@@ -287,7 +282,7 @@ public class CartController extends HttpServlet {
         }
         if (request.getParameter("checkout") != null) {
             String[] CartID = request.getParameter("listProduct").split(",");
-            
+
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             int Total = Integer.parseInt(request.getParameter("total"));
             String receivePhone = request.getParameter("receivePhone");
@@ -313,23 +308,34 @@ public class CartController extends HttpServlet {
             if (receivePayment == 2) {
                 /* On Cash */
                 tblOrder order = new tblOrder(UserID, receiveName, orderDate, Total, receivePhone, receiveAddress, Byte.parseByte("1"), receivePayment, Byte.parseByte("1"));
-                int kq = dao.AddOrderFromCart(order);
-                if (kq != 0) {
-                    int OrderID = dao.GetOrderID(orderDate, UserID);
-                    int result = 0;
-                    for (int i = 0; i < CartID.length; i++) {
-                        tblCart item = cdao.getItemforAdd(Integer.parseInt(CartID[i]));
-                        tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
-                        cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
-                        result += odao.AddOrderDetail(item, OrderID);
+                int result = 0;
+                for (int i = 0; i < CartID.length; i++) {
+                    tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
+                    if (cart.getProductAmount() <= cart.getQuantity()) {
+                        result += 1;
+                    } else {
+                        break;
                     }
-                    if (result == CartID.length) {
+                }
+                if (result == CartID.length) {
+                    int kq = dao.AddOrderFromCart(order);
+                    if (kq != 0) {
+                        int OrderID = dao.GetOrderID(orderDate, UserID);
+                        for (int i = 0; i < CartID.length; i++) {
+                            tblCart item = cdao.getItemforAdd(Integer.parseInt(CartID[i]));
+                            tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
+                            odao.AddOrderDetail(item, OrderID);
+                            cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
+                        }
                         cdao.DeleteAllIteminCart(UserID);
                         response.sendRedirect("/OrderHistory");
                     }
                 } else {
-                    response.sendRedirect("/Cart/Info/" + order.getUserID());
+//                    response.sendRedirect("/Cart/Info/" + order.getUserID());
+                    request.setAttribute("ErrorOrder", "Sorry We Have Some Problem, Please check later..");
+                    request.getRequestDispatcher("/Cart.jsp").forward(request, response);
                 }
+
             } else {
                 /*VN Pay*/
                 HttpSession session = request.getSession();
