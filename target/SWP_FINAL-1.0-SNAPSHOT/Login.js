@@ -30,11 +30,11 @@ form.addEventListener("submit", function (event) {
     valid = false;
   }
 
-//  if (password.length < 8) {
-//    msg += "password must be more than 8 characters, ";
-//    console.log(password.length);
-//    valid = false;
-//  }
+  if (password.length < 6) {
+    msg += "password must be more than 8 characters, ";
+    console.log(password.length);
+    valid = false;
+  }
 
   if (valid == false) {
     error.classList.add("error_show");

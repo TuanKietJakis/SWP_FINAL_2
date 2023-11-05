@@ -37,8 +37,8 @@ form.addEventListener("submit", function (event) {
         msg += "Username must less than 50 - ";
         // error.classList.add("error_show");
         valid = false;
-    } else if (!/^(?=.*[a-zA-Z])(?=.*[0-9])/.test(username)) {
-        msg += "Username must contain both letters and numbers - ";
+    } else if (!/^[A-Za-z]+[\w\s]*$/.test(username)) {
+        msg += "Username not start with number or no letter in name - ";
         valid = false;
     }
 

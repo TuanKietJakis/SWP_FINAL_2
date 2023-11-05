@@ -18,8 +18,23 @@
         </head>
 
         <body>
-            <% int ID=0; if (session.getAttribute("CustomerID") !=null) { ID=(int) session.getAttribute("CustomerID"); }
-                %>
+            <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int ID = 0;
+            if (session.getAttribute("CustomerID") != null) {
+                ID = (int) session.getAttribute("CustomerID");
+            }
+        %>
                 <jsp:include page="header.jsp">
                     <jsp:param name="ID" value="<%=ID%>" />
                 </jsp:include>
@@ -66,7 +81,7 @@
                             <h5> - Jean Paul Guerlain</h5>
                             <button class="btn">
                                 <div class="wrapper">
-                                    <a href="/AbouUs.jsp" class="text">Shop Now</a>
+                                    <a href="/AboutUs" class="text">Shop Now</a>
                                     <div class="flower flower1">
                                         <div class="petal one"></div>
                                         <div class="petal two"></div>
@@ -140,7 +155,7 @@
                                     <br>
                                     of perfumes, click the button below to learn more...
                                 </p>
-                                <button class="shopnow_btn"><a href="AboutUs.html" class="textshop">Shop
+                                <button class="shopnow_btn"><a href="/Shop" class="textshop">Shop
                                         Now</a></button>
                             </div>
                         </div>
@@ -178,7 +193,7 @@
                                     </div>
                                     <button class="btn">
                                         <div class="wrapper">
-                                            <a href="AboutUs.html" class="text">Shop Now</a>
+                                            <a href="/AboutUs" class="text">Shop Now</a>
                                             <div class="flower flower1">
                                                 <div class="petal one"></div>
                                                 <div class="petal two"></div>

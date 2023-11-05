@@ -16,12 +16,23 @@
         <link rel="stylesheet" href="/CSS/ContactUs.css">
         <title>Contact Page</title>
     </head>
-    <%
-        System.out.println(session.getAttribute("CustomerID"));
+     <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
+        <%
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
-                ID = (int) session.getAttribute("CustomerID");}
-    %>
+                ID = (int) session.getAttribute("CustomerID");
+            }
+        %>
     <body>
        <jsp:include page="header.jsp">
             <jsp:param name="ID" value="<%=ID%>"/>

@@ -1,6 +1,6 @@
 function scrollHeader() {
     const nav = document.getElementById('header');
-    if (this.scrollY >= 200)
+    if (this.scrollY >= 10)
         nav.classList.add('scroll-header');
     else
         nav.classList.remove('scroll-header');
@@ -29,7 +29,7 @@ acc_glass_btn.onclick = function () {
         setTimeout(function () {
             acc_glass_input.classList.remove("nav_acc_glass_show");
             document.querySelector('.nav_acc_search_result').style.display = "none";
-        }, 100);
+        }, 200);
 
     }
 };

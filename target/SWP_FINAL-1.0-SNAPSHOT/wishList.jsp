@@ -22,6 +22,17 @@
 
     <body>
         <%
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                            break;
+                        }
+                    }
+                }
+        %>
+        <%
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 ID = (int) session.getAttribute("CustomerID");
@@ -73,7 +84,7 @@
                             <div class="cart_add">
                                 <button class="cart_t_i_func">
                                     <i class="fa-solid fa-cart-plus fa-lg" style="margin-right: 2px;"></i>
-                                    <span style="font-size: 14px; margin-left: 2px;"><a href="/Cart/Add/<%= rs.getInt("ProductId")%>/<%= rs.getInt("Quantity")%>" style="color: white">Add to cart</a></span>
+                                    <span style="font-size: 14px; margin-left: 2px;"><a href="/Cart/Add/<%= rs.getInt("ProductId")%>/<%= rs.getInt("Quantity")%>">Add to cart</a></span>
                                 </button>
                             </div>
                             <div style="padding-left: 55px; margin-bottom: 10px;">

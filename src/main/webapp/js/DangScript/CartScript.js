@@ -390,38 +390,40 @@ $(document).ready(function () {
     document.querySelectorAll(".cart_t_item").forEach(n => {
         const deleteBtn = n.querySelector(".cart_t_i_func");
         deleteBtn.addEventListener('click', function () {
-            var ProductID = deleteBtn.getAttribute("data-product-id");
-            $("#action").val("delete-product");
-            $.ajax({
-                method: "POST",
-                url: "/Cart",
-                data: {
-                    ProductID: ProductID,
-                    action: "delete-product"
-                },
+            if(confirm('Are you sure to get fragnages out of your room?')){        
+                var ProductID = deleteBtn.getAttribute("data-product-id");
+                $("#action").val("delete-product");
+                $.ajax({
+                    method: "POST",
+                    url: "/Cart",
+                    data: {
+                        ProductID: ProductID,
+                        action: "delete-product"
+                    },
 //            contentType: "application/json; charset=utf-8",
 //            dataType: "json",
-                success: function (response) {
-                    n.remove();
+                    success: function (response) {
+                        n.remove();
 //                    window.location.reload();
-                    let subtotal = document.getElementById("subtotal");
-                    let total = document.getElementById("total");
-                    total.value = parseFloat(total.value) - parseFloat(subtotal.value);
-                    subtotal.value = 0;
-                    document.querySelectorAll('.getForUpdate').forEach(element => {
-                        const proPrice = element.querySelector(".proPrice").value;
-                        const proQuan = element.querySelector(".quantity-input").value;
-                        subtotal.value = parseFloat(subtotal.value) + parseFloat(proPrice * proQuan);
-                    });
-                    total.value = parseFloat(total.value) + parseFloat(subtotal.value);
-                    document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
-                    document.querySelector('.totalClass').innerHTML = "$" + total.value;
+                        let subtotal = document.getElementById("subtotal");
+                        let total = document.getElementById("total");
+                        total.value = parseFloat(total.value) - parseFloat(subtotal.value);
+                        subtotal.value = 0;
+                        document.querySelectorAll('.getForUpdate').forEach(element => {
+                            const proPrice = element.querySelector(".proPrice").value;
+                            const proQuan = element.querySelector(".quantity-input").value;
+                            subtotal.value = parseFloat(subtotal.value) + parseFloat(proPrice * proQuan);
+                        });
+                        total.value = parseFloat(total.value) + parseFloat(subtotal.value);
+                        document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
+                        document.querySelector('.totalClass').innerHTML = "$" + total.value;
 
-                    if (document.querySelector('[id^="cart"]') == null) {
-                        document.querySelector(".noItem").style.display = "block";
+                        if (document.querySelector('[id^="cart"]') == null) {
+                            document.querySelector(".noItem").style.display = "block";
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     });
 

@@ -13,6 +13,30 @@
         <link rel="stylesheet" href="Login_styles.css">
     </head>
     <body>
+         <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", cookie.getValue());
+                        response.sendRedirect("/Home");
+                        break;
+                    }
+                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("AdminstratorID", cookie.getValue());
+                        response.sendRedirect("/Admin");
+                        break;
+                    }
+                }
+            }
+//            else{
+//            if (session.getAttribute("CustomerID") != null) {
+//                response.sendRedirect("/Home");
+//            } else if (session.getAttribute("AdminstratorID") != null) {
+//                response.sendRedirect("/Admin");
+//            }
+//            }
+        %>
         <div class="section section_1">
             <div id="Login_error" class="error">
                 <p id="error_msg"></p>

@@ -440,3 +440,93 @@
         }
     }
 }
+
+.main {
+    position: relative;
+}
+
+.error_zone {
+    position: fixed;
+    bottom: 50%;
+    transform: translateY(50%);
+    left: 2%;
+    overflow: hidden;
+    height: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    padding: 22px;
+    background: transparent;
+    &>div {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 0 18px rgba(0, 0, 0, 0.05);
+        border-radius: 16px 32px;
+        background: #fefefe;
+        padding: 14px 22px 22px;
+    }
+}
+
+.showErrorZone {
+    z-index: 999;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: 0.3s ease-in-out;
+}
+
+.error_zone_header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    & .error_zone_icon {
+        font-size: 28px;
+    }
+
+    & .error_zone_title {
+        font-size: 18px;
+        letter-spacing: 1px;
+        font-weight: 500;
+    }
+}
+
+.error_zone_content {
+    /* background: #f4f4f4; */
+    padding: 18px 0;
+    padding-left: 8px;
+
+    & .error_zone_list {
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+
+        & .error_zone_item {
+            font-size: 15px;
+            font-weight: 500;
+            /* color: #df0d64; */
+            display: flex;
+            align-items: flex-start;
+            gap: .5rem;
+
+            & i {
+                font-size: 12px;
+                color: #df0d64;
+            }
+        }
+    }
+}
+
+.error_zone_func {
+    width: 100%;
+    text-align: right;
+
+    & button {
+        padding: 8px 16px;
+        border-radius: 10px;
+        background: #f4f4f4;
+        transition: 0.3s;
+
+        &:hover {
+            background: #f0f0f0;
+        }
+
+        &:active {
+            background: #e0e0e0;
+        }
+    }
+}

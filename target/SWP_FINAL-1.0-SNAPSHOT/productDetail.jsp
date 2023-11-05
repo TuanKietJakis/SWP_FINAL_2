@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@page import="DAOs.CartDAO"%>
 <%@page import="Models.tblProduct"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.ProductDAO"%>
@@ -24,13 +25,25 @@
         <link rel="stylesheet" href="/CSS/detailProduct.css"/>
     </head>    
     <body>
-
         <%
-            System.out.println(session.getAttribute("CustomerID"));
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
             int ID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 ID = (int) session.getAttribute("CustomerID");
             }
+        %>
+        <%
+            int AmountFromCart = 0;
         %>
         <jsp:include page="header.jsp">
             <jsp:param name="ID" value="<%=ID%>"/>
@@ -38,6 +51,10 @@
         <main class="main" id="main">
             <%
                 tblProduct pro = (tblProduct) request.getAttribute("Product");
+                if (session.getAttribute("CustomerID") != null) {
+                    CartDAO dao = new CartDAO();
+                    AmountFromCart = dao.getAmountFromCart(pro.getProductID(), ID);
+                }
             %>
             <section class="product_section section">
                 <div class="product_container container">
@@ -47,30 +64,33 @@
                             <div class="product_data_content">
                                 <div class="product_d_c_info">
                                     <h1 class="product_d_c_name"><%=pro.getProductName()%></h1>
-                                    <h2 class="product_d_c_price"><%=pro.getPrice()%></h2>
+                                    <h2 class="product_d_c_price">$ <%=pro.getPrice()%></h2>
                                     <p class="product_d_c_subdes"><%=pro.getProductDes()%></p>
                                 </div>
                                 <div class="product_d_c_option">
                                     <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1">Size</p>
-                                        <p class="product_d_c_o_col2"><%=pro.getSize()%>ML</p>
+                                        <p class="product_d_c_o_col1">Brand<span>:</span></p>
+                                        <p class="product_d_c_o_col2"><span onclick="location.href = '#'"><%=pro.getBrandName()%></span></p>
                                     </div>
                                     <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1">Brand</p>
-                                        <p class="product_d_c_o_col2">Good Brand</p>
+                                        <p class="product_d_c_o_col1">Category<span>:</span></p>
+                                        <p class="product_d_c_o_col2"><span onclick="location.href = '#'"><%=pro.getCatName()%></span></p>
                                     </div>
-                                    <div class="product_d_c_o_row">
-                                        <p class="product_d_c_o_col1"></p>
-                                        <div class="product_d_c_o_col">
+                                    <div class="product_d_c_o_row" style="margin-top: 18px;">
+                                        <div class="product_d_c_o_col1">
                                             <div class="cart_t_i_quantity" data-quantity-id="1">
                                                 <div class="value-button decrease">-
                                                 </div>
-                                                <input type="number" id="number1" class="quantity-input" value="1" />
+                                                <input type="number" id="number1" class="quantity-input" value="1" onkeydown="return event.keyCode >= 48 && event.keyCode <= 57 || event.keyCode == 8"/>
                                                 <div class="value-button increase">+
                                                 </div>
-                                            </div>
+                                            </div></div>
+                                        <div class="product_d_c_o_col">
                                             <button class="product_d_c_o_addtoCart" data-user-id="<%=ID%>">Add To Cart</button>
+                                            <p class="showQuan"><span><%=pro.getQuantity()%></span> Avalaible</p>
                                             <input type="hidden" id="productID"  value="<%=pro.getProductID()%>">
+                                            <input type="hidden" id="AmountFromCart"  value="<%=AmountFromCart%>">
+                                            <input type="hidden" id="StoreQuan"  value="<%=pro.getQuantity()%>">
                                         </div>
                                     </div>
                                 </div>
@@ -88,69 +108,116 @@
                     <div class="des_content">
                         <p class="des_content_active des_content_des active">Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.</p>
                         <div class="des_content_active des_content_rev">
+                            <%
+                                ProductDAO pdao = new ProductDAO();
+                                ResultSet rs = pdao.GetProductRating(pro.getProductID());
+                                if (rs.next()) {
+                            %>
                             <!-- ==================comment 1 ================-->   
                             <div class="inner">
                                 <div class="des_content_rev_img">
+                                    <%
+                                        if (rs.getInt("RateNumber") == 5) {
+                                    %>
+                                    <img src="/img/wd1.jpg" alt="">
+                                    <%
+                                    } else if (rs.getInt("RateNumber") < 5 && rs.getInt("RateNumber") > 3) {
+                                    %>
                                     <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
+                                    <%
+                                    } else {
+                                    %>
+                                    <img src="/img/Group 2527.svg" alt="">
+                                    <%
+                                        }
+                                    %>
                                 </div>
                                 <div class="des_content_rev_data">
                                     <div class="des_content_rev_header">
-                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
+                                        <h1 class="des_content_rev_name"><%=rs.getString("FullName")%></h1>
                                         <div class="dev_content_rev_star">
+                                            <%
+                                                int n = 0;
+                                                n = rs.getInt("RateNumber");
+                                                for (int i = 0; i < 5; i++) {
+                                                    if (n > 0) {
+                                            %>
                                             <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
+                                            <%
+                                                n--;
+                                            } else {
+                                            %>  
                                             <i class="fa-regular fa-star"></i>
+                                            <%
+                                                    }
+                                                }
+                                            %>
                                         </div>
                                     </div>
                                     <div class="des_content_rev_des">
-                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                                        <%=rs.getString("RateDes")%>
                                     </div>
                                 </div>
                             </div>
+                            <%
+                                while (rs.next()) {
+                            %>
                             <!-- ==================comment 1 ================-->   
                             <div class="inner">
                                 <div class="des_content_rev_img">
+                                    <%
+                                        if (rs.getInt("RateNumber") == 5) {
+                                    %>
+                                    <img src="/img/wd1.jpg" alt="">
+                                    <%
+                                    } else if (rs.getInt("RateNumber") < 5 && rs.getInt("RateNumber") > 3) {
+                                    %>
                                     <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
+                                    <%
+                                    } else {
+                                    %>
+                                    <img src="/img/Group 2527.svg" alt="">
+                                    <%
+                                        }
+                                    %>
                                 </div>
                                 <div class="des_content_rev_data">
                                     <div class="des_content_rev_header">
-                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
+                                        <h1 class="des_content_rev_name"><%=rs.getString("FullName")%></h1>
                                         <div class="dev_content_rev_star">
+                                            <%
+                                                n = rs.getInt("RateNumber");
+                                                for (int i = 0; i < 5; i++) {
+                                                    if (n > 0) {
+                                            %>
                                             <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
+                                            <%
+                                                n--;
+                                            } else {
+                                            %>  
                                             <i class="fa-regular fa-star"></i>
+                                            <%
+                                                    }
+                                                }
+                                            %>
                                         </div>
                                     </div>
                                     <div class="des_content_rev_des">
-                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
+                                        <%=rs.getString("RateDes")%>
                                     </div>
                                 </div>
                             </div>
-                            <!-- ==================comment 1 ================-->   
+                            <%
+                                }
+                            } else {
+                            %>
                             <div class="inner">
-                                <div class="des_content_rev_img">
-                                    <img src="/img/Bloons 6のTwitterイラスト検索結果。.png" alt="">
-                                </div>
-                                <div class="des_content_rev_data">
-                                    <div class="des_content_rev_header">
-                                        <h1 class="des_content_rev_name">Ariana Grande</h1>
-                                        <div class="dev_content_rev_star">
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-regular fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="des_content_rev_des">
-                                        Quod autem in homine praestantissimum atque optimum est, id deseruit. Apud ceteros autem philosophos
-                                    </div>
-                                </div>
+                                Hope you have the product and leave a comment for this
                             </div>
+                            <%
+                                }
+                            %>
+
                         </div>
                     </div>
                 </div>
@@ -167,19 +234,20 @@
                         <%
                             ProductDAO pDao = new ProductDAO();
                             ResultSet rs2 = pDao.getAllProduct();
-                            while (rs2.next()) {
+                            int n = 0;
+                            while (rs2.next() && n < 6) {
                         %>
                         <!-- ================ Card 1 -->
                         <div class="pproduct_card item">
-                            <div class="pproduct_data_img">
-                                <div onclick="location.href = '#'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
-                                                                                                         alt=""></div>
-                                <form onsubmit="event.preventDefault()" class="pproduct_wishlist_ico">
+                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
+                                <div onclick="location.href = '/Shop/Detail/<%=rs2.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs2.getString("ProductImageURL")%>"
+                                                                                                                                                 alt=""></div>
+                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                     <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </form>
+                                </div>
                                 <div class="pproduct_addCart">
                                     <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" data-user-id="<%=ID%>">
+                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs2.getInt("ProductID")%>">
                                             <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
                                             <i class="btn_icon_box fa-solid fa-parachute-box"></i>
                                             <span>Add to cart</span>
@@ -194,13 +262,13 @@
                             </div>
                             <div class="pproduct_data_content">
                                 <div class="pproduct_data_des">
-                                    <a href="#" class="pproduct_data_name"><%=rs2.getString("ProductName")%></a>
+                                    <a href="/Shop/Detail/<%=rs2.getInt("ProductID")%>" class="pproduct_data_name"><%=rs2.getString("ProductName")%></a>
                                     <p class="pproduct_data_price">$<%=rs2.getInt("Price")%></p>
                                 </div>
                             </div>
                         </div>
                         <%
-
+                                n++;
                             }
                         %>
 

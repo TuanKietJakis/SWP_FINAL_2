@@ -321,12 +321,12 @@ body {
 /* CONTENT */
 #content {
     position: relative;
-    width: calc(100% - 280px);
+    /*width: calc(100% - 280px);*/
     transition: .3s ease;
     margin-left: 5px;
 }
 #sidebar.hide ~ #content {
-    width: calc(100% - 60px);
+    /*width: calc(100% - 60px);*/
     left: 60px;
 }
 
@@ -556,17 +556,16 @@ body {
 
 .table_example{
     overflow: auto; /* Cho phép cuộn nội dung */
-    max-height: 390px;
+    max-height: calc(100vh - 335px) !important;
 }
 
 #content main .table-data {
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
-    margin-top: 10px;
     width: 100%;
     color: var(--dark);
-   
+
 }
 #content main .table-data > div {
 
@@ -595,8 +594,8 @@ body {
     flex-basis: 500px;
 }
 #content main .table-data .order table {
-    width: 1120px;
-    height: 730px;
+    width: 100%;
+    /*height: 730px;*/
     border-collapse: collapse;
     box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
     padding-left: 8px

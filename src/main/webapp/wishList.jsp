@@ -84,7 +84,7 @@
                             <div class="cart_add">
                                 <button class="cart_t_i_func">
                                     <i class="fa-solid fa-cart-plus fa-lg" style="margin-right: 2px;"></i>
-                                    <span style="font-size: 14px; margin-left: 2px;"><a href="/Cart/Add/<%= rs.getInt("ProductId")%>/<%= rs.getInt("Quantity")%>" style="color: white">Add to cart</a></span>
+                                    <span style="font-size: 14px; margin-left: 2px;"><a href="/Cart/Add/<%= rs.getInt("ProductId")%>/<%= rs.getInt("Quantity")%>">Add to cart</a></span>
                                 </button>
                             </div>
                             <div style="padding-left: 55px; margin-bottom: 10px;">

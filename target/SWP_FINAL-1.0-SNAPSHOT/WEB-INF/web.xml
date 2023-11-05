@@ -79,6 +79,14 @@
         <servlet-name>WishListController</servlet-name>
         <servlet-class>Controllers.WishListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExportFileController</servlet-name>
+        <servlet-class>Controllers.ExportFileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExportFileControllerMonth</servlet-name>
+        <servlet-class>Controllers.ExportFileControllerMonth</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BrandController</servlet-name>
         <url-pattern>/addNewBrand/*</url-pattern>
@@ -199,6 +207,14 @@
     <servlet-mapping>
         <servlet-name>WishListController</servlet-name>
         <url-pattern>/wishlist/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportFileController</servlet-name>
+        <url-pattern>/Admin/Income/ExportFileController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExportFileControllerMonth</servlet-name>
+        <url-pattern>/Admin/Income/ExportFileControllerMonth</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
