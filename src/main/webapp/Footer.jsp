@@ -27,7 +27,7 @@
                             <a href="/Shop" class="footer__link">Shop Online</a>
                         </li>
                         <li class="footer__item">
-                            <a href="/Contact" class="footer__link">What's New</a>
+                            <a href="/News" class="footer__link">What's New</a>
                         </li>
                     </ul>
                 </div>
@@ -36,10 +36,10 @@
                     <h2 class="footer__subtitle">Informations</h2>
                     <ul class="footer__list">
                         <li class="footer__item">
-                            <a href="/AbouUs" class="footer__link">About Us</a>
+                            <a href="/AboutUs" class="footer__link">About Us</a>
                         </li>
                         <li class="footer__item">
-                            <a href="/News" class="footer__link">Term & Privacy</a>
+                            <a href="/Term" class="footer__link">Term & Privacy</a>
                         </li>
                         <li class="footer__item">
                             <a href="/Contact" class="footer__link">Contact Us</a>

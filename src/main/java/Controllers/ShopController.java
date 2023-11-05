@@ -146,6 +146,11 @@ public class ShopController extends HttpServlet {
 //                String categoryFilter = String.join("','", Category);
                 sql += " AND CategoryID IN(" + Category + ") ";
             }
+            String Size = (String) request.getParameter("size");
+            if (Size != "") {
+//                String categoryFilter = String.join("','", Category);
+                sql += " AND Size IN(" + Size + ") ";
+            }
             if (request.getParameter("search") != null) {
                 String regex = (String) request.getParameter("search");
                 sql += "AND ProductName like '%" + regex + "%'";

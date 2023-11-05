@@ -2,9 +2,9 @@ $(document).ready(function () {
     filter_data();
     filterData($('#regex').val(), "search");
     resetBtn();
-    $("[data-remove='" + "search" + "']").click(function(){
-       $('#regex').val("");
-       filter_data();
+    $("[data-remove='" + "search" + "']").click(function () {
+        $('#regex').val("");
+        filter_data();
     });
     $("[id^='c']").each(function () {
         $(this).on('change', function () {
@@ -12,7 +12,7 @@ $(document).ready(function () {
                 if ($('.filter_item_chip').html !== null) {
                     removeTag($(this).data("name"));
                 }
-                filterData($(this).data("name"), $(this).data("name"),$(this).attr("id"));
+                filterData($(this).data("name"), $(this).data("name"), $(this).attr("id"));
                 resetBtn();
             }
         });
@@ -23,7 +23,18 @@ $(document).ready(function () {
                 if ($('.filter_item_chip').html !== null) {
                     removeTag($(this).data("name"));
                 }
-                filterData($(this).data("name"), $(this).data("name"),$(this).attr("id"));
+                filterData($(this).data("name"), $(this).data("name"), $(this).attr("id"));
+                resetBtn();
+            }
+        });
+    });
+    $("[id^='size']").each(function () {
+        $(this).on('change', function () {
+            if ($(this).is(':checked')) {
+                if ($('.filter_item_chip').html !== null) {
+                    removeTag($(this).data("name"));
+                }
+                filterData($(this).data("name") + "ML", $(this).data("name"), $(this).attr("id"));
                 resetBtn();
             }
         });
@@ -34,12 +45,12 @@ $(document).ready(function () {
                 if ($('.filter_item_chip').html !== null) {
                     removeTag("price");
                 }
-                filterData($(this).data("name"), "price",$(this).attr("id"));
+                filterData($(this).data("name"), "price", $(this).attr("id"));
                 resetBtn();
             }
         });
     });
-    function filterData(tag, type,id) {
+    function filterData(tag, type, id) {
         $('.filter_list_chip').append(`
                             <div class="filter_item_chip" data-remove="${type}" data-id="${id}">
                                 <span class="filter_item_chip_name">
@@ -55,8 +66,8 @@ $(document).ready(function () {
     function resetBtn() {
         $('.filter_item_chip').each(function () {
             $(this).on('click', function () {
-                $("[id^='"+$(this).data("id")+"']").prop("checked", false);
-                console.log($("[id^='"+$(this).data("id")+"']"));
+                $("[id^='" + $(this).data("id") + "']").prop("checked", false);
+                console.log($("[id^='" + $(this).data("id") + "']"));
                 $(this).remove();
                 filter_data();
             });
@@ -75,6 +86,7 @@ $(document).ready(function () {
         }
         var brand = get_filter('brand');
         var category = get_filter('category');
+        var size = get_filter('size');
         console.log(brand);
         console.log(category);
         $.ajax({
@@ -83,6 +95,7 @@ $(document).ready(function () {
             data: {
                 action: action,
                 search: search,
+                size: size,
                 price: price,
                 brand: brand,
                 category: category
@@ -92,7 +105,11 @@ $(document).ready(function () {
                 if (data.length > 0) {
                     $('.pproduct_content').empty();
                     $('.pproduct_title').html("");
-                    $('.pproduct_title').html("Search Result for "+ search +"...");
+                    if (search == "") {
+                        $('.pproduct_title').html("All Products");
+                    } else {
+                        $('.pproduct_title').html("Search Result for " + search + "...");
+                    }
                     $.each(data, function (index, value) {
                         // Assuming your HTML has a div with the class 'product-container'
                         $('.pproduct_content').append(`

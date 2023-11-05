@@ -151,6 +151,25 @@
                             </div>
                             <!-- ============== Item 1 ================= -->
                             <div class="filter_list_menu_item">
+                                <h1 class="filter_list_menu_header">Size</h1>
+                                <ul class="filter_list_menu_body">
+                                    <!--SIZE 1-->
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="size50">50ML</label></li>
+                                    <input type="checkbox" id="size50" class="classfilter size" name="size" data-name="50" value="50" hidden/>
+   
+                                    <!--SIZE 1-->
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="size75">75ML</label></li>
+                                    <input type="checkbox" id="size75" class="classfilter size" name="size" data-name="75" value="75" hidden/>
+                                    <!--SIZE 1-->
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="size100">100ML</label></li>
+                                    <input type="checkbox" id="size100" class="classfilter size" name="size" data-name="100" value="100" hidden/>
+                                    <!--SIZE 1-->
+                                    <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="size125">125ML</label></li>
+                                    <input type="checkbox" id="size125" class="classfilter size" name="size" data-name="125" value="125" hidden/>
+                                </ul>
+                            </div>
+                            <!-- ============== Item 1 ================= -->
+                            <div class="filter_list_menu_item">
                                 <h1 class="filter_list_menu_header">Price</h1>
                                 <ul class="filter_list_menu_body">
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-arrow-up-1-9"></i><label for="price-lowtohigh"> Low to High</label></li>
