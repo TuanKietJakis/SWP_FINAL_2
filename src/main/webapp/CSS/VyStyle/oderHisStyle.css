@@ -302,8 +302,8 @@ input[type=number]::-webkit-outer-spin-button {
     text-decoration: underline;
 }
 .underline-button:hover{
- 
-   color: pink;
+
+    color: pink;
 }
 
 .small-star {
@@ -329,10 +329,14 @@ input[type=number]::-webkit-outer-spin-button {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     /* MÃ u ná»n vÃ  Ä‘á»™ má» */
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
     align-items: center;
     justify-content: center;
 }
+
+
 
 
 
@@ -352,6 +356,34 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     margin-top: 10px;
 }
+.close-popup{
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    float:right;
+}
+
+.close-popup::before, .close-popup::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    top: 50%;
+    left: 0;
+    margin-top: -1px;
+}
+
+.close-popup::before {
+    transform: rotate(45deg);
+}
+
+.close-popup::after {
+    transform: rotate(-45deg);
+}
+
 
 .popup {
     border-radius: 10px;
@@ -388,15 +420,12 @@ input[type=number]::-webkit-outer-spin-button {
     z-index: 9998;
 }*/
 
-.showpopup {
-    display: flex;
-}
 
 /*.hideoverlay {
     display: none;
 }*/
 
-.rating-stars {
+/*.rating-stars {
     display: flex;
 }
 
@@ -406,6 +435,32 @@ input[type=number]::-webkit-outer-spin-button {
     cursor: pointer;
     line-height: 100%;
     font-weight: 700;
+}*/
+.rating-stars {
+    position: relative;
+    display: flex;
+    align-items: center;
+    & p{
+        margin-right: 1.5rem;
+    }
+}
+
+.star {
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.star:hover ~ .star {
+    color: #ccc;
+}
+
+.star.rated {
+    color: #ffd700;
+}
+
+.star.rated:hover ~ .star {
+    color: #ccc;
 }
 
 button {
@@ -432,6 +487,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    float: right;
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -486,7 +542,7 @@ button {
 }
 
 .Btnpopup {
-    display: flex-end;
+    justify-self: flex-end;
 }
 .background{
     position: fixed;
@@ -496,11 +552,40 @@ button {
     left: 0;
     background: rgba(0,0,0,0.5);
     z-index: -1;
-/*    display: none;*/
-    
+    visibility: hidden;
+    /*    display: none;*/
+
 }
-.show_background{
-    z-index: 10;
+.showbackground{
+    visibility: visible;
+    z-index: 990;
+}
+.showPop{
+    opacity: 1;
+    visibility: visible;
+    z-index: 999;
+}
+
+
+.btn_rateProduct {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #ff0a78;
+    background: #EE2A7B;
+}
+.btn_rateProduct:hover {
+    background: #fff;
+    color: #EE2A7B
+
 }
 /*#overlay {
   position: fixed;  Sit on top of the page content 

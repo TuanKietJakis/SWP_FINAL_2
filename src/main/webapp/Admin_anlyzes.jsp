@@ -6,6 +6,15 @@
 
 <%@page import="DAOs.CartDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<style>
+    .data{
+        flex: 1;
+        & number span{
+            float:right;
+        }
+    }
+    
+</style>
 <%
     String sql = "select count(*) as total from ";
     CartDAO dao = null;
@@ -25,21 +34,21 @@
             <i class="fa-solid fa-clipboard-list"></i>
             <div class="data">
                 <text>Total Order</text>
-                <number><%=dataOrder %><span style="font-size: 18px;font-weight: 500;"> available</span></number>
+                <number><%=dataOrder %><span style="font-size: 18px;font-weight: 500;">Order</span></number>
             </div>
         </div>
         <div class="box box2">
             <i class="fa-solid fa-users"></i>
             <div class="data">
                 <text>Total Customer</text>
-                <number><%=dataUser%><span style="font-size: 18px;font-weight: 500;"> available</span></number>
+                <number><%=dataUser%><span style="font-size: 18px;font-weight: 500;"> Member</span></number>
             </div>
         </div>
         <div class="box box3">
             <i class="fa-solid fa-hand-holding-dollar"></i>
             <div class="data">
                 <text>Total Product</text>
-                <number><%=dataProduct%> <span style="font-size: 18px;font-weight: 500;"> available</span></number>
+                <number><%=dataProduct%> <span style="font-size: 18px;font-weight: 500;"> Available</span></number>
             </div>
         </div>
     </div>

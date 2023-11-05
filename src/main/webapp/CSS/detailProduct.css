@@ -270,9 +270,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .des_content_rev .inner{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     max-width: 720px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
     gap: 15px;
     margin-bottom: 3.375rem;
     position: relative;
@@ -289,7 +289,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .des_content_rev_img {
     margin-top: 4px;
-    width: 72px;
+    width: 58px;
     height: 58px;
     align-self: top;
 
@@ -325,6 +325,9 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 400;
     line-height: 170%;
     /* 23.8px */
+}
+.des_content_rev_data{
+    flex:1;
 }
 
 .dev_content_rev_star {

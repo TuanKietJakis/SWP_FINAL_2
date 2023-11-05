@@ -22,7 +22,7 @@ body {
     justify-content: space-between;
     align-items: center;
     max-height: 117px;
-    padding: 0 18px;
+    padding: 18px 18px;
     flex: 1;
 }
 
@@ -92,7 +92,7 @@ body {
     flex: 1;
     border: 1px solid;
     overflow-x: hidden;
-    max-height: 736px;
+    max-height: 636px;
 
     &::-webkit-scrollbar {
         width: 5px;

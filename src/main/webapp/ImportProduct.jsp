@@ -55,7 +55,7 @@
                                 </div>
                                 <label class="new_image" for="chooseImage">+</label>
                             </div>
-                            <div class="admin_btn">
+                            <div class="admin_btn" onclick="location.href='/Admin/Product/List'">
                                 <span><i class="fa-solid fa-arrow-left"></i></span>
 
                             </div>

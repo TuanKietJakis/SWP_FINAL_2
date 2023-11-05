@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="/CSS/VyStyle/oderHisStyle.css">
+        <!--<link rel="stylesheet" href="/CSS/DangStyles/CartStyles.css">-->
+
     </head>
 
     <body>
@@ -45,7 +47,7 @@
                     <div class="cart_t_header">
                         <h1 class="cart_h_title col-product">Product</h1>
                         <h1 class="cart_h_title col-price">Price</h1>
-                        <h1 class="cart_h_title col-quantity">Quantity</h1>
+                        <h1 class="cart_h_title col-quantity">Amount</h1>
                         <h1 class="cart_h_title col-remove">Rating</h1>
                     </div>
                     <div class="cart_t_frame">
@@ -70,46 +72,44 @@
                         <!-- Hiển thị thông tin của đơn hàng tại đây -->
                         <div class="cart_t_item">
                             <div class="cart_t_i_content col-product">
-                                <div class="cart_t_i_img">
+                                <div class="cart_t_i_img" onclick="location.href = '/Shop/Detail/<%= productID%>'">
                                     <img src="<%=rs.getString("ProductImageURL")%>" alt="">
                                 </div>
                                 <div class="cart_t_i_data">
-                                    <h1 class="cart_t_i_title"><%= productName%></h1>
+                                    <h1 class="cart_t_i_title" onclick="location.href = '/Shop/Detail/<%= productID%>'"><%= productName%></h1>
                                     <p class="cart_t_i_subtitle">Delivery:<%= orderDate%></p>
                                 </div>
                             </div>
-                            <h1 class="cart_t_i_price col-price">$<%= productPrice%></h1>
-                            <p class="cart_t_i_quati col-quantity">Quantity: <%= quantity%></p>
+                            <h1 class="cart_t_i_price col-price" style="padding-left: .75rem;">$<%= productPrice%></h1>
+                            <p class="cart_t_i_quati col-quantity" style="padding-left: .75rem;"><%= quantity%> Items</p>
                             <%
-                                if (active == 2) {
-
-                                } else {
+                                if (active == 2) {%>
+                            <div style="min-width: 130px;
+                                 height: 40px;
+                                 color: #fff;
+                                 padding: 5px 10px;"></div>
+                            <%                      } else {
                             %>                        
-                            <button class="underline-button" onclick="openPopup(<%= productID%>,<%= orderID%>);">Rate Product</button> 
+                            <button class="btn_rateProduct" onclick="openPopup(<%= productID%>,<%= orderID%>);">Rate Product</button> 
                             <%}%>
-
-                            </td>
-                            </tr>
-                            <%
-                                } while (rs.next());
-                            } else {
-                            %>
-                            <!-- Hiển thị thông báo khi không tìm thấy đơn hàng -->
-                            <tr>
-                                <td colspan="9">No orders found for User ID: <%= userID%></td>
-                            </tr>
-                            <%
-                                }
-                            %>
-
-                            </tbody>
-                            </table>
                         </div>
+                        <%
+                            } while (rs.next());
+                        } else {
+                        %>
+                        <!-- Hiển thị thông báo khi không tìm thấy đơn hàng -->
+
+
+                        <%
+                            }
+                        %>
+
+
 
 
                         <div id="ratingPopup" class="popup">
                             <div class="popup-content">
-                                <span class="close-popup" onclick="closePopup()">&times;</span>
+                                <span class="close-popup" onclick="closePopup()"></span>
                                 <h2>Rate Product</h2>
                                 <div class="rating-stars">
                                     <p>Please select your rating:</p>
@@ -131,29 +131,31 @@
                             </div>
 
                         </div>
-                        <div class="background"></div>      
+                        <div class="background" id="bg"></div>      
+                    </div>
+                </div>
+            </section>
+        </main>
 
+        <jsp:include page="Footer.jsp"></jsp:include>
+        <script src="js/DangScript/jquery.min.js"></script>
+        <!--<script src="/js/DangScript/CartScript.js"></script>-->
+        <script src="/js/VyScript/orderHistory.js"></script>
 
-                        </section>
-                        </main>
-
-                        <jsp:include page="Footer.jsp"></jsp:include>
-                        <script src="js/DangScript/jquery.min.js"></script>
-                        <!--<script src="/js/DangScript/CartScript.js"></script>-->
-                        <script src="/js/VyScript/orderHistory.js"></script>
-
-                        <script>
+        <script>
                                         let currentProductID = 0;
                                         let currentOrderID = 0;
 
                                         function openPopup(productID, orderID) {
                                             currentOrderID = orderID;
                                             currentProductID = productID;
-                                            document.getElementById("ratingPopup").style.display = "block";
+                                            document.getElementById("ratingPopup").classList.add("showPop");
+                                            document.getElementById("bg").classList.add("showbackground");
                                         }
 
                                         function closePopup() {
-                                            document.getElementById("ratingPopup").style.display = "none";
+                                            document.getElementById("ratingPopup").classList.remove("showPop");
+                                            document.getElementById("bg").classList.remove("showbackground");
                                         }
 
                                         let rating = 0;
@@ -183,7 +185,7 @@
 
 
 
-                        </script>
-                        </body>
+        </script>
+    </body>
 
-                        </html>
+</html>

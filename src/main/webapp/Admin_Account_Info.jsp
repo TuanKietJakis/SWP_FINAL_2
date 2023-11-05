@@ -45,7 +45,7 @@
                         </div>
                         <p class="admin_text">Admin</p>
 
-                        <div class="admin_btn">
+                        <div class="admin_btn" onclick="location.href='/Admin'">
                             <span><i class="fa-solid fa-arrow-left"></i></span>
 
                         </div>

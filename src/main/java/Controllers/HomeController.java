@@ -141,7 +141,7 @@ public class HomeController extends HttpServlet {
                     } else {
                         addDAO.UpdateCombineAmount(ProductID, UserID, Amount, cart.getProductAmount());
                         int AmountFromCart = addDAO.getAmountFromCart(pro.getProductID(), UserID);
-                        out.print("{\"message\": \"update\",\"Amount\":"+AmountFromCart+"}");
+                        out.print("{\"message\": \"update\",\"Amount\":" + AmountFromCart + "}");
                         out.flush();
                     }
 
@@ -187,7 +187,7 @@ public class HomeController extends HttpServlet {
                         out.print("{\"message\": \"fail\"}");
                         out.flush();
                     }
-                }else{
+                } else {
                     int kq = addDAO.DeleteWishlist(cart.getWishListID());
                     if (kq != 0) {
                         out.print("{\"message\": \"delete\"}");
@@ -209,20 +209,20 @@ public class HomeController extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
 
-                int ProductID = Integer.parseInt(request.getParameter("ProductID"));
-                CartDAO addDAO = null;
-                tblProduct pro = new tblProduct();
-                try {
-                    addDAO = new CartDAO();
-                } catch (Exception ex) {
-                    Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                tblWishList cart = new tblWishList();
-                cart = addDAO.getWishlistTheSame(ProductID, UserID);
-                if (cart.getWishListID() != 0) {             
-                        out.print("{\"message\": \"success\"}");
-                        out.flush();
-                }
+            int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+            CartDAO addDAO = null;
+            tblProduct pro = new tblProduct();
+            try {
+                addDAO = new CartDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            tblWishList cart = new tblWishList();
+            cart = addDAO.getWishlistTheSame(ProductID, UserID);
+            if (cart.getWishListID() != 0) {
+                out.print("{\"message\": \"success\"}");
+                out.flush();
+            }
         }
         if ("recentCart".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("UserID"));
@@ -302,78 +302,77 @@ public class HomeController extends HttpServlet {
                 String helpmessage = request.getParameter("message");
                 AccountDAO dao = new AccountDAO();
 
-                boolean checkEmail = dao.checkEmail(email);
+//                boolean checkEmail = dao.checkEmail(email);
                 HttpSession mySession = request.getSession();
-                if (checkEmail == false) {
-                    request.setAttribute("mess", "Emai not exist");
-                    request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
-                } else {
-                    if (email != null || !email.equals("")) {
-                        FaQDAO Fdao = new FaQDAO();
-                        tblFAQ fa = new tblFAQ(helpmessage, email);
-                        int kq = Fdao.AddNewQuest(fa);
-                        if (kq != 0) {
-                            String to = email;// change accordingly
-                            //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
-                            Properties props = new Properties();
+//                if (checkEmail == false) {
+//                    request.setAttribute("mess", "Emai not exist");
+//                    request.getRequestDispatcher("/ContactUs.jsp").forward(request, response);
+//                } else {
+                if (email != null || !email.equals("")) {
+                    FaQDAO Fdao = new FaQDAO();
+                    tblFAQ fa = new tblFAQ(helpmessage, email);
+                    int kq = Fdao.AddNewQuest(fa);
+                    if (kq != 0) {
+                        String to = email;// change accordingly
+                        //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
+                        Properties props = new Properties();
 // Dòng tiếp theo sử dụng phương thức put() của đối tượng Properties để thiết lập thông tin máy chủ SMTP của Gmail là "smtp.gmail.com".
-                            props.put("mail.smtp.host", "smtp.gmail.com");
-                            //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
-                            props.put("mail.smtp.socketFactory.port", "465");
-                            //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
-                            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-                            //Dòng thứ năm đánh dấu yêu cầu xác thực (authentication) của người dùng khi gửi email.
-                            props.put("mail.smtp.auth", "true");
-                            //Và dòng cuối cùng thiết lập cổng SMTP là 465 để sử dụng kết nối SSL an toàn.
-                            props.put("mail.smtp.port", "465");
-                            Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-                                protected PasswordAuthentication getPasswordAuthentication() {
-                                    return new PasswordAuthentication("tuankietjks@gmail.com", "yhdtpueqzckjyrkl");// Put your email pass:y h d t p u e q z c k j y r k l
-                                    // id and
-                                    // password here
-                                }
-                            });//Vì vậy, đoạn mã này thiết lập phiên gửi email để xác thực người dùng và thiết lập thông tin tài khoản Gmail cho việc gửi email.
-                            String subject = "Thank you for contacting us!";
-                            String greeting = "<h2>Dear User,</h2>";
-                            String messageContent = "Dear valued customer,\n\n"
-                                    + "We would like to express our heartfelt gratitude for reaching out to our store. We are delighted to receive your message and sincerely appreciate your interest in our products and services.\n\n"
-                                    + "Your message has been acknowledged, and we will promptly review and respond to it. We are committed to providing you with the best support and addressing any questions to ensure you have the best shopping experience at our store.\n\n"
-                                    + "Thank you and have a great day!\n\n"
-                                    + "Sincerely,\n";
-                            String closing = "<br><p>Best regards,</p><p>Floral Fantasy</p><p>Email: tuankietjks@gmail.com</p><p>Mobile: 01123456789</p>";
+                        props.put("mail.smtp.host", "smtp.gmail.com");
+                        //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
+                        props.put("mail.smtp.socketFactory.port", "465");
+                        //Dòng đầu tiên khởi tạo một đối tượng Properties để cấu hình các thuộc tính cho kết nối.
+                        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                        //Dòng thứ năm đánh dấu yêu cầu xác thực (authentication) của người dùng khi gửi email.
+                        props.put("mail.smtp.auth", "true");
+                        //Và dòng cuối cùng thiết lập cổng SMTP là 465 để sử dụng kết nối SSL an toàn.
+                        props.put("mail.smtp.port", "465");
+                        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                            protected PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication("tuankietjks@gmail.com", "yhdtpueqzckjyrkl");// Put your email pass:y h d t p u e q z c k j y r k l
+                                // id and
+                                // password here
+                            }
+                        });//Vì vậy, đoạn mã này thiết lập phiên gửi email để xác thực người dùng và thiết lập thông tin tài khoản Gmail cho việc gửi email.
+                        String subject = "Thank you for contacting us!";
+                        String greeting = "<h2>Dear User,</h2>";
+                        String messageContent = "Dear valued customer,\n\n"
+                                + "We would like to express our heartfelt gratitude for reaching out to our store. We are delighted to receive your message and sincerely appreciate your interest in our products and services.\n\n"
+                                + "Your message has been acknowledged, and we will promptly review and respond to it. We are committed to providing you with the best support and addressing any questions to ensure you have the best shopping experience at our store.\n\n"
+                                + "Thank you and have a great day!\n\n"
+                                + "Sincerely,\n";
+                        String closing = "<br><p>Best regards,</p><p>Floral Fantasy</p><p>Email: tuankietjks@gmail.com</p><p>Mobile: 01123456789</p>";
 
 // Build the email content using HTML tags
-                            StringBuilder sb = new StringBuilder();
-                            sb.append("<div style='background-color:#f7f7f7;padding:20px;font-family:Arial,sans-serif;'>");
-                            sb.append("<div style='background-color:#fff;padding:20px;border-radius: 10px;'>");
-                            sb.append("<div style='background-image:url(assets1/images/login.jpg); width=200px;font-family:Arial,sans-serif;'>");
-                            sb.append(greeting);
-                            sb.append("<p>Thank you for choosing our store.</p>");
-                            sb.append(messageContent);
-                            sb.append("<br>");
-                            sb.append(closing);
-                            sb.append("</div></div>");
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("<div style='background-color:#f7f7f7;padding:20px;font-family:Arial,sans-serif;'>");
+                        sb.append("<div style='background-color:#fff;padding:20px;border-radius: 10px;'>");
+                        sb.append("<div style='background-image:url(assets1/images/login.jpg); width=200px;font-family:Arial,sans-serif;'>");
+                        sb.append(greeting);
+                        sb.append("<p>Thank you for choosing our store.</p>");
+                        sb.append(messageContent);
+                        sb.append("<br>");
+                        sb.append(closing);
+                        sb.append("</div></div>");
 
-                            try {
-                                MimeMessage message = new MimeMessage(session);
-                                message.setFrom(new InternetAddress(email));
-                                message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                                message.setSubject(subject);
+                        try {
+                            MimeMessage message = new MimeMessage(session);
+                            message.setFrom(new InternetAddress(email));
+                            message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
+                            message.setSubject(subject);
 
-                                // Set the email content type to HTML
-                                message.setContent(sb.toString(), "text/html");
+                            // Set the email content type to HTML
+                            message.setContent(sb.toString(), "text/html");
 
-                                // Send message
-                                Transport.send(message);
-                            } catch (MessagingException e) {
-                                throw new RuntimeException(e);
-                            }
-                            mySession.setAttribute("email", email);
-                            request.setAttribute("Ps", "Your message have been sent");
-                            request.getRequestDispatcher("/home_redirect.jsp").forward(request, response);
-                        } else {
-                            response.sendRedirect("/Contact");
+                            // Send message
+                            Transport.send(message);
+                        } catch (MessagingException e) {
+                            throw new RuntimeException(e);
                         }
+                        mySession.setAttribute("email", email);
+                        request.setAttribute("Ps", "Your message have been sent");
+                        request.getRequestDispatcher("/home_redirect.jsp").forward(request, response);
+                    } else {
+                        response.sendRedirect("/Contact");
                     }
                 }
             } catch (Exception e) {

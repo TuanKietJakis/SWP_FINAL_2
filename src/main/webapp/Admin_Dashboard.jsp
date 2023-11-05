@@ -18,6 +18,13 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <style>
+            .table_body{
+                max-height: calc(100vh - 429px);
+                overflow-x: hidden;
+                justify-content: flex-start !important;
+            }
+        </style>
         <%
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {

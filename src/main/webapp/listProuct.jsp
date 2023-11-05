@@ -121,7 +121,6 @@
                     <h1 class="pproduct_title">All Products</h1>
                     <div class="pproduct_content grid">
                          <input type="hidden" id="userID" value="<%=ID%>">
-
                     </div>
                         <div class="pproduct_getmore"><button id="btn-load-more">More Product</button></div>
                 </div>

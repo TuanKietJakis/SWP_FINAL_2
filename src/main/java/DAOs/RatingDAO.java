@@ -45,7 +45,8 @@ public class RatingDAO {
     }
 
     public boolean insertRating(int productID, int rateNumber, String rateDes, int userID) {
-        try {
+        int rowsAffected = 0;
+                try {
             String sql = "INSERT INTO tblRating VALUES (?, ?, ?, ?,?)";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, productID);
@@ -53,7 +54,7 @@ public class RatingDAO {
             ps.setString(3, rateDes);
             ps.setInt(4, userID);
             ps.setInt(5, 1);
-            int rowsAffected = ps.executeUpdate();
+            rowsAffected = ps.executeUpdate();
 
             return rowsAffected > 0;
         } catch (SQLException e) {

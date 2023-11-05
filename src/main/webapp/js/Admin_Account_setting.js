@@ -58,6 +58,6 @@ form.addEventListener("submit", e => {
 
     if (valid == false) {
         e.preventDefault();
-        alert("sai");
+        alert("Your Infomation have some thing Wrong, Please check it");
     }
 })

@@ -269,7 +269,7 @@ public class OrderDAO {
     public ResultSet GetAllOrder() {
         try {
             String sql = "select * from tblOrder\n"
-                    + "inner join tblOrderStatus on tblOrderStatus.StatusID = tblOrder.StatusID";
+                    + "inner join tblOrderStatus on tblOrderStatus.StatusID = tblOrder.StatusID order by tblOrder.StatusID asc";
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             return rs;

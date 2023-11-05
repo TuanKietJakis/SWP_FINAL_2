@@ -63,8 +63,7 @@
                                                         <th>Name</th>
                                                         <th>Price</th>
                                                         <th>Brand</th>
-                                                        <th>Category</th>
-                                                        <th>Rating</th>
+                                                        <th>Category</th>                                                 
                                                         <th>Quantity</th>
                                                         <th>Active</th>
                                                         <th>Image</th>
@@ -95,14 +94,7 @@
                                                     %>
                                                     <td class="tdCat"><%= rs3.getString("CatName")%></td>
                                                     <%}%>
-                                                    <%
-                                                        int RatingID = rs.getInt("RatingID");
-                                                        RatingDAO rDao = new RatingDAO();
-                                                        ResultSet rs4 = rDao.getRateNumberByRateID(RatingID);
-                                                        while (rs4.next()) {
-                                                    %>
-                                                    <td class="tdRate"><%= rs4.getInt("RateNumber")%></td>
-                                                    <%}%>
+                                                    
 
                                                     <td class="tdQuantity"><%= rs.getInt("Quantity")%></td>
 

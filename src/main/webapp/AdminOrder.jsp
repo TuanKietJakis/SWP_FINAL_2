@@ -35,8 +35,8 @@
             int usID = 0;
             if (session.getAttribute("AdminstratorID") != null) {
                 usID = (int) session.getAttribute("AdminstratorID");
-            }else{
-            response.sendRedirect("/Home");
+            } else {
+                response.sendRedirect("/Home");
             }
         %>
         <div class="order_list_container">
@@ -114,7 +114,7 @@
                             <h3 class="order_table_col name">Customer Name</h3>
                             <h3 class="order_table_col quan">Quantity</h3>
                             <h3 class="order_table_col price">Price</h3>
-                            <h3 class="order_table_col status">Status</h3>
+                            <h3 class="order_table_col status">Status<span></span></h3>
                             <h3 class="order_table_col func">Operation</h3>
                         </div>
                         <%
@@ -173,19 +173,21 @@
             }
 
         </script>
-<!--        <script>
-            document.querySelectorAll('.status').forEach(status => {
-                const spanText = status.querySelector("span").textContent;
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.status').forEach(status => {
+                    const spanText = status.querySelector("span").textContent;
 
-                if (spanText === "rejected") {
-                    status.classList.add("denied");
-                } else if (spanText === "delivered") {
-                    status.classList.add("confirm");
-                } else {
-                    status.classList.add("pending");
-                }
+                    if (spanText == "Rejected") {
+                        status.classList.add("denied");
+                    } else if (spanText == "Delivered") {
+                        status.classList.add("confirm");
+                    } else if (spanText == "Pending"){
+                        status.classList.add("pending");
+                    }
+                });
             });
-        </script>-->
+        </script>
 
     </body>
 

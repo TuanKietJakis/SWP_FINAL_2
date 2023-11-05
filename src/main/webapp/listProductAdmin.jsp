@@ -28,9 +28,48 @@
 
     <body>
         <%
-            int usID = (int) session.getAttribute("AdminstratorID");
-
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("adminID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("AdminstratorID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
         %>
+        <%
+            int usID = 0;
+            if (session.getAttribute("AdminstratorID") != null) {
+                usID = (int) session.getAttribute("AdminstratorID");
+            } else {
+                response.sendRedirect("/Home");
+            }
+        %>
+        <style>
+            #content main{
+                width: 100%
+            }
+            .order_list_container{
+                display: inline-block !important;
+                flex:1;
+            }
+            table {
+                perspective: 1000px;
+            }
+
+            tbody{
+                width: 100%;
+                height: 100px;
+                border-collapse: collapse;
+                transform-style: preserve-3d;
+                transform: rotateX(180deg);
+            }
+            td{
+                transform: rotateX(-180deg);
+            }
+
+        </style>
 
         <div class="container">
             <jsp:include page="Admin_navigation.jsp">
@@ -53,10 +92,10 @@
                             %>
                             <div class="table-data">
                                 <div class="order">
-                                    <div class="Header">
+                                    <div class="Header" style="display: flex;align-items: center; justify-content: space-between;padding-right: 5rem;">
                                         <div class="pHeader"><%= totalProducts%> product</div>
-                                        <label class="addNewBrand" onclick="location.href = '/addNewBrand'">Add new Brands</label>
-                                        <label class="addNewCategory"  onclick="location.href = '/addNewCategory'">Add new categories</label>
+                                        <!--                                        <label class="addNewBrand" onclick="location.href = '/addNewBrand'">Add new Brands</label>
+                                                                                <label class="addNewCategory"  onclick="location.href = '/addNewCategory'">Add new categories</label>-->
                                         <label class="addNewProduct" onclick="location.href = '/Admin/Product/addNewProduct'">Add new products</label>
                                     </div>
                                     <div class="table_example">
@@ -104,16 +143,19 @@
                                                     <td style="text-align: center"> <%=rs.getInt("Quantity")%></td>
                                                     <%
                                                         byte active1 = rs.getByte("Active");
+                                                        String color = "";
                                                         String active = "";
                                                         if (active1 == 1) {
+                                                        color = "#04B200";
                                                             active = "available";
                                                         } else {
+                                                         color = "rgba(255, 150, 127, 1)";
                                                             active = "unavailable";
                                                         }
                                                     %>
-                                                    <td style="text-align: center"> <%=active%></td>
+                                                    <td style="text-align: center; color:<%=color%>;"> <%=active%></td>
 
-                                                    <td style="text-align: center"> <a class="info" href="/Product/View/<%=rs.getInt("CategoryID")%>"><b>Info ></b></a></td>
+                                                    <td style="text-align: center;color:<%=color%>;"> <a class="info" href="/Product/Update/<%= rs.getInt("ProductID")%>"><b>Info ></b></a></td>
                                                 </tr>
                                                 <%
 

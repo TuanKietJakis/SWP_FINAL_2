@@ -21,9 +21,10 @@
         <title>JSP Page</title>
     </head>
     <style>
-        .admin_content{
-            justify-content: center;
-            
+        .admin_content {
+            /* justify-content: center; */
+            max-height: calc(100vh - 295px);
+            overflow-x: hidden;
         }
         .faq-list {
             list-style-type: none;
@@ -51,7 +52,7 @@
         .faq-list {
             display: flex;
             flex-direction: column;
-            
+
             list-style-type: none;
             padding: 0;
         }
@@ -111,9 +112,9 @@
                             <div class="admin_btn" onclick="location.href = '/Admin'" >
                                 <span><i class="fa-solid fa-arrow-left"></i></span>
                             </div>
-<!--                            <div class="search-box">
-                                <input type="text" id="searchInput" placeholder="Search FAQ...">
-                            </div>-->
+                            <!--                            <div class="search-box">
+                                                            <input type="text" id="searchInput" placeholder="Search FAQ...">
+                                                        </div>-->
                         </div>
                         <div class="admin_content_infos">
                             <div class="brand-list">
@@ -132,14 +133,14 @@
                                 <%
                                     }
                                     rs.close(); // Close the ResultSet after use
-                                %>
+%>
                             </ul>
                         </div>
                     </div>
-                    <div class="Account_search">
-                        <input type="text" id="searchInput" placeholder="Search...">
-                    </div>
                 </div>
+                            <div class="Account_search" style="padding:12px auto 24px;">
+                                <input type="text" id="searchInput" placeholder="Search...">
+                            </div>
             </div>
         </div>
         <script src="/js/Admin_dashboard.js"></script>

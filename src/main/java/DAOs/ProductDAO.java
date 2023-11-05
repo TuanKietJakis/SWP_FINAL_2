@@ -60,13 +60,14 @@ public class ProductDAO {
         }
         return null;
     }
-    public ResultSet getFilterProduct(String sql){
-        try{
-        ps =conn.prepareStatement(sql);
-        rs = ps.executeQuery();
-        return rs;
-        }catch(SQLException e){
-            
+
+    public ResultSet getFilterProduct(String sql) {
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+
         }
         return null;
     }
@@ -104,7 +105,7 @@ public class ProductDAO {
         return pro;
     }
 
-     public int UpdateProduct(tblProduct pro) {
+    public int UpdateProduct(tblProduct pro) {
         String sql = "Update tblProduct set CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, RatingID = ?, ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
         int result = 0;
         try {
@@ -126,8 +127,8 @@ public class ProductDAO {
         }
         return result;
     }
-     
-      public int UpdatetoProduct(tblProduct pro) {
+
+    public int UpdatetoProduct(tblProduct pro) {
         String sql = "Update tblProduct set CategoryID = ?, ProductName = ?, Price = ?, BrandID = ?, ProductDes = ?, Quantity = ?, Active = ?, ProductImageURL = ?, Size = ? where ProductID = ?";
         int result = 0;
         try {
@@ -149,8 +150,21 @@ public class ProductDAO {
         }
         return result;
     }
-     
-     public int ChangeActive(int ID) {
+
+    public ResultSet GetProductRating(int ProductID) {
+        try {
+            String sql = "select * from tblRating inner join tblUser on tblUser.UserID = tblRating.UserID where ProductID = ? and tblRating.Active = 1";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, ProductID);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+        return null;
+    }
+
+    public int ChangeActive(int ID) {
         int ketqua = 0;
         String sql = "Update tblProduct SET Active = 0 \n"
                 + "where ProductID = ?";
@@ -345,7 +359,7 @@ public class ProductDAO {
 
     public tblProduct getProductbyID(int ID) {
         tblProduct pro = new tblProduct();
-            String sql = "select * from tblProduct inner join tblCategory on tblProduct.CategoryID = tblCategory.CategoryID inner join tblBrand on tblBrand.BrandID = tblProduct.BrandID where ProductID = ? and tblProduct.Active = 1;";
+        String sql = "select * from tblProduct inner join tblCategory on tblProduct.CategoryID = tblCategory.CategoryID inner join tblBrand on tblBrand.BrandID = tblProduct.BrandID where ProductID = ? and tblProduct.Active = 1;";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
@@ -360,6 +374,7 @@ public class ProductDAO {
 
         return pro;
     }
+
     public int getProductQuantity(int ProductID) {
         String sql = "select Quantity from tblProduct where ProductID=?";
         try {

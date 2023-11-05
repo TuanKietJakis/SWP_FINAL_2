@@ -27,6 +27,52 @@
     </head>
 
     <body>
+        <style>
+            .addNewBrand1 {
+                min-width: 180px;
+                height: 40px;
+                color: #fff;
+                padding: 8px 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                display: inline-block;
+                outline: none;
+                border-radius: 5px;
+                border: 2px solid #ff0a78;
+                background: #ff0a78;
+                font-size: 18px;
+            }
+            .addNewBrand1:hover {
+                background: #fff;
+                color: #ff0a78
+            }
+            .addNewBrand2 {
+                min-width: 180px;
+                height: 40px;
+                color: #fff;
+                padding: 8px 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                display: inline-block;
+                outline: none;
+                border-radius: 5px;
+                border: 2px solid #ffd819;
+                background: #ffd819;
+                font-size: 18px;
+            }
+            .addNewBrand2:hover {
+                background: #fff;
+                color: #ffd819
+            }
+            .order_list_container{
+                width: 100%;
+                justify-content: center;
+            }
+        </style>
         <%
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
@@ -42,8 +88,8 @@
             int usID = 0;
             if (session.getAttribute("AdminstratorID") != null) {
                 usID = (int) session.getAttribute("AdminstratorID");
-            }else{
-            response.sendRedirect("/Home");
+            } else {
+                response.sendRedirect("/Home");
             }
         %>
 
@@ -61,8 +107,10 @@
                         <main>
                             <div class="table-data">
                                 <div class="order">
-                                    <button class="addNewBrand" onclick="getIncomeByDay()">Income Day</button>
-                                    <button class="addNewBrand" onclick="getIncomeByMonth()">Income Month</button>
+                                    <div style="display: flex;align-items: center;justify-content: center;gap:1.5rem;">
+                                        <button class="addNewBrand1" style="margin-left: 0;" onclick="getIncomeByDay()">Income Day</button>
+                                        <button class="addNewBrand2" style="margin-left: 0;" onclick="getIncomeByMonth()">Income Month</button>
+                                    </div>
                                     <form id="dateForm" action="/Admin/Income/Day" method="get">
                                         <input type="hidden" id="selectedDate" name="date">
                                     </form>
@@ -106,21 +154,21 @@
 //                                                alert('Form submitted with month and year: ' + monthYear);
 //                                            }
 //                                        }
-                                        function getIncomeByDayBackup() {
-                                            var date = prompt("Enter date (YYYY-MM-DD):");
-                                            if (date !== null) {
-                                                // Kiểm tra định dạng ngày
-                                                var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-                                                if (!date.match(dateRegex)) {
-                                                    alert('Invalid date format. Please use YYYY-MM-DD.');
-                                                    return;
-                                                }
+                                            function getIncomeByDayBackup() {
+                                                var date = prompt("Enter date (YYYY-MM-DD):");
+                                                if (date !== null) {
+                                                    // Kiểm tra định dạng ngày
+                                                    var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                                                    if (!date.match(dateRegex)) {
+                                                        alert('Invalid date format. Please use YYYY-MM-DD.');
+                                                        return;
+                                                    }
 
-                                                document.getElementById('selectedDate').value = date;
-                                                document.getElementById('dateForm').submit();
-                                                alert('Form submitted with date: ' + date);
+                                                    document.getElementById('selectedDate').value = date;
+                                                    document.getElementById('dateForm').submit();
+                                                    alert('Form submitted with date: ' + date);
+                                                }
                                             }
-                                        }
 
 //                                        function getIncomeByMonth() {
 //                                            var monthYear = prompt("Enter month and year (MM-YYYY):");
@@ -141,39 +189,39 @@
 //                                                alert('Form submitted with month and year: ' + monthYear);
 //                                            }
 //                                        }
-                                        function getIncomeByDay() {
-                                            var date = prompt("Enter date (YYYY-MM-DD):");
-                                            if (date !== null) {
-                                                var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-                                                if (!date.match(dateRegex)) {
-                                                    alert('Invalid date format. Please use YYYY-MM-DD.');
-                                                    return;
-                                                }
-
-                                                document.getElementById('selectedDate').value = date;
-                                                document.getElementById('dateForm').submit();
-                                                alert('Form submitted with date: ' + date);
-                                            }
-                                        }
-
-                                        function getIncomeByMonth() {
-                                            var startDate = prompt("Enter start date (YYYY-MM-DD):");
-                                            if (startDate !== null) {
-                                                var endDate = prompt("Enter end date (YYYY-MM-DD):");
-                                                if (endDate !== null) {
+                                            function getIncomeByDay() {
+                                                var date = prompt("Enter date (YYYY-MM-DD):");
+                                                if (date !== null) {
                                                     var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-                                                    if (!startDate.match(dateRegex) || !endDate.match(dateRegex)) {
+                                                    if (!date.match(dateRegex)) {
                                                         alert('Invalid date format. Please use YYYY-MM-DD.');
                                                         return;
                                                     }
 
-                                                    document.getElementById('selectedStartDate').value = startDate;
-                                                    document.getElementById('selectedEndDate').value = endDate;
-                                                    document.getElementById('monthForm').submit();
-                                                    alert('Form submitted with start date: ' + startDate + ' and end date: ' + endDate);
+                                                    document.getElementById('selectedDate').value = date;
+                                                    document.getElementById('dateForm').submit();
+                                                    alert('Form submitted with date: ' + date);
                                                 }
                                             }
-                                        }
+
+                                            function getIncomeByMonth() {
+                                                var startDate = prompt("Enter start date (YYYY-MM-DD):");
+                                                if (startDate !== null) {
+                                                    var endDate = prompt("Enter end date (YYYY-MM-DD):");
+                                                    if (endDate !== null) {
+                                                        var dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+                                                        if (!startDate.match(dateRegex) || !endDate.match(dateRegex)) {
+                                                            alert('Invalid date format. Please use YYYY-MM-DD.');
+                                                            return;
+                                                        }
+
+                                                        document.getElementById('selectedStartDate').value = startDate;
+                                                        document.getElementById('selectedEndDate').value = endDate;
+                                                        document.getElementById('monthForm').submit();
+                                                        alert('Form submitted with start date: ' + startDate + ' and end date: ' + endDate);
+                                                    }
+                                                }
+                                            }
 
 
 
