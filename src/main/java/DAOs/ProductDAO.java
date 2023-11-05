@@ -330,7 +330,7 @@ public class ProductDAO {
 
     public ResultSet getSearchProduct(String inputValue) {
         ResultSet rs = null;
-        String sql = "select ProductID,ProductName,ProductImageURL,Price from tblProduct where ProductName like ? order by ProductName OFFSET 0 ROWS\n"
+        String sql = "select ProductID,ProductName,ProductImageURL,Price from tblProduct where ProductName like ? and Active = 1 order by ProductName OFFSET 0 ROWS\n"
                 + "FETCH NEXT 4 ROWS ONLY;";
         String itemName = "%" + inputValue + "%";
         try {
@@ -345,7 +345,7 @@ public class ProductDAO {
 
     public ResultSet getSearchProductnolimit(String inputValue) {
         ResultSet rs = null;
-        String sql = "select * from tblProduct where ProductName like ?";
+        String sql = "select * from tblProduct where ProductName like ? and Active = 1;";
         String itemName = "%" + inputValue + "%";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);

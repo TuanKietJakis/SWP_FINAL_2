@@ -94,6 +94,8 @@ public class HomeController extends HttpServlet {
                     request.getRequestDispatcher("/WhatsNew.jsp").forward(request, response);
                 } else if (path.endsWith("/Term")) {
                     request.getRequestDispatcher("/term.jsp").forward(request, response);
+                }else if(path.endsWith("/404NotFound")){
+                                        request.getRequestDispatcher("/notfound.jsp").forward(request, response);
                 }
             }
         }

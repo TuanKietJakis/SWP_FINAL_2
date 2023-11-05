@@ -81,8 +81,12 @@ public class ShopController extends HttpServlet {
                         Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     tblProduct pro = dao.getProductbyID(ProductID);
+                    if(pro.getProductName() == null){
+                        response.sendRedirect("/404NotFound");
+                    }else{             
                     request.setAttribute("Product", pro);
                     request.getRequestDispatcher("/productDetail.jsp").forward(request, response);
+                    }
                 }
             } else {
                 if (path.startsWith("/Shop/Search")) {

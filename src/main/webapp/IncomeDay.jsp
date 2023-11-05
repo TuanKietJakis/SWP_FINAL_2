@@ -80,13 +80,13 @@
                             <div class="chart">
                                 <div class="chart1">
                                     <!-- Sửa tiêu đề của chart ở đây -->
-                                    <h1>ABC</h1>
+                                    <h1>Income Day</h1>
                                     <canvas id="myChart1"></canvas> <!-- This is for the first chart -->
 
                                 </div>
                                 <div class="chart2">
                                     <!-- Sửa tiêu đề của chart ở đây -->
-                                    <h1>ABC</h1>
+                                    <h1>Total Order</h1>
                                     <canvas id="myChart2"></canvas> <!-- This is for the second chart -->
                                 </div>
                                 <!-- Hai cái nút để bấm -->
@@ -173,7 +173,7 @@
                             label: 'Total Income',
                             data: [<%= resultSet1.getInt("TotalProductPrice") - resultSet1.getInt("TotalProductCost")%>],
                             borderWidth: 1,
-                            backgroundColor: ['#009900'],
+                            backgroundColor: ['#04B200'],
                         }]
                 },
                 options: {
@@ -200,7 +200,7 @@
                             label: '# of Orders',
                             data: [<%= pendingCount%>, <%= deliveredCount%>, <%= rejectedCount%>],
                             borderWidth: 1,
-                            backgroundColor: ['#F1C40F', '#228B22', '#FF0000'],
+                            backgroundColor: ['rgba(255, 238, 89, 1.5)', 'rgba(127, 255, 140, 1.5)', 'rgba(255, 150, 127, 1.5)'],
                         }]
                 },
                 options: {

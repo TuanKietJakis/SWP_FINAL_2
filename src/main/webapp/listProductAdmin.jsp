@@ -69,6 +69,37 @@
                 transform: rotateX(-180deg);
             }
 
+            .search-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 50%;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;
+                border: 2px solid #ccc;
+                border-radius: 4px;
+                outline: none;
+            }
+
+            .search-container button {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 12px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
         </style>
 
         <div class="container">
@@ -96,6 +127,10 @@
                                         <div class="pHeader"><%= totalProducts%> product</div>
                                         <!--                                        <label class="addNewBrand" onclick="location.href = '/addNewBrand'">Add new Brands</label>
                                                                                 <label class="addNewCategory"  onclick="location.href = '/addNewCategory'">Add new categories</label>-->
+                                        <div class="search-container">
+                                            <input onchange="searchProducts()" type="text" id="productSearch" placeholder="Search for products...">
+                                            <button onclick="searchProducts()"><i class="fa fa-search"></i></button>
+                                        </div>
                                         <label class="addNewProduct" onclick="location.href = '/Admin/Product/addNewProduct'">Add new products</label>
                                     </div>
                                     <div class="table_example">
@@ -146,10 +181,10 @@
                                                         String color = "";
                                                         String active = "";
                                                         if (active1 == 1) {
-                                                        color = "#04B200";
+                                                            color = "#04B200";
                                                             active = "available";
                                                         } else {
-                                                         color = "rgba(255, 150, 127, 1)";
+                                                            color = "rgba(255, 150, 127, 1)";
                                                             active = "unavailable";
                                                         }
                                                     %>
@@ -174,6 +209,29 @@
         <!--            </div>
                 </div>-->
         <script src="js/Admin_dashboard.js"></script>
+        <script>
+                                            function searchProducts() {
+                                                var input, filter, table, tr, td, i, txtValue;
+                                                input = document.getElementById("productSearch");
+                                                filter = input.value.toUpperCase();
+                                                table = document.getElementById("example"); // ID của bảng chứa danh sách sản phẩm
+                                                tr = table.getElementsByTagName("tr");
+
+                                                for (i = 0; i < tr.length; i++) {
+                                                    td = tr[i].getElementsByTagName("td")[0]; // Cột chứa tên sản phẩm
+
+                                                    if (td) {
+                                                        txtValue = td.textContent || td.innerText;
+
+                                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                            tr[i].style.display = "";
+                                                        } else {
+                                                            tr[i].style.display = "none";
+                                                        }
+                                                    }
+                                                }
+                                            }
+        </script>
 
 
 

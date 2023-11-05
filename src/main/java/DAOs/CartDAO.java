@@ -54,6 +54,19 @@ public class CartDAO {
         }
         return null;
     }
+    public int ChangeActive(int ID) {
+        int ketqua = 0;
+        String sql = "Update tblProduct SET Active = 0 \n"
+                + "where ProductID = ? ";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            ketqua = ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ketqua;
+    }
 
     public int showNumberItem(int UserID) {
         int kq = 0;

@@ -326,6 +326,10 @@ public class CartController extends HttpServlet {
                             tblCart cart = cdao.CompareAmount(Integer.parseInt(CartID[i]));
                             odao.AddOrderDetail(item, OrderID);
                             cdao.UpdateProductQuantity(cart.getProductAmount(), cart.getQuantity(), cart.getProductID());
+                            tblCart cartnext = cdao.CompareAmount(Integer.parseInt(CartID[i]));
+                            if(cartnext.getQuantity() == 0){
+                                cdao.ChangeActive(cartnext.getProductID());
+                            }
                         }
                         cdao.DeleteAllIteminCart(UserID);
                         response.sendRedirect("/OrderHistory");
