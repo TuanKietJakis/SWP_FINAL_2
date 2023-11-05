@@ -36,6 +36,7 @@ function AddtoCart(element) {
                 setTimeout(function () {
                     m.removeClass("input_checkAdd");
                 }, 4000);
+                document.querySelector('#AmountFromCart').value = data.Amount;
             } else if (data.message === "full") {
                 alert("You Can not fill more food if your stomach is full");
             } else if (data.message === "fail") {

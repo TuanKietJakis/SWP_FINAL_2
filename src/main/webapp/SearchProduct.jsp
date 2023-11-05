@@ -24,15 +24,15 @@
     </head>
     <body>
         <%
-                Cookie[] cookies = request.getCookies();
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
-                            session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
-                            break;
-                        }
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                        break;
                     }
                 }
+            }
         %>
         <%
             int ID = 0;
@@ -110,34 +110,14 @@
             </section>
             <%
                 String regex = (String) request.getAttribute("inputValue");
-                if (regex == null || regex == "") {
-                    response.sendRedirect("/Shop");
-                }
             %>
+            <input type="text" hidden id="UserID" value="<%=ID%>">
             <!-- =========================== Product ================================== -->
             <section class="pproduct_section section">
-            <input type="text" id="regex" value="<%=regex%>..." hidden/>
+                <input type="text" id="regex" value="<%=regex%>" hidden/>
                 <div class="pproduct_container container">
                     <div class="filter_container">
                         <div class="filter_list_chip">
-<!--                            <div class="filter_item_chip">
-                                <span class="filter_item_chip_name">
-                                    p..
-                                </span>
-                                <i class="fa-solid fa-xmark"></i>
-                            </div>-->
-<!--                            <div class="filter_item_chip">
-                                <span class="filter_item_chip_name">
-                                    Category 1
-                                </span>
-                                <i class="fa-solid fa-xmark"></i>
-                            </div>
-                            <div class="filter_item_chip">
-                                <span class="filter_item_chip_name">
-                                    Brand 1
-                                </span>
-                                <i class="fa-solid fa-xmark"></i>
-                            </div>-->
                         </div>
                         <div class="filter_list_menu">
                             <!-- ============== Item 1 ================= -->
@@ -145,12 +125,12 @@
                                 <h1 class="filter_list_menu_header">Category</h1>
                                 <ul class="filter_list_menu_body">
                                     <%
-                                    CategoryDAO dao = new CategoryDAO();
-                                    ResultSet rsCate = dao.GetAllCategory();
-                                    while(rsCate.next()){
+                                        CategoryDAO dao = new CategoryDAO();
+                                        ResultSet rsCate = dao.GetAllCategory();
+                                        while (rsCate.next()) {
                                     %>
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-inbox"></i> <label for="c<%=rsCate.getInt("CategoryID")%>"><%=rsCate.getString("CatName")%></label></li>
-                                    <input type="checkbox" id="c<%=rsCate.getInt("CategoryID")%>" name="category" data-name="<%=rsCate.getString("CatName")%>" value="<%=rsCate.getInt("CategoryID")%>" hidden/>
+                                    <input type="checkbox" id="c<%=rsCate.getInt("CategoryID")%>" class="classfilter category" name="category" data-name="<%=rsCate.getString("CatName")%>" value="<%=rsCate.getInt("CategoryID")%>" hidden/>
                                     <%
                                         }
                                     %>
@@ -161,11 +141,11 @@
                                 <h1 class="filter_list_menu_header">Brand</h1>
                                 <ul class="filter_list_menu_body">
                                     <%
-                                    ResultSet rsBrand = dao.GetAllBrand();
-                                    while(rsBrand.next()){
+                                        ResultSet rsBrand = dao.GetAllBrand();
+                                        while (rsBrand.next()) {
                                     %>
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-tag"></i> <label for="b<%=rsBrand.getInt("BrandID")%>"><%=rsBrand.getString("BrandName")%></label></li>
-                                    <input type="checkbox" id="b<%=rsBrand.getInt("BrandID")%>" name="brand" data-name="<%=rsBrand.getString("BrandName")%>" value="<%=rsBrand.getInt("BrandID")%>" hidden/>
+                                    <input type="checkbox" id="b<%=rsBrand.getInt("BrandID")%>" class="classfilter brand" name="brand" data-name="<%=rsBrand.getString("BrandName")%>" value="<%=rsBrand.getInt("BrandID")%>" hidden/>
                                     <%}%>
                                 </ul>
                             </div>
@@ -174,99 +154,18 @@
                                 <h1 class="filter_list_menu_header">Price</h1>
                                 <ul class="filter_list_menu_body">
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-arrow-up-1-9"></i><label for="price-lowtohigh"> Low to High</label></li>
-                                                                        <input type="radio" id="price-lowtohigh" name="pricesort" data-name="Low To High" value="lowtohigh" hidden/>
+                                    <input type="radio" onclick="fetch_data()" id="price-lowtohigh" class="classfilter price" name="pricesort" data-name="Low To High" value="lowtohigh" hidden/>
                                     <li class="filter_list_menu_body_link"><i class="fa-solid fa-arrow-up-9-1"></i> <label for="price-hightolow">High to Low</label></li>
-                                                                        <input type="radio" id="price-hightolow" name="pricesort" data-name="High To Low" value="hightolow" hidden/>
+                                    <input type="radio" id="price-hightolow" class="classfilter price" name="pricesort" data-name="High To Low" value="hightolow" hidden/>
                                 </ul>
                             </div>
                         </div>
                     </div>
 
-                    <%
-                        ProductDAO pDAO = new ProductDAO();
-                        ResultSet rs1 = pDAO.getSearchProductnolimit(regex);
-                        if (!rs1.next()) {
-                    %>
-                    <h1 class="pproduct_title" style="font-weight: 500">No Result for <Span style="font-weight: 600"><%=regex%></Span>...</h1>
+                    <h1 class="pproduct_title" style="font-weight: 500"></h1>
                     <div class="pproduct_content grid">
-                    </div>
-                    <%
-                    } else {
-                    %>
-                    <h1 class="pproduct_title" style="font-weight: 500">Search Result for <Span style="font-weight: 600"><%=regex%></Span>...</h1>
-                    <div class="pproduct_content grid">
-                        <!-- ================ Card 1 -->
-                        <div class="pproduct_card">
-                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
-                                <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                                                                                                 alt=""></div>
-                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                    <button type="submit" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </div>
-                                <div class="pproduct_addCart">
-                                    <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
-                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
-                                            <span>Add to cart</span>
-                                        </button>
-                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
-                                        <input type="hidden" id="action" name="action" value="addtoCart">
-                                        <div class="input_back">
-                                            <i class="fa-solid fa-check"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pproduct_data_content">
-                                <div class="pproduct_data_des">
-                                    <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
-                                    <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            while (rs1.next()) {
-                        %>
-                        <!-- ================ Card 1 -->
-                        <div class="pproduct_card">
-                            <div class="pproduct_data_img" onmouseenter="checkLove(this)">
-                                <div onclick="location.href = '/Shop/Detail/<%=rs1.getInt("ProductID")%>'" class="pproduct_data_img_inline"><img src="<%=rs1.getString("ProductImageURL")%>"
-                                                                                                                                                 alt=""></div>
-                                <div class="pproduct_wishlist_ico" onclick="AddtoWishlist(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                    <button type="button" class="i-color"><i class="fa-regular fa-heart "></i></button>
-                                </div>
-                                <div class="pproduct_addCart">
-                                    <div class="input_flip">
-                                        <button type="button" class="pproduct_addCart_btn" onclick="AddtoCart(this)" data-user-id="<%=ID%>" data-product-id="<%=rs1.getInt("ProductID")%>">
-                                            <i class="btn_icon_cart fa-solid fa-cart-shopping"></i>
-                                            <i class="btn_icon_box fa-solid fa-parachute-box"></i>
-                                            <span>Add to cart</span>
-                                        </button>
-                                        <input type="hidden" id="productID"  value="<%=rs1.getInt("ProductID")%>">
-                                        <input type="hidden" id="action" name="action" value="addtoCart">
-                                        <div class="input_back">
-                                            <i class="fa-solid fa-check"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pproduct_data_content">
-                                <div class="pproduct_data_des">
-                                    <a href="/Shop/Detail/<%=rs1.getInt("ProductID")%>" class="pproduct_data_name"><%=rs1.getString("ProductName")%></a>
-                                    <p class="pproduct_data_price">$<%=rs1.getInt("Price")%></p>
-                                </div>
-                            </div>
-                        </div>
-                        <%
-                            }
-                        %>
 
                     </div>
-                    <div class="pproduct_getmore"><button id="btn-load-more">More Product</button></div>
-                    <%
-                        }
-                    %>
             </section>
 
         </main>

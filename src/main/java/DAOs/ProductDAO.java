@@ -60,6 +60,16 @@ public class ProductDAO {
         }
         return null;
     }
+    public ResultSet getFilterProduct(String sql){
+        try{
+        ps =conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+        return rs;
+        }catch(SQLException e){
+            
+        }
+        return null;
+    }
 
     public ResultSet getAllProductLimit(int start, int limit) {
         String sql = "select * from tblProduct order by ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
@@ -335,11 +345,8 @@ public class ProductDAO {
 
     public tblProduct getProductbyID(int ID) {
         tblProduct pro = new tblProduct();
-
+            String sql = "select * from tblProduct inner join tblCategory on tblProduct.CategoryID = tblCategory.CategoryID inner join tblBrand on tblBrand.BrandID = tblProduct.BrandID where ProductID = ? and tblProduct.Active = 1;";
         try {
-            String sql = "select * from tblProduct inner join tblCategory on tblProduct.CategoryID = tblCategory.CategoryID\n"
-                    + "                         inner join tblBrand on tblBrand.BrandID = tblProduct.BrandID\n"
-                    + "where ProductID = ? and tblProduct.Active = 1;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, ID);
             rs = ps.executeQuery();

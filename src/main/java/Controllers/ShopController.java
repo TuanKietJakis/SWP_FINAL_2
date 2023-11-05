@@ -116,25 +116,67 @@ public class ShopController extends HttpServlet {
             } catch (Exception ex) {
                 Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            ResultSet rs = dao.getAllProductLimit(start, limit);            
+            ResultSet rs = dao.getAllProductLimit(start, limit);
             List<tblProduct> list = new ArrayList<>();
-                try {
-                    while (rs.next()) {
-                        int ProductID = rs.getInt("ProductID");
-                        String ProductName = rs.getString("ProductName");
-                        int ProductPrice = rs.getInt("Price");
-                        String ProductImageURL = rs.getString("ProductImageURL");
-                        list.add(new tblProduct(ProductID, ProductName, ProductPrice, ProductImageURL));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                while (rs.next()) {
+                    int ProductID = rs.getInt("ProductID");
+                    String ProductName = rs.getString("ProductName");
+                    int ProductPrice = rs.getInt("Price");
+                    String ProductImageURL = rs.getString("ProductImageURL");
+                    list.add(new tblProduct(ProductID, ProductName, ProductPrice, ProductImageURL));
                 }
-                ObjectMapper objectMapper = new ObjectMapper();
-                String json = objectMapper.writeValueAsString(list);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
-            }        
+            } catch (SQLException ex) {
+                Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        } else if ("fetch_data".equals(action)) {
+            String sql = "Select * from tblProduct where Active = 1 ";
+            String Brand = (String) request.getParameter("brand");
+            if (Brand != "") {
+//                String brandFilter = String.join("','", Brand);
+                sql += " AND BrandID IN(" + Brand + ") ";
+            }
+            String Category = (String) request.getParameter("category");
+            if (Category != "") {
+//                String categoryFilter = String.join("','", Category);
+                sql += " AND CategoryID IN(" + Category + ") ";
+            }
+            if (request.getParameter("search") != null) {
+                String regex = (String) request.getParameter("search");
+                sql += "AND ProductName like '%" + regex + "%'";
+            }
+            int price = Integer.parseInt(request.getParameter("price"));
+            if (price == 1) {
+                sql += " ORDER BY price ASC ";
+            } else if (price == 2) {
+                sql += " ORDER BY price DESC ";
+            }
+            ProductDAO dao = null;
+            try {
+                dao = new ProductDAO();
+            } catch (Exception ex) {
+                Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ResultSet rs = dao.getFilterProduct(sql);
+            List<tblProduct> list = new ArrayList<>();
+            try {
+                while (rs.next()) {
+                    list.add(new tblProduct(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getInt("Price"), rs.getString("ProductImageURL")));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ShopController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(list);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        }
     }
 
     /**

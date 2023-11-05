@@ -362,6 +362,7 @@ body {
 .pproduct_content {
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
+        min-height: 40vh;
 }
 
 .pproduct_data_img {

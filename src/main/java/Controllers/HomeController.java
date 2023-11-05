@@ -140,8 +140,8 @@ public class HomeController extends HttpServlet {
                         out.flush();
                     } else {
                         addDAO.UpdateCombineAmount(ProductID, UserID, Amount, cart.getProductAmount());
-
-                        out.print("{\"message\": \"update\"}");
+                        int AmountFromCart = addDAO.getAmountFromCart(pro.getProductID(), UserID);
+                        out.print("{\"message\": \"update\",\"Amount\":"+AmountFromCart+"}");
                         out.flush();
                     }
 

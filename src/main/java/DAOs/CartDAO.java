@@ -393,6 +393,19 @@ public class CartDAO {
         }
         return kq;
     }
+    public int GetCount(String sql) {
+        int kq = 0;
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                kq = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+
+        }
+        return kq;
+    }
 
 }
 
