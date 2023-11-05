@@ -21,6 +21,10 @@
         <title>JSP Page</title>
     </head>
     <style>
+        .admin_content{
+            justify-content: center;
+            
+        }
         .faq-list {
             list-style-type: none;
             padding: 0;
@@ -31,7 +35,7 @@
             border: 1px solid #ccc;
             padding: 10px;
             background-color: #f9f9f9;
-            width: 400px;
+            /*width: 400px;*/
         }
 
         .faq-item strong {
@@ -45,11 +49,15 @@
         }
         /* styles.css */
         .faq-list {
+            display: flex;
+            flex-direction: column;
+            
             list-style-type: none;
             padding: 0;
         }
 
         .faq-item {
+            flex: 1;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             padding: 10px;
@@ -68,7 +76,7 @@
 
     </style>
     <body>
-         <%
+        <%
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -83,8 +91,8 @@
             int usID = 0;
             if (session.getAttribute("AdminstratorID") != null) {
                 usID = (int) session.getAttribute("AdminstratorID");
-            }else{
-            response.sendRedirect("/Home");
+            } else {
+                response.sendRedirect("/Home");
             }
         %>
 
@@ -103,9 +111,9 @@
                             <div class="admin_btn" onclick="location.href = '/Admin'" >
                                 <span><i class="fa-solid fa-arrow-left"></i></span>
                             </div>
-                            <div class="search-box">
+<!--                            <div class="search-box">
                                 <input type="text" id="searchInput" placeholder="Search FAQ...">
-                            </div>
+                            </div>-->
                         </div>
                         <div class="admin_content_infos">
                             <div class="brand-list">
@@ -124,9 +132,12 @@
                                 <%
                                     }
                                     rs.close(); // Close the ResultSet after use
-%>
+                                %>
                             </ul>
                         </div>
+                    </div>
+                    <div class="Account_search">
+                        <input type="text" id="searchInput" placeholder="Search...">
                     </div>
                 </div>
             </div>
@@ -134,20 +145,20 @@
         <script src="/js/Admin_dashboard.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-                        // Search functionality
-                        document.getElementById('searchInput').addEventListener('input', function () {
-                            var keyword = this.value.toLowerCase();
-                            var faqs = document.querySelectorAll('.brand-list ul li');
+                                // Search functionality
+                                document.getElementById('searchInput').addEventListener('input', function () {
+                                    var keyword = this.value.toLowerCase();
+                                    var faqs = document.querySelectorAll('.brand-list ul li');
 
-                            faqs.forEach(function (faq) {
-                                var faqInfo = faq.innerText.toLowerCase();
-                                if (faqInfo.includes(keyword)) {
-                                    faq.style.display = 'block';
-                                } else {
-                                    faq.style.display = 'none';
-                                }
-                            });
-                        });
+                                    faqs.forEach(function (faq) {
+                                        var faqInfo = faq.innerText.toLowerCase();
+                                        if (faqInfo.includes(keyword)) {
+                                            faq.style.display = 'block';
+                                        } else {
+                                            faq.style.display = 'none';
+                                        }
+                                    });
+                                });
         </script>
     </body>
 </html>

@@ -1,3 +1,4 @@
+<%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.OrderDAO"%>
 <%@page import="DAOs.AccountDAO"%>
@@ -52,15 +53,6 @@
             OrderStatusDAO orderStatusDAO = new OrderStatusDAO();
             ResultSet resultSet = orderStatusDAO.GetAll();
 
-            int[] statusIDs = new int[3];
-            String[] statusNames = new String[3];
-
-            int index = 0;
-            while (resultSet.next()) {
-                statusIDs[index] = resultSet.getInt("StatusID");
-                statusNames[index] = resultSet.getString("StatusName");
-                index++;
-            }
             int pendingCount = orderStatusDAO.GetTotalCount(1);
             int deliveredCount = orderStatusDAO.GetTotalCount(2);
             int rejectedCount = orderStatusDAO.GetTotalCount(3);
@@ -116,8 +108,9 @@
                                         </div>
                                         <div class="table_body">
                                         <%
-                                            ResultSet resultSet2 = oDAO.GetBillOnDay(Day);
-                                            while (resultSet2.next()) {
+                                            try {
+                                                ResultSet resultSet2 = oDAO.GetBillOnDay(Day);
+                                                while (resultSet2.next()) {
                                         %>
                                         <div class="table_data table_data2" data-table="2">
                                             <p><%= resultSet2.getInt("OrderID")%></p>
@@ -134,7 +127,12 @@
                                             <p><%= resultSet2.getString("PhoneNumber")%></p>
                                             <p><%= resultSet2.getInt("TotalPrice")%></p>
                                         </div>
-                                        <% }%>
+                                        <% }
+                                            } catch (SQLException e) {
+                                                e.printStackTrace();
+                                            }
+                                        %>
+
                                     </div>
                                 </div>
                                 <div class="export_btn">
@@ -156,26 +154,26 @@
         <script>
             <%while (resultSet1.next()) {
             %>
-                const ctx1 = document.getElementById('myChart1');
-                new Chart(ctx1, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Income'],
-                        datasets: [{
-                                label: 'Total Income',
-                                data: [<%= resultSet1.getInt("TotalProductPrice") - resultSet1.getInt("TotalProductCost")%>],
-                                borderWidth: 1,
-                                backgroundColor: ['#009900'],
-                            }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+            const ctx1 = document.getElementById('myChart1');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Income'],
+                    datasets: [{
+                            label: 'Total Income',
+                            data: [<%= resultSet1.getInt("TotalProductPrice") - resultSet1.getInt("TotalProductCost")%>],
+                            borderWidth: 1,
+                            backgroundColor: ['#009900'],
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
+                }
+            });
             <% }%>
         </script>
 

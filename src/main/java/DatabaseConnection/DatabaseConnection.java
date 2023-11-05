@@ -55,8 +55,8 @@ public class DatabaseConnection {
 //                    + "encrypt=true;"
 //                    + "trustServerCertificate=true;"
 //                    + "sendStringParametersAsUnicode=true;");
-        conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-OCMN4IH\\SQLEXPRESS:1433;databaseName=FFShop;"
-                + "user=sa;password=Admin123@;encrypt=true;trustServerCertificate=true;");
+        conn = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-1JMA68C\\\\ADMIN:1433;databaseName=FFShop;"
+                + "user=sa;password=123;encrypt=true;trustServerCertificate=true;");
 
         return conn;
     }
