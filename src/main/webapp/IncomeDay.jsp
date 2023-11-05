@@ -1,9 +1,13 @@
+<%@page import="javafx.scene.control.Cell"%>
+<%@page import="com.sun.rowset.internal.Row"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="DAOs.OrderDAO"%>
 <%@page import="DAOs.AccountDAO"%>
 <%@page import="DAOs.OrderStatusDAO"%>
-
+<%@page import="org.apache.poi.xssf.usermodel.XSSFWorkbook"%>
+<%@page import="org.apache.poi.ss.usermodel.*"%>
+<%@page import="java.io.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -56,7 +60,11 @@
             int pendingCount = orderStatusDAO.GetTotalCount(1);
             int deliveredCount = orderStatusDAO.GetTotalCount(2);
             int rejectedCount = orderStatusDAO.GetTotalCount(3);
+
+
         %>
+
+
         <div class="container">
             <jsp:include page="Admin_navigation.jsp">
                 <jsp:param name="ID" value="<%=usID%>"/>
@@ -85,7 +93,7 @@
                             </div>
                         </div>
                         <div class="admin_content_infos">
-                            <form action="">
+                            <form action="ExportFileController" method="get">
                                 <div class="table_container">
                                     <div class="table" id="filterTable">
                                         <div class="table_tittle">
@@ -99,7 +107,6 @@
                                             <h3>Total Price</h3>
                                             <h3>Product ID</h3>
                                             <h3>Active</h3>
-                                            <h3>Rate Number</h3>
                                             <h3>Full Name</h3>
                                             <h3>Email</h3>
                                             <h3>Phone Number</h3>
@@ -125,7 +132,6 @@
                                             <p><%= resultSet2.getString("FullName")%></p>
                                             <p><%= resultSet2.getString("Email")%></p>
                                             <p><%= resultSet2.getString("PhoneNumber")%></p>
-                                            <p><%= resultSet2.getInt("TotalPrice")%></p>
                                         </div>
                                         <% }
                                             } catch (SQLException e) {
@@ -136,7 +142,11 @@
                                     </div>
                                 </div>
                                 <div class="export_btn">
-                                    <input type="submit" value="Export">
+                                    <input type="hidden" name="date" value="<%= Day%>">
+
+                                    <div class="export_btn">
+                                        <input type="submit" value="Export to Excel">
+                                    </div>
                                 </div>
 
                             </div>

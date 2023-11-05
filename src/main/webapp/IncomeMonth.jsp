@@ -38,11 +38,11 @@
         %>
         <%
 // income Month chua xong, xuat bill chua duoc.
-            String start = request.getParameter("startDate");
-            String end = request.getParameter("endDate");
+            String startDate = request.getParameter("startDate");
+            String endDate = request.getParameter("endDate");
 
             OrderDAO oDAO = new OrderDAO();
-            ResultSet resultSet2 = oDAO.GetIncomeOnMonth(start, end);
+            ResultSet resultSet2 = oDAO.GetIncomeOnMonth(startDate, endDate);
 
             OrderDAO o3DAO = new OrderDAO();
 //            ResultSet resultSet3 = oDAO.GetBillOnMonth(start, end);
@@ -82,12 +82,12 @@
                             </div>
                         </div>
                         <div class="admin_content_infos">
-                            <form action="">
+                            <form action="ExportFileControllerMonth" method="get">
                                 <div class="table_container">
                                     <div class="table" id="filterTable">
                                         <div class="table_tittle">
 
-                                            <h3>OrderID</h3>
+                                            <h3>Order ID</h3>
                                             <h3>Order Date</h3>
                                             <h3>Product Name</h3>
                                             <h3>Product Price</h3>
@@ -96,7 +96,6 @@
                                             <h3>Total Price</h3>
                                             <h3>Product ID</h3>
                                             <h3>Active</h3>
-                                            <h3>Rate Number</h3>
                                             <h3>Full Name</h3>
                                             <h3>Email</h3>
                                             <h3>Phone Number</h3>
@@ -105,7 +104,7 @@
                                         </div>
                                         <div class="table_body">
                                         <%
-                                            ResultSet resultSet3 = oDAO.GetBillOnMonth(start, end);
+                                            ResultSet resultSet3 = oDAO.GetBillOnMonth(startDate, endDate);
                                             while (resultSet3.next()) {
                                         %>
                                         <div class="table_data table_data2" data-table="2">
@@ -121,13 +120,17 @@
                                             <p><%= resultSet3.getString("FullName")%></p>
                                             <p><%= resultSet3.getString("Email")%></p>
                                             <p><%= resultSet3.getString("PhoneNumber")%></p>
-                                            <p><%= resultSet3.getInt("TotalPrice")%></p>
                                         </div>
                                         <% }%>
                                     </div>
                                 </div>
                                 <div class="export_btn">
-                                    <input type="submit" value="Export">
+                                    <input type="hidden" name="startDate" value="<%= startDate%>">
+                                    <input type="hidden" name="endDate" value="<%= endDate%>">
+
+                                    <div class="export_btn">
+                                        <input type="submit" value="Export to Excel">
+                                    </div>
                                 </div>
 
                             </div>
