@@ -150,7 +150,7 @@ public class HomeController extends HttpServlet {
                 } else {
                     int kq = addDAO.AddNewCart(UserID, pro, Amount);
                     if (kq != 0) {
-                        out.print("{\"message\": \"success\"}");
+                        out.print("{\"message\": \"success\",\"Amount\":" + Amount + "}");
                         out.flush();
                     } else {
                         out.print("{\"message\": \"fail\"}");

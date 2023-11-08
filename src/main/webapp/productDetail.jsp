@@ -65,7 +65,7 @@
                                 <div class="product_d_c_info">
                                     <h1 class="product_d_c_name"><%=pro.getProductName()%></h1>
                                     <h2 class="product_d_c_price">$ <%=pro.getPrice()%></h2>
-                                    <p class="product_d_c_subdes"><%=pro.getProductDes()%></p>
+                                    <p class="product_d_c_subdes">The Best Choice Of Fragrances</p>
                                 </div>
                                 <div class="product_d_c_option">
                                     <div class="product_d_c_o_row">
@@ -106,7 +106,7 @@
                         <h1 class="des_nav_list des_nav_rev">Review</h1>
                     </div>
                     <div class="des_content">
-                        <p class="des_content_active des_content_des active">Aenean sit amet gravida nisi. Nam fermentum est felis, quis feugiat nunc fringilla sit amet. Ut in blandit ipsum. Quisque luctus dui at ante aliquet, in hendrerit lectus interdum. Morbi elementum sapien rhoncus pretium maximus. Nulla lectus enim, cursus et elementum sed, sodales vitae eros. Ut ex quam, porta consequat interdum in, faucibus eu velit. Quisque rhoncus ex ac libero varius molestie. Aenean tempor sit amet orci nec iaculis. Cras sit amet nulla libero. Curabitur dignissim, nunc nec laoreet consequat, purus nunc porta lacus, vel efficitur tellus augue in ipsum. Cras in arcu sed metus rutrum iaculis. Nulla non tempor erat. Duis in egestas nunc.</p>
+                        <p class="des_content_active des_content_des active"><%=pro.getProductDes()%></p>
                         <div class="des_content_active des_content_rev">
                             <%
                                 ProductDAO pdao = new ProductDAO();

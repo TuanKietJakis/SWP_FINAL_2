@@ -32,6 +32,8 @@
             int userID = 0;
             if (session.getAttribute("CustomerID") != null) {
                 userID = (int) session.getAttribute("CustomerID");
+            }else{
+            response.sendRedirect("/Home");
             }
         %>
         <jsp:include page="header.jsp">

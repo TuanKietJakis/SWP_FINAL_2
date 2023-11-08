@@ -53,48 +53,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 let form = document.getElementById("cartForm");
-if(form){   
-form.addEventListener("submit", function (event) {
-    let msg = document.querySelector('.error_zone_list');
-    msg.innerHTML = "";
+if (form) {
+    form.addEventListener("submit", function (event) {
+        let msg = document.querySelector('.error_zone_list');
+        msg.innerHTML = "";
 //  let error_msg = document.getElementById("error_msg");
-    let inputName = document.getElementById("inputFullName").value;
-    let inputPhoneNumber = document.getElementById("inputPhoneNumber").value;
-    let vnPay = document.getElementById("vnPay");
-    let cash = document.getElementById("cash");
-    let inputAddress = document.getElementById("inputAddress").value;
-    let valid = true;
+        let inputName = document.getElementById("inputFullName").value;
+        let inputPhoneNumber = document.getElementById("inputPhoneNumber").value;
+        let vnPay = document.getElementById("vnPay");
+        let cash = document.getElementById("cash");
+        let inputAddress = document.getElementById("inputAddress").value;
+        let valid = true;
 
-    if (inputName === "" || inputName === null) {
-        msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Name is Empty</li>";
-        // error.classList.add("error_show");
-        valid = false;
-    }
+        if (inputName === "" || inputName === null) {
+            msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Name is Empty</li>";
+            // error.classList.add("error_show");
+            valid = false;
+        }
 
-    const te = /^[0][0-9]{9}$/;
-    if (inputPhoneNumber === "") {
-        msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Please fill Phone Number field</li>";
+        const te = /^[0][0-9]{9}$/;
+        if (inputPhoneNumber === "") {
+            msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Please fill Phone Number field</li>";
 
-        valid = false;
-    } else if (!te.test(inputPhoneNumber)) {
-        msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Phone Number must be 0123123123</li>";
-        valid = false;
-    }
-    if (!vnPay.checked && !cash.checked) {
-        msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Please choose payment method</li>";
-        valid = false;
-    }
-    if (inputAddress === "" || inputAddress === null) {
-        msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Address should not be empty</li>";
-        valid = false;
-    }
+            valid = false;
+        } else if (!te.test(inputPhoneNumber)) {
+            msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Phone Number must be 0123123123</li>";
+            valid = false;
+        }
+        if (!vnPay.checked && !cash.checked) {
+            msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Please choose payment method</li>";
+            valid = false;
+        }
+        if (inputAddress === "" || inputAddress === null) {
+            msg.innerHTML += "<li class=\"error_zone_item\"><i class=\"fa-solid fa-xmark\"></i>Address should not be empty</li>";
+            valid = false;
+        }
 
-    if (valid === false) {
-        document.querySelector('.error_zone').classList.add("showErrorZone");
-        event.preventDefault();
+        if (valid === false) {
+            document.querySelector('.error_zone').classList.add("showErrorZone");
+            event.preventDefault();
 
-    }
-});
+        }
+    });
 }
 document.querySelector('.error_zone_close').onclick = function () {
     document.querySelector('.error_zone').classList.remove("showErrorZone");
@@ -229,7 +229,14 @@ document.querySelector('#btnSubmitForAdd').addEventListener('click', () => {
                 console.log(data);
                 alert("Import Successfully!");
                 $('.classForAppend').html("");
+                $('.cart_dz_select').html("");
+                $('.cart_dz_select').append(`
+                <option value="">Choose Delivery Address</option>
+                 `);
                 $.each(data, function (index, value) {
+                    $('.cart_dz_select').append(`
+                <option value="${value.addressID}">${value.fullName} - ${value.address}</option>
+                 `);
                     // Assuming your HTML has a div with the class 'product-container'
                     $('.classForAppend').append(`
                  <div class="address_m_row" id="a${value.addressID}">
@@ -348,7 +355,7 @@ document.querySelector('#btnSubmitForRemove').addEventListener('click', () => {
         success: function (data) {
             if (data.message == "success") {
                 alert("Remove Successfully!");
-               const RowItem = document.querySelector('#a' + ID);
+                const RowItem = document.querySelector('#a' + ID);
                 RowItem.remove();
                 $('#backtoAddressManage2').trigger('click');
             } else {
@@ -390,7 +397,7 @@ $(document).ready(function () {
     document.querySelectorAll(".cart_t_item").forEach(n => {
         const deleteBtn = n.querySelector(".cart_t_i_func");
         deleteBtn.addEventListener('click', function () {
-            if(confirm('Are you sure to get fragnages out of your room?')){        
+            if (confirm('Are you sure to get fragnages out of your room?')) {
                 var ProductID = deleteBtn.getAttribute("data-product-id");
                 $("#action").val("delete-product");
                 $.ajax({
@@ -407,16 +414,21 @@ $(document).ready(function () {
 //                    window.location.reload();
                         let subtotal = document.getElementById("subtotal");
                         let total = document.getElementById("total");
-                        total.value = parseFloat(total.value) - parseFloat(subtotal.value);
+                        let ship = document.getElementById("shipcost");
+                        total.value = parseFloat(total.value) - parseFloat(subtotal.value) - parseInt(ship.value);
                         subtotal.value = 0;
+                        let shipcost = 0
                         document.querySelectorAll('.getForUpdate').forEach(element => {
+                            shipcost++;
                             const proPrice = element.querySelector(".proPrice").value;
                             const proQuan = element.querySelector(".quantity-input").value;
                             subtotal.value = parseFloat(subtotal.value) + parseFloat(proPrice * proQuan);
                         });
-                        total.value = parseFloat(total.value) + parseFloat(subtotal.value);
+                        total.value = parseFloat(total.value) + parseFloat(subtotal.value) + parseInt(shipcost);
+                        ship.value = shipcost;
                         document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
                         document.querySelector('.totalClass').innerHTML = "$" + total.value;
+                        document.querySelector('.shipcostClass').innerHTML = "$" + shipcost;
 
                         if (document.querySelector('[id^="cart"]') == null) {
                             document.querySelector(".noItem").style.display = "block";
@@ -448,16 +460,21 @@ $(document).ready(function () {
                         element.remove();
                         let subtotal = document.getElementById("subtotal");
                         let total = document.getElementById("total");
-                        total.value = parseFloat(total.value) - parseFloat(subtotal.value);
+                        let ship = document.getElementById("shipcost");
+                        total.value = parseFloat(total.value) - parseFloat(subtotal.value) - parseInt(ship.value);
+                        let shipcost = 0;
                         subtotal.value = 0;
                         document.querySelectorAll('.getForUpdate').forEach(element => {
+                            shipcost++;
                             const proPrice = element.querySelector(".proPrice").value;
                             const proQuan = element.querySelector(".quantity-input").value;
                             subtotal.value = parseFloat(subtotal.value) + parseFloat(proPrice * proQuan);
                         });
-                        total.value = parseFloat(total.value) + parseFloat(subtotal.value);
+                        total.value = parseFloat(total.value) + parseFloat(subtotal.value) + parseInt(shipcost);
+                        ship.value = shipcost;
                         document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
                         document.querySelector('.totalClass').innerHTML = "$" + total.value;
+                        document.querySelector('.shipcostClass').innerHTML = "$" + shipcost;
                     } else if (data.message === "toolarge") {
                         element.querySelector(".quantity-input").value = data.quantity;
                         let subtotal = document.getElementById("subtotal");

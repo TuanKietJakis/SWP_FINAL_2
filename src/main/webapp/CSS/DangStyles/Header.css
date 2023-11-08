@@ -57,6 +57,13 @@
 .nav_item:hover::before {
     width: 100%;
 }
+.nav_item.active a{
+        font-weight: 600;
+}
+.nav_item.active::before{
+    width:100%;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
 
 .nav_acc {
     position: relative;

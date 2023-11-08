@@ -50,6 +50,17 @@ public class ProductDAO {
     }
 
     public ResultSet getAllProduct() {
+        String sql = "select*from tblProduct where Active = 1";
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public ResultSet getAllProduct2() {
         String sql = "select*from tblProduct";
         try {
             ps = conn.prepareStatement(sql);
@@ -73,7 +84,7 @@ public class ProductDAO {
     }
 
     public ResultSet getAllProductLimit(int start, int limit) {
-        String sql = "select * from tblProduct order by ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+        String sql = "select * from tblProduct where Active = 1 order by ProductID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
         try {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, start);

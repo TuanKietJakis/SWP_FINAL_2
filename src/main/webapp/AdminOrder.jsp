@@ -130,7 +130,7 @@
                             <p class="order_table_col id"><%=rs.getInt("OrderID")%></p>
                             <p class="order_table_col name"><%=rs.getString("FullName")%></p>
                             <p class="order_table_col quan"><%=rs1.getString("TotalQuantity")%></p>
-                            <p class="order_table_col price"><%=rs.getInt("TotalPrice")%></p>
+                            <p class="order_table_col price">$<%=rs.getInt("TotalPrice")%></p>
                             <p class="order_table_col status"><span><%=rs.getString("StatusName")%></span></p>
                             <a class="order_table_col link func" href="/Admin/OrderDetail/<%=rs.getInt("OrderID")%>/<%= usID%>">Info <span>></span></a>
                         </div>

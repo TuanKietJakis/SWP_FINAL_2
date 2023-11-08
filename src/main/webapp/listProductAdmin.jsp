@@ -149,7 +149,7 @@
                                             </thead>
                                             <tbody>                               
                                                 <%
-                                                    ResultSet rs = pDao.getAllProduct();
+                                                    ResultSet rs = pDao.getAllProduct2();
                                                     while (rs.next()) {
                                                 %>
                                                 <tr>
