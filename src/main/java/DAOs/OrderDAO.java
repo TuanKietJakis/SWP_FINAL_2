@@ -94,7 +94,7 @@ public class OrderDAO {
     public ResultSet GetBillOnMonth(String Month, String Month2) {
 
         String sql = "SELECT o.OrderID, FORMAT(CONVERT(datetime, o.OrderDate, 103), 'yyyy-MM-dd') as OrderDate, p.ProductName, p.Price as ProductPrice, p.Cost as ProductCost,\n"
-                + "od.Quantity, o.TotalPrice, p.ProductID, od.Active, r.RateNumber,u.FullName,u.Email,u.PhoneNumber\n"
+                + "od.Quantity, o.TotalPrice, p.ProductID, od.Active, r.RateNumber,o.FullName,u.Email,o.PhoneNumber\n"
                 + "FROM tblOrder o \n"
                 + "INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
                 + "INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
@@ -116,7 +116,7 @@ public class OrderDAO {
 
     public ResultSet GetBillOnDay(String Day) {
         String sql = "SELECT o.OrderID, CONVERT(datetime, o.OrderDate, 103) as OrderDate, p.ProductName, p.Price as ProductPrice, p.Cost as ProductCost,\n"
-                + "                  od.Quantity, o.TotalPrice, p.ProductID, od.Active,u.FullName,u.Email,u.PhoneNumber\n"
+                + "                  od.Quantity, o.TotalPrice, p.ProductID, od.Active,o.FullName,u.Email,o.PhoneNumber\n"
                 + "            FROM tblOrder o \n"
                 + "           INNER JOIN tblOrderDetail od ON o.OrderID = od.OrderID\n"
                 + "           INNER JOIN tblProduct p ON od.ProductID = p.ProductID\n"
@@ -278,17 +278,21 @@ public class OrderDAO {
         return null;
     }
 
-    public ResultSet GetOrderIDQuantity() {
+    public int GetOrderIDQuantity(int OrderID) {
+        int kq = 0;
         try {
-            String sql = "SELECT OrderID, SUM(Quantity) AS TotalQuantity\n"
-                    + "FROM tblOrderDetail\n"
+            String sql = "SELECT count(Quantity) AS TotalQuantity \n"
+                    + "FROM tblOrderDetail where OrderID = ? \n"
                     + "GROUP BY OrderID\n";
             ps = conn.prepareStatement(sql);
+            ps.setInt(1,OrderID);
             rs = ps.executeQuery();
-            return rs;
+           if(rs.next()){
+               kq = rs.getInt("TotalQuantity");
+           }
         } catch (Exception e) {
         }
-        return null;
+        return kq;
     }
 
     public int GetTotalOrder() {
@@ -346,6 +350,47 @@ public class OrderDAO {
         } catch (Exception e) {
         }
         return result;
+    }
+    public ResultSet getOrderDetail(int OrderID){
+        String sql = "select * from tblOrderDetail where OrderID = ?;";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, OrderID);
+            rs = ps.executeQuery();
+            return rs;
+        }catch(SQLException e){
+            
+        }
+        return null;
+    }
+    public int getProductQuan(int ProductID){
+        int kq = 0;
+        String sql = "select Quantity from tblProduct where ProductID = ?";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, ProductID);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                kq = rs.getInt("Quantity");
+            }
+        }catch(SQLException e){
+            
+        }
+        return kq;
+    }
+    public int updateQuantityProduct(int ProductID,int Amount,int Quantity){
+        int kq = 0;
+        int total = Quantity + Amount;
+        String sql = "update tblProduct set Quantity = ? where ProductID = ?";
+        try{
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, total);
+            ps.setInt(2, ProductID);
+            kq = ps.executeUpdate();
+        }catch(SQLException r){
+            
+        }
+        return kq;
     }
 
     public int AcceptOrder(int orderID) {

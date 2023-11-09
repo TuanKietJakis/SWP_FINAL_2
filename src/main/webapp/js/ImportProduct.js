@@ -81,6 +81,14 @@ form.addEventListener("submit", (e) => {
         msg3 = "ProductName cannot be empty"
         isvalid = false;
     }
+    if (ProductName.value.length < 10) {
+        let errorName = document.querySelector('.i3')
+        errorName.classList.remove("hide_error")
+        errorName.classList.remove("show_error")
+        msg3 = ""
+        msg3 = "ProductName must be at least 10 characters";
+        isvalid = false;
+    }
 
     if(Price.value == null || Price.value == ""){
         let errorprice = document.querySelector('.i4')

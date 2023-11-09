@@ -52,7 +52,7 @@
                         <h1 class="cart_h_title col-quantity">Amount</h1>
                         <h1 class="cart_h_title col-remove">Rating</h1>
                     </div>
-                    <div class="cart_t_frame">
+                    <div class="cart_t_frame" style="display: flex;flex-direction: column-reverse;">
                         <%
                             OrderDAO oDao = new OrderDAO();
                             ResultSet rs = oDao.GetOrderDetailsByUserID(userID);

@@ -162,7 +162,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            <%while (resultSet1.next()) {
+            <%if (resultSet1.next()) {
             %>
             const ctx1 = document.getElementById('myChart1');
             new Chart(ctx1, {
@@ -184,7 +184,30 @@
                     }
                 }
             });
-            <% }%>
+            <% } else {
+            %>
+            const ctx1 = document.getElementById('myChart1');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Income'],
+                    datasets: [{
+                            label: 'Total Income',
+                            data: [0],
+                            borderWidth: 1,
+                            backgroundColor: ['#04B200'],
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            <%
+    }%>
         </script>
 
 
@@ -212,7 +235,6 @@
                     }
                 }
             });
-
             function handleHover(evt, item, legend) {
                 legend.chart.data.datasets[0].backgroundColor.forEach((color, index, colors) => {
                     colors[index] = index === item.index || color.length === 9 ? color : color + '4D';

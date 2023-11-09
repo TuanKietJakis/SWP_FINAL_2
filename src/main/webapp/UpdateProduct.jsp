@@ -200,7 +200,7 @@
                             <div class="btn_admin">
                                 <div class="button-group" style="display: flex; gap:1.5rem; align-items: center;">
 
-                                    <button onclick="return confirm('Confirm for deletion?');" href="/Product/Delete/<%= pro.getProductID()%>" class="btnDelete" role="button"><i class="fa-solid fa-trash"></i> Delete</button>
+                                    <!--<button onclick="return confirm('Confirm for deletion?');" href="/Product/Delete/" class="btnDelete" role="button"><i class="fa-solid fa-trash"></i> Delete</button>-->
                                     <input type="hidden" id="userID" name="userId" value=""> 
                                     <input type="hidden" name="txtProductID" value="<%= pro.getProductID()%>">
                                     <input type="hidden" name="oldImagePath" value="<%= pro.getProductImageURL()%>">

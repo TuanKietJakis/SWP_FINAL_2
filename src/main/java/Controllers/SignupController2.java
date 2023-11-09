@@ -93,9 +93,9 @@ public class SignupController2 extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            String username = request.getParameter("txtUsername");
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassWord");
+            String username = request.getParameter("txtUsername").trim();
+            String email = request.getParameter("txtEmail").trim();
+            String password = request.getParameter("txtPassWord").trim();
             AccountDAO dao = new AccountDAO();
 
             if (dao.checkUserNameIsExist(username)) {

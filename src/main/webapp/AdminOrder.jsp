@@ -121,15 +121,15 @@
                             OrderDAO Dao = new OrderDAO();
                             OrderDAO Dao1 = new OrderDAO();
                             ResultSet rs = Dao.GetAllOrder();
-                            ResultSet rs1 = Dao1.GetOrderIDQuantity();
-                            while (rs.next() && rs1.next()) {
+//                            ResultSet rs1 = Dao1.GetOrderIDQuantity();
+                            while (rs.next()) {
                         %>
                         <!-- =================== Body Table =================== -->
 
                         <div class="order_table_row body">
                             <p class="order_table_col id"><%=rs.getInt("OrderID")%></p>
                             <p class="order_table_col name"><%=rs.getString("FullName")%></p>
-                            <p class="order_table_col quan"><%=rs1.getString("TotalQuantity")%></p>
+                            <p class="order_table_col quan"><%=dao.GetOrderIDQuantity(rs.getInt("OrderID"))%></p>
                             <p class="order_table_col price">$<%=rs.getInt("TotalPrice")%></p>
                             <p class="order_table_col status"><span><%=rs.getString("StatusName")%></span></p>
                             <a class="order_table_col link func" href="/Admin/OrderDetail/<%=rs.getInt("OrderID")%>/<%= usID%>">Info <span>></span></a>
@@ -180,7 +180,7 @@
 
                     if (spanText == "Rejected") {
                         status.classList.add("denied");
-                    } else if (spanText == "Delivered") {
+                    } else if (spanText == "Confirmed") {
                         status.classList.add("confirm");
                     } else if (spanText == "Pending"){
                         status.classList.add("pending");

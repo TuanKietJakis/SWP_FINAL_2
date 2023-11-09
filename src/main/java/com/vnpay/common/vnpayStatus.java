@@ -115,7 +115,7 @@ public class vnpayStatus extends HttpServlet {
                 }
                 if (result == CartID.length) {
                     cdao.DeleteAllIteminCart(vnp_UserID);
-                    request.getRequestDispatcher("/thanksForPayMent.jsp").forward(request, response);
+                    response.sendRedirect("/ThankPayment");
                 }
 
             } catch (Exception e) {

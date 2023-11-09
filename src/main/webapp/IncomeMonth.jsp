@@ -146,7 +146,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
-            <%while (resultSet2.next()) {
+            <%if (resultSet2.next()) {
             %>
             const ctx1 = document.getElementById('myChart1');
             new Chart(ctx1, {
@@ -168,7 +168,30 @@
                     }
                 }
             });
-            <% }%>
+            <% }else{
+%>
+   const ctx1 = document.getElementById('myChart1');
+            new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['Income'],
+                    datasets: [{
+                            label: 'Total Income',
+                            data: [0],
+                            borderWidth: 1,
+                            backgroundColor: ['#04B200'],
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });         
+<%
+}%>
         </script>
 
 

@@ -89,9 +89,9 @@ public class RatingController extends HttpServlet {
         success = ratingDAO.insertActiveToOrderDetail(orderID, productID);
 
         if (success) {
-            response.sendRedirect("thanksForPayMent.jsp");
+            response.sendRedirect("/ThankRating");
         } else {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("/404NotFound");
         }
     }
 

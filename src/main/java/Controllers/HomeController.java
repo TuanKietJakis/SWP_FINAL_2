@@ -96,6 +96,11 @@ public class HomeController extends HttpServlet {
                     request.getRequestDispatcher("/term.jsp").forward(request, response);
                 }else if(path.endsWith("/404NotFound")){
                                         request.getRequestDispatcher("/notfound.jsp").forward(request, response);
+                }else if(path.endsWith("/ThankRating")){
+                                                            request.getRequestDispatcher("/thankForRating.jsp").forward(request, response);
+                }
+                else if(path.endsWith("/ThankPayment")){
+                                                            request.getRequestDispatcher("/thanksForPayMent.jsp").forward(request, response);
                 }
             }
         }
@@ -270,7 +275,7 @@ public class HomeController extends HttpServlet {
             out.flush();
         }
         if ("searchInput".equals(action)) {
-            String inputValue = request.getParameter("inputValue");
+            String inputValue = request.getParameter("inputValue").trim();
             ProductDAO dao = null;
             try {
                 dao = new ProductDAO();
@@ -300,7 +305,7 @@ public class HomeController extends HttpServlet {
         }
         if (request.getParameter("btnContact") != null) {
             try {
-                String email = request.getParameter("email");
+                String email = request.getParameter("email").trim();
                 String helpmessage = request.getParameter("message");
                 AccountDAO dao = new AccountDAO();
 

@@ -103,7 +103,16 @@ public class CartController extends HttpServlet {
                 CartDAO carDAO = new CartDAO();
                 tblProduct pro = carDAO.getProductforAdd(ProductID);
                 int id = (int) request.getSession().getAttribute("CustomerID");
-                int kq = carDAO.AddNewCarttoWishList(id, pro);
+                tblCart productToAdd = carDAO.getCartTheSame(ProductID, id); //lay thong tin cart
+                int kq = 0;
+                int cartAmount,cartId;
+                if(productToAdd.getCartID()==0){
+                    kq = carDAO.AddNewCarttoWishList(id, pro);
+                }else{
+                    cartAmount = productToAdd.getProductAmount(); //lay cart id
+                    cartId = productToAdd.getCartID(); //lay so luong trong cart
+                    carDAO.UpdateCartAmount(++cartAmount, cartId); //update voi so luong +1
+                }
                 response.sendRedirect("/wishlist/show");
             } catch (Exception ex) {
                 Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
@@ -205,7 +214,7 @@ public class CartController extends HttpServlet {
         if ("importAddress".equals(action)) {
             int UserID = Integer.parseInt(request.getParameter("userID"));
             String Name = request.getParameter("inputName");
-            String Phone = request.getParameter("inputPhoneNumber");
+            String Phone = request.getParameter("inputPhoneNumber").trim();
             int Payment = Integer.parseInt(request.getParameter("payment"));
             String Address = request.getParameter("inputAddress");
             try {
@@ -241,7 +250,7 @@ public class CartController extends HttpServlet {
         if ("editAddress".equals(action)) {
             int addressID = Integer.parseInt(request.getParameter("addressID"));
             String Name = request.getParameter("inputName");
-            String Phone = request.getParameter("inputPhoneNumber");
+            String Phone = request.getParameter("inputPhoneNumber").trim();
             int Payment = Integer.parseInt(request.getParameter("payment"));
             String Address = request.getParameter("inputAddress");
             try {
@@ -285,7 +294,7 @@ public class CartController extends HttpServlet {
 
             int UserID = Integer.parseInt(request.getParameter("UserID"));
             int Total = Integer.parseInt(request.getParameter("total"));
-            String receivePhone = request.getParameter("receivePhone");
+            String receivePhone = request.getParameter("receivePhone").trim();
             String receiveName = request.getParameter("receiveName");
             byte receivePayment = Byte.parseByte(request.getParameter("receivePayment"));
             String receiveAddress = request.getParameter("receiveAddress");
@@ -332,7 +341,7 @@ public class CartController extends HttpServlet {
                             }
                         }
                         cdao.DeleteAllIteminCart(UserID);
-                        response.sendRedirect("/OrderHistory");
+                        response.sendRedirect("/ThankPayment");
                     }
                 } else {
 //                    response.sendRedirect("/Cart/Info/" + order.getUserID());

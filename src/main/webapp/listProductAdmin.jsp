@@ -184,7 +184,7 @@
                                                             color = "#04B200";
                                                             active = "available";
                                                         } else {
-                                                            color = "rgba(255, 150, 127, 1)";
+                                                            color = "#ee2a7b";
                                                             active = "unavailable";
                                                         }
                                                     %>

@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (productName.length > 50) {
             msg += "Product name must be less than 50 characters - ";
             valid = false;
+        }else if(productName.length < 10){
+            msg += "Product name must be at least 10 characters - ";
+            valid = false;
         }
 
         if (price.trim() === "" || isNaN(price)) {

@@ -82,8 +82,8 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         if (request.getParameter("btnLogin") != null) {
             try {
-                String us = request.getParameter("username");
-                String ps = request.getParameter("password");
+                String us = request.getParameter("username").trim();
+                String ps = request.getParameter("password").trim();
                 tblUser acc = new tblUser(us, ps);
                 AccountDAO dao = new AccountDAO();
                 boolean result = dao.Login(acc);

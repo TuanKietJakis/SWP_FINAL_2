@@ -79,8 +79,8 @@ public class ResetPassword extends HttpServlet {
        
             if (request.getParameter("btnReset") != null) {
                 try {
-                    String new_password = request.getParameter("newpassword");
-                    String confirm_password = request.getParameter("comfirmpassword");
+                    String new_password = request.getParameter("newpassword").trim();
+                    String confirm_password = request.getParameter("comfirmpassword").trim();
                     HttpSession mySession = request.getSession();
                     HttpSession newSession = request.getSession();
                     String email = (String) mySession.getAttribute("email");

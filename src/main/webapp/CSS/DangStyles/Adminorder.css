@@ -125,8 +125,11 @@ body {
     &.header,
     &.body {
         padding: 22px 26px;
+        transition: 0.3s;
     }
-
+    &.body:hover{
+        background: #f4f4f4;
+    }
     &.header {
         position: sticky;
         top: 0;

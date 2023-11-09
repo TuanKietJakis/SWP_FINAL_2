@@ -7,6 +7,7 @@
 let Problem = document.querySelector('.order_show_info_reject');
 if(Problem!= null){
     Problem.addEventListener("click", () => {
+        if(confirm('You sure change status of this order?')){         
         let OrderID = document.querySelector('#orderID').value;
         $.ajax({
             method: 'post',
@@ -24,12 +25,14 @@ if(Problem!= null){
                 }
             }
         });
+        }
     });
 }
 
 let Ok = document.querySelector('.order_show_info_confirm');
 if(Ok!=null){
     Ok.addEventListener("click", () => {
+        if(confirm('You sure change status of this order?')){            
         let OrderID = document.querySelector('#orderID').value;
         $.ajax({
             method: 'post',
@@ -47,5 +50,6 @@ if(Ok!=null){
                 }
             }
         });
+        }
     });
 }

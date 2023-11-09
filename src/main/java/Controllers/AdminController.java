@@ -130,13 +130,13 @@ public class AdminController extends HttpServlet {
         if (path.endsWith("/Admin/OrderStatus")) {
             request.getRequestDispatcher("/OrderStatus.jsp").forward(request, response);
         }
-         if (path.endsWith("/Admin/Income")) {
+        if (path.endsWith("/Admin/Income")) {
             request.getRequestDispatcher("/ChooseViewIncome.jsp").forward(request, response);
         }
-           if (path.endsWith("/Admin/Income/Day")) {
+        if (path.endsWith("/Admin/Income/Day")) {
             request.getRequestDispatcher("/IncomeDay.jsp").forward(request, response);
         }
-            if (path.endsWith("/Admin/Income/Month")) {
+        if (path.endsWith("/Admin/Income/Month")) {
             request.getRequestDispatcher("/IncomeMonth.jsp").forward(request, response);
         }
         if (path.endsWith("/Admin/RevenueAndExpenditure")) {
@@ -282,6 +282,12 @@ public class AdminController extends HttpServlet {
                 int orderID = Integer.parseInt(request.getParameter("order"));
                 OrderDAO dao = new OrderDAO();
                 int kq = dao.RejectOrder(orderID);
+                ResultSet rs = dao.getOrderDetail(orderID);
+                while (rs.next()) {
+                    int productQuan = dao.getProductQuan(rs.getInt("ProductID"));
+                    int orderAmount = rs.getInt("Quantity");
+                    kq = dao.updateQuantityProduct(rs.getInt("ProductID"), orderAmount, productQuan);
+                }
                 if (kq != 0) {
                     response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");

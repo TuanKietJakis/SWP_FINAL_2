@@ -18,6 +18,11 @@
         <link rel="stylesheet" href="/CSS/AddNewProduct.css">
     </head>
     <body>
+        <style>
+            [class^="i"]{
+                color:crimson;
+            }
+        </style>
         <%
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {

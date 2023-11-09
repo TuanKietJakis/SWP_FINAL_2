@@ -194,10 +194,10 @@ public class AccountController extends HttpServlet {
         if (request.getParameter("btnUpdate") != null && request.getParameter("btnUpdate").equals("Update")) {
 
             try {
-                String fullname = request.getParameter("Fullname");
-                String username = request.getParameter("Username");
-                String phone = request.getParameter("Mobile_Number");
-                String email = request.getParameter("Email");
+                String fullname = request.getParameter("Fullname").trim();
+                String username = request.getParameter("Username").trim();
+                String phone = request.getParameter("Mobile_Number").trim();
+                String email = request.getParameter("Email").trim();
                 String address = request.getParameter("Address");
                 String gender = request.getParameter("slctGender");
                 Date DoB = Date.valueOf(request.getParameter("DoB"));
@@ -214,10 +214,10 @@ public class AccountController extends HttpServlet {
         if (btnUpdateProfileUser != null && btnUpdateProfileUser.equals("Update")) {
 
             try {
-                String fullname = request.getParameter("Fullname");
-                String username = request.getParameter("Username");
-                String phone = request.getParameter("Mobile_Number");
-                String email = request.getParameter("Email");
+                String fullname = request.getParameter("Fullname").trim();
+                String username = request.getParameter("Username").trim();
+                String phone = request.getParameter("Mobile_Number").trim();
+                String email = request.getParameter("Email").trim();
                 String address = request.getParameter("Address");
                 String gender = request.getParameter("slctGender");
                 String DoB = request.getParameter("DoB");

@@ -10,12 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="refresh" content="5; url=/OrderHistory">
-        <title>JSP Page</title>
+        <title>Thank For Rating</title>
         <link rel="stylesheet" href="CSS/home_redirect.css">
     </head>
     <body>
         <div class="redirect">
-        <h1 style="font-size: 28px;">Thanks for payment, We'll check your order! <br> Now you'll be redirect to new page in <span class="counter" style="color: red;">6</span> seconds....</h1>
+        <h1 style="font-size: 28px;">Thanks for your Rating, Hope you enjoy this product <br> Now you'll be redirect to new page in <span class="counter" style="color: red;">6</span> seconds....</h1>
         <script src="test.js"></script>
         <lord-icon src="https://cdn.lordicon.com/lomfljuq.json" trigger="loop" colors="primary:#109121"
             style="width:150px;height:150px">
