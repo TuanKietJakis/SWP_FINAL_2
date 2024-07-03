@@ -491,7 +491,7 @@ $(document).ready(function () {
 
                         document.querySelector('.subtotalClass').innerHTML = "$" + subtotal.value;
                         document.querySelector('.totalClass').innerHTML = "$" + total.value;
-                        alert("Too much You Can not pay for this");
+                        alert("If you want to buy more, please contact us!");
 
 
                     } else if (data.message === "success") {

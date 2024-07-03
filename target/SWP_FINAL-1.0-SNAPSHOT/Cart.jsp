@@ -22,6 +22,25 @@
 
     <body>
         <%
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userID") && !cookie.getValue().equals("")) {
+                        session.setAttribute("CustomerID", Integer.parseInt(cookie.getValue()));
+                        break;
+                    }
+                }
+            }
+        %>
+        <%
+            int usID = 0;
+            if (session.getAttribute("CustomerID") != null) {
+                usID = (int) session.getAttribute("CustomerID");
+            } else {
+                response.sendRedirect("/Home");
+            }
+        %>
+        <%
             tblUser us = (tblUser) session.getAttribute("UserInfo");
         %>
 
@@ -216,7 +235,8 @@
                                         shipcost = 1 * countProduct;
                                     }
                                 %>
-                                <span>
+                                <input type="hidden" name="shipcost" id="shipcost" value="<%=shipcost%>">
+                                <span class="shipcostClass">
                                     $<%=shipcost%>
                                 </span>
                             </h3>
@@ -388,8 +408,8 @@
             <div class="popup_bg"></div>
         </main>
         <jsp:include page="Footer.jsp"></jsp:include>      
-            <script src="/js/DangScript/jquery.min.js"></script>
-            <script src="/js/DangScript/CartScript.js"></script>
-            
+        <script src="/js/DangScript/jquery.min.js"></script>
+        <script src="/js/DangScript/CartScript.js"></script>
+
     </body>
 </html>

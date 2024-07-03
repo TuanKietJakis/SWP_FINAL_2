@@ -59,7 +59,7 @@ form.addEventListener("submit", function (event) {
         valid = false;
     }
 
-    if (password.length < 6) {
+    if (password.length < 8) {
         msg += "Password must be more than 8 characters - ";
         valid = false;
     }

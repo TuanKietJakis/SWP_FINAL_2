@@ -38,7 +38,7 @@ function AddtoCart(element) {
                 }, 4000);
                 document.querySelector('#AmountFromCart').value = data.Amount;
             } else if (data.message === "full") {
-                alert("You Can not fill more food if your stomach is full");
+                alert("If you want to buy more, we can help you on contact us");
             } else if (data.message === "fail") {
                 alert("Some problem drop in here! Please try again")
             } else {

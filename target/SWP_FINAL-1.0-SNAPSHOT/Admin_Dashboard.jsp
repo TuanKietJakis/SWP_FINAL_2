@@ -64,7 +64,7 @@
 
                                     <select class="select" id="filterSelect">
                                         <option selected="selected" value="0">All</option>
-                                        <option value="1">Customer</option>
+                                        <option value="1">User</option>
                                         <option value="2">Admin</option>
                                     </select>
 

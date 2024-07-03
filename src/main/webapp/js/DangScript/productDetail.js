@@ -74,7 +74,7 @@ document.querySelector('.product_d_c_o_addtoCart').addEventListener('click', () 
                 document.querySelector('#AmountFromCart').value = data.Amount;
                 document.querySelector('.number_of_item').textContent = parseInt(document.querySelector('.number_of_item').textContent) + parseInt(1);
             } else if (data.message === "full") {
-                alert("You get too much for today");
+                alert("If you want to buy more, please contact us!");
             } else if (data.message === "fail") {
                 alert("Add to Cart Fail");
             } else if (data.message === "update") {
@@ -94,7 +94,7 @@ document.querySelector('.quantity-input').addEventListener('input', () => {
     var StoreQuan = document.querySelector('#StoreQuan').value;
     if (StoreQuan < TotalAmount) {
         document.querySelector('.quantity-input').value = parseInt(StoreQuan) - parseInt(AmountFromCart);
-        alert("Thank for your huge number of product order, but we don't have enough product available for you");
+        alert("If you want to buy more, we can help you by contact us!");
     }
 });
 
